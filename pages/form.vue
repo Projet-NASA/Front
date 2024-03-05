@@ -1,18 +1,22 @@
 <template>
-  <div>
-    <h1>Ajouter un utilisateur</h1>
-    <form @submit.prevent="submitForm">
-      <div>
-        <label for="email">Email:</label>
-        <input id="email" v-model="user.email" type="email" required>
+  <div class="max-w-md mx-auto my-10">
+    <h1 class="text-2xl font-bold mb-5 text-center">Ajouter un utilisateur</h1>
+    <form @submit.prevent="submitForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <div class="mb-4">
+        <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+        <input id="email" v-model="user.email" type="email" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
       </div>
-      <div>
-        <label for="name">Nom:</label>
-        <input id="name" v-model="user.name" type="text" required>
+      <div class="mb-6">
+        <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nom:</label>
+        <input id="name" v-model="user.name" type="text" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
       </div>
-      <button type="submit">Envoyer</button>
+      <div class="flex items-center justify-between">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Envoyer
+        </button>
+      </div>
     </form>
-    <p v-if="message">{{ message }}</p>
+    <p v-if="message" class="text-center text-bold mt-3">{{ message }}</p>
   </div>
 </template>
 
