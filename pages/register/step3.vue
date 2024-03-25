@@ -67,6 +67,7 @@ async function submitForm() {
     message.value = "Veuillez remplir tous les champs";
     return;
   }
+
   try {
     const response = await fetch("http://localhost:3003/user/addUser", {
       method: "POST",
