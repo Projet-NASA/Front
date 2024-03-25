@@ -81,11 +81,17 @@
             S'inscrire
           </button>
         </div>
+        <div class="flex justify-center mt-4">
+          <NuxtLink to="/login" class="text-white font-bold underline">
+            Vous avez déjà un compte ? Connectez-vous ici.
+          </NuxtLink>
+        </div>
       </form>
       <p v-if="message" class="text-center text-bold mt-3">{{ message }}</p>
     </div>
   </section>
 </template>
+
 <script setup>
 import { ref } from "vue";
 
