@@ -68,45 +68,38 @@
   </section>
 </template>
 
-<script setup>
+<script>
 import { ref } from "vue";
 
-const user = ref({
-  email: "",
-  name: "",
-});
+export default {
+  setup() {
+    const user = ref({ email: "", password: "" });
 
-const message = ref("");
+    async function submitForm() {
+      try {
+        const response = await fetch("http://localhost:3003/user/loginUser", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: user.value.email,
+            password: user.value.password,
+          }),
+        });
 
-async function submitForm() {
-  if (!user.value.email || !user.value.name) {
-    message.value = "Veuillez remplir tous les champs";
-    return;
-  }
-  try {
-    const response = await fetch("http://localhost:3003/user/addUser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: user.value.email,
-        name: user.value.name,
-      }),
-    });
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.error);
+        }
 
-    if (!response.ok) {
-      throw new Error("La requête a échoué");
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
     }
-
-    const data = await response.json();
-    message.value = "Utilisateur ajouté avec succès";
-    console.log(data);
-    user.value.email = "";
-    user.value.name = "";
-  } catch (error) {
-    message.value = "Erreur lors de l'ajout de l'utilisateur";
-    console.error(error);
-  }
-}
+    return { user, submitForm };
+  },
+};
 </script>
