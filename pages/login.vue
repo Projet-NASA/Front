@@ -58,7 +58,7 @@
 
         <div class="flex justify-center gap-4 my-4">
           <p>Pas de compte ?</p>
-          <NuxtLink class="hover:underline decoration-solid text-blue-500">
+          <NuxtLink to="/register/step1" class="hover:underline decoration-solid text-blue-500">
             S'inscrire
           </NuxtLink>
         </div>
