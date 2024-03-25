@@ -69,11 +69,12 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   setup() {
     const user = ref({ email: "", password: "" });
+    const router = useRouter(); 
 
     async function submitForm() {
       try {
@@ -95,6 +96,7 @@ export default {
 
         const data = await response.json();
         console.log(data);
+        router.push('/');
       } catch (error) {
         console.error(error);
       }
