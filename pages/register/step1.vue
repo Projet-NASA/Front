@@ -104,7 +104,7 @@
           </NuxtLink>
         </div>
       </form>
-      <p v-if="message" class="text-center text-bold mt-3">{{ message }}</p>
+      <p v-if="message" :class="messageClass" class="text-center font-bold mt-3">{{ message }}</p>
     </div>
   </section>
 </template>
@@ -120,6 +120,7 @@ const user = ref({
 });
 
 const message = ref("");
+const messageClass = ref("");
 
 async function submitForm() {
   console.log("Soumission du formulaire", user.value);
@@ -147,6 +148,7 @@ async function submitForm() {
 
     const data = await response.json();
     message.value = "Utilisateur ajouté avec succès";
+    messageClass.value = "text-green-500"; 
     console.log("Inscription réussie", data);
     user.value.firstName = "";
     user.value.lastName = "";
@@ -154,9 +156,12 @@ async function submitForm() {
     user.value.password = "";
   } catch (error) {
     console.error("Erreur lors de la requête fetch", error);
+    message.value = error.message;
+    messageClass.value = "text-red-500";
   }
 }
 </script>
+
 
 <style>
 html,
