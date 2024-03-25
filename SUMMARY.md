@@ -1,3 +1,3 @@
 # Table of contents
 
-* [Projet NASA Backend](README.md)
+* [Nuxt 3 Minimal Starter](README.md)
