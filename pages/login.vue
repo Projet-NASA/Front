@@ -12,7 +12,7 @@
         <h1 class="text-2xl font-bold mb-5 text-center">S'identifier</h1>
         <div class="mb-4">
           <label for="email" class="block text-gray-700 text-sm font-bold mb-2"
-            >E-mail ou téléphone</label
+            >E-mail</label
           >
           <input
             id="email"
