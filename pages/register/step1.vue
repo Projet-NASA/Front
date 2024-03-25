@@ -69,7 +69,7 @@
         <div class="flex items-center justify-between">
           <button
             type="submit"
-            class="bg-[#8A01F5] hover:bg-[#2D3758] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-80"
+            class="bg-bleu hover:bg-violet text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-80"
           >
             S'identifier avec Google
           </button>

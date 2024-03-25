@@ -37,20 +37,20 @@
         <div class="flex items-center justify-between">
           <button
             type="submit"
-            class="bg-[#2D3758] hover:bg-[#8A01F5] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-80"
+            class="bg-bleu hover:bg-violet text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-80"
           >
             Connexion
           </button>
         </div>
         <div class="flex items-center my-4">
-          <div class="h-px w-36 bg-[#8A01F5]"></div>
+          <div class="h-px w-36 bg-violet"></div>
           <p class="mx-2">Ou</p>
-          <div class="h-px w-36 bg-[#8A01F5]"></div>
+          <div class="h-px w-36 bg-violet"></div>
         </div>
         <div class="flex items-center justify-between">
           <button
             type="submit"
-            class="bg-[#2D3758] hover:bg-[#8A01F5] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-80"
+            class="bg-bleu hover:bg-violet text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-80"
           >
             S'identifier avec Google
           </button>
