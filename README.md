@@ -1,8 +1,8 @@
 ---
 description: >-
-  Look at the [Nuxt 3
-  documentation](https://nuxt.com/docs/getting-started/introduction) to learn
-  more.
+  This is the front end of our linkedin automobile, we use Nuxt3 so let's go
+  check de documentation before using it ->
+  https://nuxt.com/docs/getting-started/introduction
 ---
 
 # Nuxt 3 Minimal Starter
