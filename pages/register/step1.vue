@@ -82,7 +82,7 @@
           </button>
         </div>
         <div class="flex justify-center mt-4">
-          <NuxtLink to="/login" class="text-white font-bold underline">
+          <NuxtLink to="/login" class="text-bleu font-bold underline">
             Vous avez déjà un compte ? Connectez-vous ici.
           </NuxtLink>
         </div>
