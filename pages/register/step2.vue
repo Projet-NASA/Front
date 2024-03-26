@@ -14,7 +14,7 @@
 
 <script>
 import { onMounted, ref } from "vue";
-import { checkTokenAndRedirect } from "../utils";
+import { checkTokenAndRedirect } from "../../utils/utils";
 
 export default {
   setup() {
@@ -50,3 +50,4 @@ export default {
   },
 };
 </script>
+../../utils/utils

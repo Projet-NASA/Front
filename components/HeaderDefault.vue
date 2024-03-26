@@ -4,9 +4,15 @@
       <title>AutoLinkedIn</title>
     </head>
     <header class="bg-white text-black shadow-lg">
-      <div class="container mx-auto flex flex-row items-center justify-between p-4">
+      <div
+        class="container mx-auto flex flex-row items-center justify-between p-4"
+      >
         <div class="flex items-center">
-          <img class="w-10 h-10 rounded-full" src="https://via.placeholder.com/150" alt="Logo" />
+          <img
+            class="w-10 h-10 rounded-full"
+            src="https://via.placeholder.com/150"
+            alt="Logo"
+          />
           <div class="ml-2 font-bold text-xl">AutoLinkedIn</div>
         </div>
         <div>
@@ -29,11 +35,9 @@
 
 <script setup>
 let isLoggedIn = false;
-  if (!isLoggedIn) {
-    // this.$router.push('/register/step1');
-  }
-
-
+if (!isLoggedIn) {
+  // this.$router.push('/register/step1');
+}
 </script>
 
 <style lang="scss" scoped></style>

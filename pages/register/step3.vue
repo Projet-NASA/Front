@@ -54,7 +54,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { checkTokenAndRedirect } from "../utils";
+import { checkTokenAndRedirect } from "../../utils/utils";
 
 const user = ref({
   email: "",

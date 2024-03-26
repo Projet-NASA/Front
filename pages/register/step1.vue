@@ -100,7 +100,10 @@
 
         <div class="flex justify-center gap-4 my-4">
           <p>Vous avez déjà un compte ?</p>
-          <NuxtLink to="/Login" class="hover:underline decoration-solid text-bleu">
+          <NuxtLink
+            to="/Login"
+            class="hover:underline decoration-solid text-bleu"
+          >
             Se Connecter
           </NuxtLink>
         </div>
@@ -119,7 +122,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { checkTokenAndRedirect } from "../utils";
+import { checkTokenAndRedirect } from "../../utils/utils";
 
 const user = ref({
   firstName: "",
