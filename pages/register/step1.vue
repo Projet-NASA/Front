@@ -118,6 +118,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { checkTokenAndRedirect } from "../utils";
 
 const user = ref({
   firstName: "",
@@ -170,9 +171,5 @@ async function submitForm() {
   }
 }
 
-onMounted(() => {
-  if (localStorage.getItem("token")) {
-    router.push("/");
-  }
-});
+onMounted(checkTokenAndRedirect);
 </script>
