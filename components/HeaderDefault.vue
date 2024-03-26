@@ -5,7 +5,7 @@
     </head>
     <header
       :class="{
-        'fixed w-11/12 ml-20 mt-2': isScrollingDown,
+        'fixed w-11/12 ml-20 mt-2 rounded-2xl': isScrollingDown,
         'bg-secondary-100 text-black shadow-lg z-50': true,
       }"
     >
@@ -31,17 +31,13 @@
               <nuxt-link to="/" class="text-text-default">Home</nuxt-link>
             </li>
             <li>
-              <nuxt-link to="/" class="text-text-default"
-                >My Network</nuxt-link
-              >
+              <nuxt-link to="/" class="text-text-default">My Network</nuxt-link>
             </li>
             <li>
               <nuxt-link to="/" class="text-text-default">Jobs</nuxt-link>
             </li>
             <li>
-              <nuxt-link to="/" class="text-text-default"
-                >Messaging</nuxt-link
-              >
+              <nuxt-link to="/" class="text-text-default">Messaging</nuxt-link>
             </li>
             <li>
               <nuxt-link to="/" class="text-text-default"
@@ -65,7 +61,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useCookie } from '#app';
+import { useCookie } from "#app";
 
 const isScrollingDown = ref(false);
 const isDarkTheme = useCookie("isDarkTheme", false);
@@ -98,4 +94,3 @@ onBeforeUnmount(() => {
   window.removeEventListener("scroll", handleScroll);
 });
 </script>
-
