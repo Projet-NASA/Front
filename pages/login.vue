@@ -100,10 +100,6 @@ export default {
         const data = await response.json();
         console.log(data);
         localStorage.setItem("token", data.token);
-        console.log(
-          "localStorage.getItem('token')",
-          localStorage.getItem("token")
-        );
         router.push("/");
       } catch (error) {
         console.error(error);
