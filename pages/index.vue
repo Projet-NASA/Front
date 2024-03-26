@@ -1,18 +1,14 @@
 <template>
-  <div class="flex flex-col justify-center items-center h-screen bg-gray-100">
+  <div class="flex flex-col items-center pt-7 h-screen bg-background">
     <div class="w-full max-w-2xl">
-      <!-- Post Input -->
-      <div class="p-4 bg-white rounded shadow mb-4">
+      <div class="p-4 bg-secondary rounded shadow mb-4">
         <input class="w-full p-2 border rounded" type="text" placeholder="Start a post..." />
-        <div class="flex justify-between mt-2">
+        <div class="flex justify-end mt-2">
           <button class="px-4 py-2 bg-blue-600 text-white rounded">Post</button>
         </div>
       </div>
-
-      <!-- Feed -->
       <div>
-        <!-- Post -->
-        <div class="p-4 bg-white rounded shadow mb-4">
+        <div class="p-4 bg-background rounded shadow mb-4">
           <div class="flex items-center mb-2">
             <img class="w-10 h-10 rounded-full" src="https://via.placeholder.com/150" alt="User avatar" />
             <div class="ml-2">
@@ -28,7 +24,12 @@
             <div>2 Comments</div>
           </div>
         </div>
-        <!-- More posts... -->
+        <!-- <NuxtLink
+      to="/register/step1"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    >
+      Aller au formulaire
+    </NuxtLink> -->
       </div>
     </div>
   </div>
