@@ -116,7 +116,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 
 const user = ref({
   firstName: "",
@@ -127,6 +128,8 @@ const user = ref({
 
 const message = ref("");
 const messageClass = ref("");
+
+const router = useRouter();
 
 async function submitForm() {
   console.log("Soumission du formulaire", user.value);
@@ -165,17 +168,11 @@ async function submitForm() {
     message.value = error.message;
     messageClass.value = "text-red-500";
   }
-  created(){
-    if (localStorage.getItem("token")) {
-      this.$router.push("/home");
-  }
 }
-</script>
 
-<style>
-html,
-body {
-  height: 100%;
-  margin: 0;
-}
-</style>
+onMounted(() => {
+  if (localStorage.getItem("token")) {
+    router.push("/");
+  }
+});
+</script>
