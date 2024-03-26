@@ -5,6 +5,7 @@
 
 @layer base {
   :root {
+    --text : var(--text-950);
     --text-50: #eae9fc;
     --text-100: #d4d2f9;
     --text-200: #a9a5f3;
@@ -17,6 +18,7 @@
     --text-900: #08062d;
     --text-950: #040316;
     
+    --background : var(--background-100);
     --background-50: #f2f2f2;
     --background-100: #e6e6e6;
     --background-200: #cccccc;
@@ -29,6 +31,7 @@
     --background-900: #1a1a1a;
     --background-950: #0d0d0d;
     
+    --primary : var(--primary-500);
     --primary-50: #f4e6ff;
     --primary-100: #e9ccff;
     --primary-200: #d39afe;
@@ -41,6 +44,7 @@
     --primary-900: #1d0033;
     --primary-950: #0e0019;
     
+    --secondary : var(--secondary-500);
     --secondary-50: #eef0f6;
     --secondary-100: #dde1ee;
     --secondary-200: #bcc3dc;
@@ -53,6 +57,7 @@
     --secondary-900: #111522;
     --secondary-950: #090b11;
     
+    --accent : var(--accent-500);
     --accent-50: #f4e5ff;
     --accent-100: #e9ccff;
     --accent-200: #d399ff;
@@ -67,6 +72,7 @@
     
   }
   .dark {
+    --text : var(--text-950);
     --text-50: #040316;
     --text-100: #08062d;
     --text-200: #100c5a;
@@ -79,6 +85,7 @@
     --text-900: #d4d2f9;
     --text-950: #eae9fc;
     
+    --background : var(--background-100);
     --background-50: #0d0d0d;
     --background-100: #1a1a1a;
     --background-200: #333333;
@@ -91,6 +98,7 @@
     --background-900: #e6e6e6;
     --background-950: #f2f2f2;
     
+    --primary : var(--primary-500);
     --primary-50: #0e0019;
     --primary-100: #1d0033;
     --primary-200: #3a0165;
@@ -103,6 +111,7 @@
     --primary-900: #e9ccff;
     --primary-950: #f4e6ff;
     
+    --secondary : var(--secondary-500);
     --secondary-50: #090b11;
     --secondary-100: #111522;
     --secondary-200: #232a43;
@@ -115,6 +124,7 @@
     --secondary-900: #dde1ee;
     --secondary-950: #eef0f6;
     
+    --accent : var(--accent-500);
     --accent-50: #0e001a;
     --accent-100: #1d0033;
     --accent-200: #3a0066;
