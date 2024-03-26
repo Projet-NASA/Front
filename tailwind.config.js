@@ -15,7 +15,7 @@ module.exports = {
           700: "var(--text-700)",
           800: "var(--text-800)",
           900: "var(--text-900)",
-          950: "var(--text-950)",
+          default: "var(--text-950)",
         },
         background: {
           50: "var(--background-50)",
@@ -62,7 +62,7 @@ module.exports = {
           200: "var(--accent-200)",
           300: "var(--accent-300)",
           400: "var(--accent-400)",
-          500: "var(--accent-500)",
+          default: "var(--accent-500)",
           600: "var(--accent-600)",
           700: "var(--accent-700)",
           800: "var(--accent-800)",
