@@ -79,10 +79,11 @@
         <div class="flex flex-col items-center justify-between">
           <button
             type="button"
-            @click="submitForm"
+            @click="nextStep"
+
             class="bg-bleu hover:bg-violet text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mb-2"
           >
-            S'inscrire
+            Suivant
           </button>
 
           <div class="flex items-center my-4">
@@ -121,7 +122,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { useFormStore } from '../../stores/values.js';
+import { useFormStore } from 
 import { onMounted } from 'vue';
 
 const user = ref({
@@ -134,14 +135,13 @@ const user = ref({
 const message = ref("");
 const messageClass = ref("");
 
-export {
-  data() {
+  const data = () =>{
     return {
       sliderValue: [25, 75] // Initial range values
     };
-  },
-  emits: ['next-step','previous-step'],
-  setup(_, { emit }) {
+  };
+  emits: ['next-step','previous-step'];
+  const setup = (_, { emit }) =>{
     const mainStep = 50;
 
     onMounted(() => {
@@ -161,8 +161,8 @@ export {
       formData,
       nextStep,
     };
-  },
-}
+  };
+
 
 async function submitForm() {
   console.log("Soumission du formulaire", user.value);
