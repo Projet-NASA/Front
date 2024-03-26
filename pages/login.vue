@@ -58,7 +58,10 @@
 
         <div class="flex justify-center gap-4 my-4">
           <p>Pas de compte ?</p>
-          <NuxtLink to="/register/step1" class="hover:underline decoration-solid text-bleu">
+          <NuxtLink
+            to="/register/step1"
+            class="hover:underline decoration-solid text-bleu"
+          >
             S'inscrire
           </NuxtLink>
         </div>
@@ -69,12 +72,12 @@
 </template>
 
 <script>
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   setup() {
     const user = ref({ email: "", password: "" });
-    const router = useRouter(); 
+    const router = useRouter();
 
     async function submitForm() {
       try {
@@ -96,7 +99,7 @@ export default {
 
         const data = await response.json();
         console.log(data);
-        router.push('/');
+        router.push("/");
       } catch (error) {
         console.error(error);
       }
