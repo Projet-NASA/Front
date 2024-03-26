@@ -87,7 +87,7 @@
 
           <div class="flex items-center my-4">
             <div class="h-px w-36 bg-violet"></div>
-            <p class="mx-2">Ou</p>
+            <p class="mx-2">OU</p>
             <div class="h-px w-36 bg-violet"></div>
           </div>
           <button
@@ -98,9 +98,10 @@
           </button>
         </div>
 
-        <div class="flex justify-center mt-4">
-          <NuxtLink to="/login" class="text-bleu font-bold underline">
-            Vous avez déjà un compte ? Connectez-vous ici.
+        <div class="flex justify-center gap-4 my-4">
+          <p>Vous avez déjà un compte ?</p>
+          <NuxtLink to="/Login" class="hover:underline decoration-solid text-bleu">
+            Se Connecter
           </NuxtLink>
         </div>
       </form>

@@ -44,7 +44,7 @@
         </div>
         <div class="flex items-center my-4">
           <div class="h-px w-36 bg-violet"></div>
-          <p class="mx-2">Ou</p>
+          <p class="mx-2">OU</p>
           <div class="h-px w-36 bg-violet"></div>
         </div>
         <div class="flex items-center justify-between">
