@@ -4,9 +4,12 @@ module.exports = {
   theme: {
     extend:{
       colors: {
-        violet: "#8a01f5",
-        bleu: "#2d3758",
-      },
+        'text': 'var(--text)',
+        'background': 'var(--background)',
+        'primary': 'var(--primary)',
+        'secondary': 'var(--secondary)',
+        'accent': 'var(--accent)',
+       },
     }
   },
   // plugins: [],
