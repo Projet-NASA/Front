@@ -28,12 +28,9 @@
 </template>
 
 <script setup>
-  //if not logged in redirect to login page
-  // You can add your logic here to check if the user is logged in
-  // and redirect to the login page if not
+let isLoggedIn = false;
   if (!isLoggedIn) {
-    // Redirect to login page
-    this.$router.push('/login');
+    // this.$router.push('/register/step1');
   }
 
 
