@@ -13,7 +13,8 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { checkTokenAndRedirect } from "../utils";
 
 export default {
   setup() {
@@ -43,6 +44,8 @@ export default {
         console.error(error);
       }
     }
+
+    onMounted(checkTokenAndRedirect);
     return { user, submitForm };
   },
 };
