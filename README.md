@@ -9,7 +9,7 @@ description: >-
 
 ### Setup
 
-﻿ Make sure to install the dependencies: ﻿
+Make sure to install the dependencies:
 
 ```bash
 # npm
@@ -25,11 +25,11 @@ yarn install
 bun install
 ```
 
-﻿
+
 
 ### Development Server
 
-﻿ Start the development server on `http://localhost:3000`: ﻿
+Start the development server on `http://localhost:3000`:
 
 ```bash
 # npm
@@ -45,11 +45,11 @@ yarn dev
 bun run dev
 ```
 
-﻿
+
 
 ### Production
 
-﻿ Build the application for production: ﻿
+Build the application for production:
 
 ```bash
 # npm
@@ -65,7 +65,7 @@ yarn build
 bun run build
 ```
 
-﻿ Locally preview production build: ﻿
+Locally preview production build:
 
 ```bash
 # npm
