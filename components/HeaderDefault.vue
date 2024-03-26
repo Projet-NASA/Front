@@ -63,12 +63,20 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from "vue";
+<script setup>
+import { ref, onMounted } from "vue";
+import { useCookie } from '#app';
 
 const isScrollingDown = ref(false);
-const isDarkTheme = useCookie("isDarkTheme");
+const isDarkTheme = useCookie("isDarkTheme", { default: false });
 
+const applyTheme = () => {
+  if (isDarkTheme.value) {
+    document.body.classList.add("dark");
+  } else {
+    document.body.classList.remove("dark");
+  }
+};
 
 const handleScroll = () => {
   const currentScrollPosition =
@@ -78,27 +86,16 @@ const handleScroll = () => {
 
 const toggleTheme = () => {
   isDarkTheme.value = !isDarkTheme.value;
-  if (isDarkTheme.value) {
-    document.body.classList.add("dark");
-    isDarkTheme.value = true;
-  } else {
-    document.body.classList.remove("dark");
-    isDarkTheme.value = false;
-  }
+  applyTheme();
 };
 
-// onMounted(() => {
-//   window.addEventListener("scroll", handleScroll);
-//   if (isDarkTheme.value) {
-//     document.body.classList.add("dark");
-//     isDarkTheme.value = true;
-//   } else {
-//     document.body.classList.remove("dark");
-//     isDarkTheme.value = false;
-//   }
-// });
+onMounted(() => {
+  applyTheme(); // Applique le thème lors du montage du composant
+  window.addEventListener("scroll", handleScroll);
+});
 
-// onBeforeUnmount(() => {
-//   window.removeEventListener("scroll", handleScroll);
-// });
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
 </script>
+
