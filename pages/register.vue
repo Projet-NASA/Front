@@ -67,100 +67,86 @@
 </template>
 
 <script setup>
-  import { ref } from "vue";
-import StepOne from '../components/teststeps/stepOne.vue';
-import StepTwo from '../components/teststeps/stepTwo.vue';
-import StepThree from '../components/teststeps/stepThree.vue';
-import StepFour from '../components/teststeps/stepFour.vue';
-import FinalStep from '../components/teststeps/finalStep.vue';
+import { ref } from "vue";
+import StepOne from "../components/teststeps/stepOne.vue";
+import StepTwo from "../components/teststeps/stepTwo.vue";
+import StepThree from "../components/teststeps/stepThree.vue";
+import StepFour from "../components/teststeps/stepFour.vue";
+import FinalStep from "../components/teststeps/finalStep.vue";
 
-  const user = ref({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  });
-  export {
-    data()=>{
-        return{
-            progressStyleOne: '',
-            progressStyleTwo: '',
-        }
-    },
-    setup() {
-        const currentStep = ref(0);
-        const nextStep = () => {
-        currentStep.value++;
-        };
-        const previousStep = () => {
-            currentStep.value--;
-        };
-        const formSteps = [
-            Step1,
-            Step2,
-            Step3,
-            Step4,
-            FinalStep,
-        ];
-        return {
-            nextStep,
-            previousStep,
-            currentStep,
-            formSteps,
-        };
-    }
-    methods: {
-        handleFirstMainStep(mainStep) {
-            this.progressStyleOne = mainStep;
-        }
-        handleSecondStep(secondStep) {
-            this.progressStyleTwo = secondStep;
-        }
-    }
-}
+const user = ref({
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+});
 
-  const message = ref("");
-  const messageClass = ref("");
+const data = () => {
+  return {
+    progressStyleOne: "",
+    progressStyleTwo: "",
+  };
+};
 
-  async function submitForm() {
-    console.log("Soumission du formulaire", user.value);
-    console.log("JSON.stringify(user.value)", JSON.stringify(user.value));
-    try {
-      const response = await fetch("http://localhost:3003/createUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          firstName: user.value.firstName,
-          lastName: user.value.lastName,
-          email: user.value.email,
-          password: user.value.password,
-        }),
-      });
+const methods = {
+  handleFirstMainStep(mainStep) {
+    this.progressStyleOne = mainStep;
+  },
+  handleSecondStep(secondStep) {
+    this.progressStyleTwo = secondStep;
+  },
+};
 
-      console.log("Requête fetch complétée", response);
+const currentStep = ref(0);
+const nextStep = () => {
+  currentStep.value++;
+};
+const previousStep = () => {
+  currentStep.value--;
+};
+const formSteps = [StepOne, StepTwo, StepThree, StepFour, FinalStep];
 
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error);
-      }
+const message = ref("");
+const messageClass = ref("");
 
+async function submitForm() {
+  console.log("Soumission du formulaire", user.value);
+  console.log("JSON.stringify(user.value)", JSON.stringify(user.value));
+  try {
+    const response = await fetch("http://localhost:3003/createUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName: user.value.firstName,
+        lastName: user.value.lastName,
+        email: user.value.email,
+        password: user.value.password,
+      }),
+    });
+
+    console.log("Requête fetch complétée", response);
+
+    if (!response.ok) {
       const data = await response.json();
-      message.value = "Utilisateur ajouté avec succès";
-      messageClass.value = "text-green-500";
-      console.log("Inscription réussie", data);
-      user.value.firstName = "";
-      user.value.lastName = "";
-      user.value.email = "";
-      user.value.password = "";
-    } catch (error) {
-      console.error("Erreur lors de la requête fetch", error);
-      message.value = error.message;
-      messageClass.value = "text-red-500";
+      throw new Error(data.error);
     }
 
+    const data = await response.json();
+    message.value = "Utilisateur ajouté avec succès";
+    messageClass.value = "text-green-500";
+    console.log("Inscription réussie", data);
+    user.value.firstName = "";
+    user.value.lastName = "";
+    user.value.email = "";
+    user.value.password = "";
+  } catch (error) {
+    console.error("Erreur lors de la requête fetch", error);
+    message.value = error.message;
+    messageClass.value = "text-red-500";
   }
+}
 </script>
 
 <style>
