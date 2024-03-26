@@ -121,6 +121,8 @@
 
 <script setup>
 import { ref } from "vue";
+import { useFormStore } from '../../stores/values.js';
+import { onMounted } from 'vue';
 
 const user = ref({
   firstName: "",
@@ -131,6 +133,36 @@ const user = ref({
 
 const message = ref("");
 const messageClass = ref("");
+
+export {
+  data() {
+    return {
+      sliderValue: [25, 75] // Initial range values
+    };
+  },
+  emits: ['next-step','previous-step'],
+  setup(_, { emit }) {
+    const mainStep = 50;
+
+    onMounted(() => {
+      emit('constant-one-emitted', mainStep); 
+    });
+
+    const formStore = useFormStore();
+
+    const formData = formStore.formData;
+
+    const nextStep = () => {
+      formStore.setFormData(formData);
+      emit('next-step');
+    };
+
+    return {
+      formData,
+      nextStep,
+    };
+  },
+}
 
 async function submitForm() {
   console.log("Soumission du formulaire", user.value);
