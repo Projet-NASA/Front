@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-[#2D3758] w-screen h-screen flex justify-center">
+  <section class="bg-[#2D3758] w-full h-screen flex justify-center">
     <div class="w-96 my-28">
       <form @submit.prevent="submitForm" class="bg-background-200 shadow-md rounded px-8 pt-6 pb-8 mb-2">
         <div class="flex justify-center items-center">
