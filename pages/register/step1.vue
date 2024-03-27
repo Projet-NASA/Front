@@ -100,18 +100,29 @@
 
         <div class="flex justify-center gap-4 my-4">
           <p>Vous avez déjà un compte ?</p>
-          <NuxtLink to="/Login" class="hover:underline decoration-solid text-bleu">
+          <NuxtLink
+            to="/Login"
+            class="hover:underline decoration-solid text-bleu"
+          >
             Se Connecter
           </NuxtLink>
         </div>
       </form>
-      <p v-if="message" :class="messageClass" class="text-center font-bold mt-3">{{ message }}</p>
+      <p
+        v-if="message"
+        :class="messageClass"
+        class="text-center font-bold mt-3"
+      >
+        {{ message }}
+      </p>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { checkTokenAndRedirect } from "../../utils/utils";
 
 const user = ref({
   firstName: "",
@@ -122,6 +133,8 @@ const user = ref({
 
 const message = ref("");
 const messageClass = ref("");
+
+const router = useRouter();
 
 async function submitForm() {
   console.log("Soumission du formulaire", user.value);
@@ -149,7 +162,7 @@ async function submitForm() {
 
     const data = await response.json();
     message.value = "Utilisateur ajouté avec succès";
-    messageClass.value = "text-green-500"; 
+    messageClass.value = "text-green-500";
     console.log("Inscription réussie", data);
     user.value.firstName = "";
     user.value.lastName = "";
@@ -161,13 +174,6 @@ async function submitForm() {
     messageClass.value = "text-red-500";
   }
 }
+
+onMounted(checkTokenAndRedirect);
 </script>
-
-
-<style>
-html,
-body {
-  height: 100%;
-  margin: 0;
-}
-</style>

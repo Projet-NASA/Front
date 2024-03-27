@@ -21,6 +21,7 @@
           <div class="text-text-default ml-2 font-bold text-xl">
             AutoLinkedIn
           </div>
+
         </div>
         <div>
           <input class="p-2 rounded" type="text" placeholder="Search..." />
@@ -84,6 +85,7 @@ const toggleTheme = () => {
   isDarkTheme.value = !isDarkTheme.value;
   applyTheme();
 };
+
 
 onMounted(() => {
   applyTheme(); // Applique le thème lors du montage du composant
