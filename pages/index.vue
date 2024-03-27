@@ -18,12 +18,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  // Vue component options here...
-}
-</script>
+<script setup></script>
 
-<style scoped>
-/* CSS styles here... */
-</style>
+<style scoped></style>
