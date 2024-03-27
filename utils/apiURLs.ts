@@ -1,4 +1,4 @@
-const apiURLs = {
+const apiURL = {
   addUser: "http://localhost:3003/user/createUser",
   getUser: "http://localhost:3003/user/User",
   getOneUser: "http://localhost:3003/user/OneUser",
@@ -38,4 +38,4 @@ const apiURLs = {
   getLikeByUser: "http://localhost:3003/like/LikeByUser",
 };
 
-export default apiURLs;
+export default apiURL;
