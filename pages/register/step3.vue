@@ -53,7 +53,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { checkTokenAndRedirect } from "../../utils/utils";
 
 const user = ref({
   email: "",
@@ -94,4 +95,5 @@ async function submitForm() {
     console.error(error);
   }
 }
+onMounted(checkTokenAndRedirect);
 </script>
