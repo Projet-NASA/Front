@@ -82,7 +82,7 @@
             @click="nextStep"
             class="bg-bleu hover:bg-violet text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mb-2"
           >
-            S'inscrire
+            Suivant
           </button>
 
           <div class="flex items-center my-4">

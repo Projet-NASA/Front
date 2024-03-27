@@ -8,20 +8,7 @@
           @next-step="nextStep"
           @previous-step="previousStep"
         />
-        <button
-            type="button"
-            @click="nextStep"
-            class="bg-bleu hover:bg-violet text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mb-2"
-          >
-            S'inscrire
-          </button>
-          <button
-            type="button"
-            @click="previousStep"
-            class="bg-bleu hover:bg-violet text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mb-2"
-          >
-            S'inscrire
-          </button>
+
   </section>
 </template>
 
