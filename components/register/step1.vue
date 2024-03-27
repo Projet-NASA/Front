@@ -24,7 +24,7 @@
           </label>
           <input
             id="firstName"
-            v-model="user.firstName"
+            v-model="formData.firstName"
             type="text"
             required
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -40,7 +40,7 @@
           </label>
           <input
             id="lastName"
-            v-model="user.lastName"
+            v-model="formData.lastName"
             type="text"
             required
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -53,7 +53,7 @@
           </label>
           <input
             id="email"
-            v-model="user.email"
+            v-model="formData.email"
             type="email"
             required
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -69,7 +69,7 @@
           </label>
           <input
             id="password"
-            v-model="user.password"
+            v-model="formData.password"
             type="password"
             required
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -80,10 +80,9 @@
           <button
             type="button"
             @click="nextStep"
-
             class="bg-bleu hover:bg-violet text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mb-2"
           >
-            Suivant
+            S'inscrire
           </button>
 
           <div class="flex items-center my-4">
@@ -109,98 +108,38 @@
           </NuxtLink>
         </div>
       </form>
-      <p
-        v-if="message"
-        :class="messageClass"
-        class="text-center font-bold mt-3"
-      >
-        {{ message }}
-      </p>
     </div>
   </section>
 </template>
 
-<script setup>
-import { ref } from "vue";
-import { useFormStore } from 
-import { onMounted } from 'vue';
-
-const user = ref({
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-});
-
-const message = ref("");
-const messageClass = ref("");
-
-  const data = () =>{
-    return {
-      sliderValue: [25, 75] // Initial range values
-    };
-  };
-  emits: ['next-step','previous-step'];
-  const setup = (_, { emit }) =>{
-    const mainStep = 50;
-
-    onMounted(() => {
-      emit('constant-one-emitted', mainStep); 
-    });
-
+<script>
+import { useFormStore } from '../../stores/value';
+export default {
+  emits: ['next-step','previous-step'],
+  setup(_, { emit }) {
     const formStore = useFormStore();
-
     const formData = formStore.formData;
 
     const nextStep = () => {
+
       formStore.setFormData(formData);
       emit('next-step');
+    };
+    const previousStep = () => {
+       if (formData) {
+    formStore.setFormData(formData);
+    emit('next-step');
+  } else {
+    console.error("formData is undefined");
+  }
     };
 
     return {
       formData,
       nextStep,
+      previousStep,
     };
-  };
-
-
-async function submitForm() {
-  console.log("Soumission du formulaire", user.value);
-  console.log("JSON.stringify(user.value)", JSON.stringify(user.value));
-  try {
-    const response = await fetch("http://localhost:3003/createUser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstName: user.value.firstName,
-        lastName: user.value.lastName,
-        email: user.value.email,
-        password: user.value.password,
-      }),
-    });
-
-    console.log("Requête fetch complétée", response);
-
-    if (!response.ok) {
-      const data = await response.json();
-      throw new Error(data.error);
-    }
-
-    const data = await response.json();
-    message.value = "Utilisateur ajouté avec succès";
-    messageClass.value = "text-green-500";
-    console.log("Inscription réussie", data);
-    user.value.firstName = "";
-    user.value.lastName = "";
-    user.value.email = "";
-    user.value.password = "";
-  } catch (error) {
-    console.error("Erreur lors de la requête fetch", error);
-    message.value = error.message;
-    messageClass.value = "text-red-500";
-  }
+  },
 }
 </script>
 
