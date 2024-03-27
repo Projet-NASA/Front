@@ -1,6 +1,6 @@
 <template>
-  <section class="bg-[#2D3758] w-full h-screen flex justify-center">
-    <div class="w-96 my-28">
+  <section class="bg-background-default w-full h-screen flex justify-center">
+    <div class="w-1/4 my-28">
       <form @submit.prevent="submitForm" class="bg-background-200 shadow-md rounded px-8 pt-6 pb-8 mb-2">
         <div class="flex justify-center items-center">
           <img src="../assets/images/logo-transparent.png" class="w-28 h-28" />
@@ -17,22 +17,24 @@
           <input id="password" v-model="user.password" type="password" required
             class="bg-background-default shadow appearance-none border-primary-800 border rounded w-full py-2 px-3 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline" />
         </div>
-        <div class="flex items-center justify-between">
-          <button type="submit"
-            class="bg-primary-800 hover:bg-primary-default transition-colors duration-300 text-text-50 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-80">
-            Connexion
-          </button>
-        </div>
-        <div class="flex items-center my-4">
-          <div class="h-px w-36 bg-violet"></div>
-          <p class="mx-2 text-text-default">OU</p>
-          <div class="h-px w-36 bg-violet"></div>
-        </div>
-        <div class="flex items-center justify-between">
-          <button
-            class="bg-primary-800 hover:bg-primary-default transition-colors duration-300 text-text-50 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-80">
-            S'identifier avec Google
-          </button>
+        <div class="flex flex-col items-center justify-between">
+          <div class="flex items-center justify-between">
+            <button type="submit"
+              class="bg-primary-800 hover:bg-primary-default transition-colors duration-300 text-text-50 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-80">
+              Connexion
+            </button>
+          </div>
+          <div class="flex items-center my-4">
+            <div class="h-px w-36 bg-violet"></div>
+            <p class="mx-2 text-text-default">OU</p>
+            <div class="h-px w-36 bg-violet"></div>
+          </div>
+          <div class="flex items-center justify-between">
+            <button
+              class="bg-primary-800 hover:bg-primary-default transition-colors duration-300 text-text-50 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-80">
+              S'identifier avec Google
+            </button>
+          </div>
         </div>
 
         <div class="flex justify-center gap-4 my-4">
