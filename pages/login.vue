@@ -73,6 +73,7 @@
 
 <script>
 import { useRoute, useRouter } from "vue-router";
+import apiURL from "../utils/apiURLs";
 
 export default {
   setup() {
@@ -81,7 +82,7 @@ export default {
 
     async function submitForm() {
       try {
-        const response = await fetch("http://localhost:3003/user/loginUser", {
+        const response = await fetch(apiURL.loginUser, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
