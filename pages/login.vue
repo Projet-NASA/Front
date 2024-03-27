@@ -25,9 +25,9 @@
             </button>
           </div>
           <div class="flex items-center my-4">
-            <div class="h-px w-36 bg-violet"></div>
+            <div class="h-px w-36 bg-primary-default"></div>
             <p class="mx-2 text-text-default">OU</p>
-            <div class="h-px w-36 bg-violet"></div>
+            <div class="h-px w-36 bg-primary-default"></div>
           </div>
           <div class="flex items-center justify-between">
             <button
