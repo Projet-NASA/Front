@@ -5,17 +5,17 @@
 
 @layer base {
   :root {
-    --text-50: #eae9fc;
-    --text-100: #d4d2f9;
-    --text-200: #a9a5f3;
-    --text-300: #7e78ed;
-    --text-400: #534be7;
-    --text-500: #281fe0;
-    --text-600: #2018b4;
-    --text-700: #181287;
-    --text-800: #100c5a;
-    --text-900: #08062d;
-    --text-950: #040316;
+    --text-50: #fbe8fd;
+    --text-100: #f6d0fb;
+    --text-200: #eea2f6;
+    --text-300: #e573f2;
+    --text-400: #dd44ee;
+    --text-500: #d416e9;
+    --text-600: #aa11bb;
+    --text-700: #7f0d8c;
+    --text-800: #55095d;
+    --text-900: #2a042f;
+    --text-950: #060107;
     
     --background : #e6e6e6;
     --background-50: #f2f2f2;
@@ -69,17 +69,17 @@
   }
   .dark {
 
-    --text-50: #040316;
-    --text-100: #08062d;
-    --text-200: #100c5a;
-    --text-300: #181287;
-    --text-400: #2018b4;
-    --text-500: #281fe0;
-    --text-600: #534be7;
-    --text-700: #7e78ed;
-    --text-800: #a9a5f3;
-    --text-900: #d4d2f9;
-    --text-950: #eae9fc;
+    --text-50: #150217;
+    --text-100: #2b042f;
+    --text-200: #55085e;
+    --text-300: #800c8d;
+    --text-400: #ab10bc;
+    --text-500: #d514eb;
+    --text-600: #de43ef;
+    --text-700: #e672f3;
+    --text-800: #eea1f7;
+    --text-900: #f7d0fb;
+    --text-950: #ffffff;
     
     --background-50: #0d0d0d;
     --background-100: #1a1a1a;
