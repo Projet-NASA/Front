@@ -131,11 +131,17 @@ const submitForm = async () => {
     console.log("Soumission du formulaire", formData);
     console.log("JSON.stringify(formData)", JSON.stringify(formData));
     console.log(formData.dateOfBirth);
-    
-    const formattedDateOfBirth = formData.dateOfBirth.toISOString();
 
+const isoDateString = formData.dateOfBirth.toISOString();
 
-    console.log(formattedDateOfBirth);
+const dateInUTC = new Date(isoDateString);
+
+const dateInCEST = new Date(dateInUTC.getTime() + (60 * 120 * 1000)); 
+
+const formattedDateOfBirth = dateInCEST.toISOString();
+
+console.log(formattedDateOfBirth);
+
 
 
     const response = await fetch("http://localhost:3003/user/createUser", {
