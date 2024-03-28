@@ -120,60 +120,60 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { checkTokenAndRedirect } from "../../utils/utils";
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { checkTokenAndRedirect } from '../../utils/utils'
 
 const user = ref({
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-});
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: ''
+})
 
-const message = ref("");
-const messageClass = ref("");
+const message = ref('')
+const messageClass = ref('')
 
-const router = useRouter();
+const router = useRouter()
 
 async function submitForm() {
-  console.log("Soumission du formulaire", user.value);
-  console.log("JSON.stringify(user.value)", JSON.stringify(user.value));
+  console.log('Soumission du formulaire', user.value)
+  console.log('JSON.stringify(user.value)', JSON.stringify(user.value))
   try {
-    const response = await fetch("http://localhost:3003/createUser", {
-      method: "POST",
+    const response = await fetch('http://localhost:3003/createUser', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         firstName: user.value.firstName,
         lastName: user.value.lastName,
         email: user.value.email,
-        password: user.value.password,
-      }),
-    });
+        password: user.value.password
+      })
+    })
 
-    console.log("Requête fetch complétée", response);
+    console.log('Requête fetch complétée', response)
 
     if (!response.ok) {
-      const data = await response.json();
-      throw new Error(data.error);
+      const data = await response.json()
+      throw new Error(data.error)
     }
 
-    const data = await response.json();
-    message.value = "Utilisateur ajouté avec succès";
-    messageClass.value = "text-green-500";
-    console.log("Inscription réussie", data);
-    user.value.firstName = "";
-    user.value.lastName = "";
-    user.value.email = "";
-    user.value.password = "";
+    const data = await response.json()
+    message.value = 'Utilisateur ajouté avec succès'
+    messageClass.value = 'text-green-500'
+    console.log('Inscription réussie', data)
+    user.value.firstName = ''
+    user.value.lastName = ''
+    user.value.email = ''
+    user.value.password = ''
   } catch (error) {
-    console.error("Erreur lors de la requête fetch", error);
-    message.value = error.message;
-    messageClass.value = "text-red-500";
+    console.error('Erreur lors de la requête fetch', error)
+    message.value = error.message
+    messageClass.value = 'text-red-500'
   }
 }
 
-onMounted(checkTokenAndRedirect);
+onMounted(checkTokenAndRedirect)
 </script>
