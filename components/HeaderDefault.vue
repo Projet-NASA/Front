@@ -6,7 +6,7 @@
     <header
       :class="{
         'fixed w-11/12 ml-20 mt-2 rounded-2xl': isScrollingDown,
-        'bg-secondary-100 text-black shadow-lg z-50': true,
+        'bg-secondary-200 text-black shadow-lg z-50': true,
       }"
     >
       <div

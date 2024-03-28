@@ -2,24 +2,26 @@
   <div class="flex flex-col items-center pt-7 bg-background-default">
     <div class="w-full max-w-2xl">
       <div class="p-4 bg-secondary-200 rounded shadow mb-4">
-        <input class="w-full p-2 border rounded" type="text" placeholder="Start a post..." />
+        <button
+          class="w-full p-2 border rounded text-left text-text-900 bg-background-default hover:outline-primary-default hover:outline hover:shadow-outline"
+          type="button"
+        >
+          Start a post
+        </button>
+        
         <div class="flex justify-end mt-2">
-          <button class="px-4 py-2 bg-primary-default text-text-default rounded">Post</button>
-
+          <ul>
+            <li></li>
+          </ul>
         </div>
       </div>
       <div>
-        <FeedPost />
-        <FeedPost />
-        <FeedPost />
-        <FeedPost />
-        <FeedPost />
-
+        <FeedGet />
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup lang="ts"></script>
 
 <style scoped></style>

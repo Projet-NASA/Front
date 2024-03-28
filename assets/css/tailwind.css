@@ -2,8 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
+  blockquote,
+  dl,
+  dd,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  hr,
+  figure,
+  p,
+  pre {
+    margin: 0;
+  }
+
   :root {
     --text-50: #fbe8fd;
     --text-100: #f6d0fb;
@@ -16,8 +31,8 @@
     --text-800: #55095d;
     --text-900: #2a042f;
     --text-950: #060107;
-    
-    --background : #e6e6e6;
+
+    --background: #e6e6e6;
     --background-50: #f2f2f2;
     --background-100: #e6e6e6;
     --background-200: #cccccc;
@@ -29,7 +44,7 @@
     --background-800: #333333;
     --background-900: #1a1a1a;
     --background-950: #0d0d0d;
-    
+
     --primary-50: #f4e6ff;
     --primary-100: #e9ccff;
     --primary-200: #d39afe;
@@ -41,7 +56,7 @@
     --primary-800: #3a0165;
     --primary-900: #1d0033;
     --primary-950: #0e0019;
-    
+
     --secondary-50: #eef0f6;
     --secondary-100: #dde1ee;
     --secondary-200: #bcc3dc;
@@ -53,7 +68,7 @@
     --secondary-800: #232a43;
     --secondary-900: #111522;
     --secondary-950: #090b11;
-    
+
     --accent-50: #f4e5ff;
     --accent-100: #e9ccff;
     --accent-200: #d399ff;
@@ -65,10 +80,8 @@
     --accent-800: #3a0066;
     --accent-900: #1d0033;
     --accent-950: #0e001a;
-    
   }
   .dark {
-
     --text-50: #150217;
     --text-100: #2b042f;
     --text-200: #55085e;
@@ -80,7 +93,7 @@
     --text-800: #eea1f7;
     --text-900: #f7d0fb;
     --text-950: #ffffff;
-    
+
     --background-50: #0d0d0d;
     --background-100: #1a1a1a;
     --background-200: #333333;
@@ -92,7 +105,7 @@
     --background-800: #cccccc;
     --background-900: #e6e6e6;
     --background-950: #f2f2f2;
-    
+
     --primary-50: #0e0019;
     --primary-100: #1d0033;
     --primary-200: #3a0165;
@@ -104,7 +117,7 @@
     --primary-800: #d39afe;
     --primary-900: #e9ccff;
     --primary-950: #f4e6ff;
-    
+
     --secondary-50: #090b11;
     --secondary-100: #111522;
     --secondary-200: #232a43;
@@ -116,7 +129,7 @@
     --secondary-800: #bcc3dc;
     --secondary-900: #dde1ee;
     --secondary-950: #eef0f6;
-    
+
     --accent-50: #0e001a;
     --accent-100: #1d0033;
     --accent-200: #3a0066;
