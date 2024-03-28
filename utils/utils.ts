@@ -12,6 +12,7 @@ export function checkTokenAndRedirect() {
       router.push('/')
     } catch (err) {
       console.error('le jeton a été falsifié', err)
+      localStorage.removeItem('token')
     }
   }
 }
