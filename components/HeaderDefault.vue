@@ -88,7 +88,7 @@ onMounted(() => {
 const handleScroll = () => {
   const threshold = 50;
   if (window.scrollY > threshold) {
-    isFloating.value = 'w-11/12 top-2';
+    isFloating.value = 'w-11/12 top-2 rounded-xl';
   } else {
     isFloating.value = 'w-full top-0';
   }
