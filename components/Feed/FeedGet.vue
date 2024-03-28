@@ -25,13 +25,12 @@
 import apiURL from "../../utils/apiURLs";
 
 const getPosts = async () => {
-  const response = await fetch(apiURL.getPost);
-  const data = await response.json();
-  return data;
-};
+  const response = await fetch(apiURL.getPost)
+  const data = await response.json()
+  return data
+}
 
-console.log(getPosts);
-
+console.log(getPosts)
 </script>
 
 <style scoped></style>

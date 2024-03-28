@@ -72,41 +72,41 @@
 </template>
 
 <script>
-import { useRoute, useRouter } from "vue-router";
-import apiURL from "../utils/apiURLs";
+import { useRoute, useRouter } from 'vue-router'
+import apiURL from '../utils/apiURLs'
 
 export default {
   setup() {
-    const user = ref({ email: "", password: "" });
-    const router = useRouter();
+    const user = ref({ email: '', password: '' })
+    const router = useRouter()
 
     async function submitForm() {
       try {
         const response = await fetch(apiURL.loginUser, {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             email: user.value.email,
-            password: user.value.password,
-          }),
-        });
+            password: user.value.password
+          })
+        })
 
         if (!response.ok) {
-          const data = await response.json();
-          throw new Error(data.error);
+          const data = await response.json()
+          throw new Error(data.error)
         }
 
-        const data = await response.json();
-        console.log(data);
-        localStorage.setItem("token", data.token);
-        router.push("/");
+        const data = await response.json()
+        console.log(data)
+        localStorage.setItem('token', data.token)
+        router.push('/')
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
     }
-    return { user, submitForm };
-  },
-};
+    return { user, submitForm }
+  }
+}
 </script>

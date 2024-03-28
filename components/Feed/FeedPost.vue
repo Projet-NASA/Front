@@ -11,16 +11,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const showPopup = ref(false);
+const showPopup = ref(false)
 
 function openPopup() {
-  showPopup.value = true;
+  showPopup.value = true
 }
 
 function closePopup() {
-  showPopup.value = false;
+  showPopup.value = false
 }
 </script>
 
