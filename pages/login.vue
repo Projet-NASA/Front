@@ -1,4 +1,5 @@
 <template>
+
   <section class="bg-background-default min-h-screen flex justify-center items-center">
     <div class="w-full sm:w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4 my-8">
       <form @submit.prevent="submitForm" class="bg-background-200 shadow-md rounded px-8 pt-6 pb-8 mb-2">
@@ -6,11 +7,22 @@
           <img src="../assets/images/logo-transparent.png" class="w-28 h-28" />
         </div>
 
-        <h1 class="text-2xl font-bold mb-5 text-center text-text-default">S'identifier</h1>
+        <h1 class="text-2xl font-bold mb-5 text-center text-text-default">
+          S'identifier
+        </h1>
         <div class="mb-4">
-          <label for="email" class="block text-text-default text-sm font-bold mb-2">E-mail</label>
-          <input id="email" v-model="user.email" type="email" required
-            class="bg-background-default shadow appearance-none border-primary-800 border rounded w-full py-2 px-3 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline" />
+          <label
+            for="email"
+            class="block text-text-default text-sm font-bold mb-2"
+            >E-mail</label
+          >
+          <input
+            id="email"
+            v-model="user.email"
+            type="email"
+            required
+            class="bg-background-default shadow appearance-none border-primary-800 border rounded w-full py-2 px-3 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          />
         </div>
         <div class="mb-6">
           <label for="password" class="block text-text-default text-sm font-bold mb-2">Mot de passe</label>
@@ -39,7 +51,10 @@
 
         <div class="flex justify-center gap-4 mb-4">
           <p class="text-text-default">Pas de compte ?</p>
-          <NuxtLink to="/register/step1" class="hover:underline decoration-solid text-text-default">
+          <NuxtLink
+            to="/register/step1"
+            class="hover:underline decoration-solid text-text-default"
+          >
             S'inscrire
           </NuxtLink>
         </div>
@@ -50,41 +65,41 @@
 </template>
 
 <script>
-import { useRoute, useRouter } from "vue-router";
-import apiURL from "../utils/apiURLs";
+import { useRoute, useRouter } from 'vue-router'
+import apiURL from '../utils/apiURLs'
 
 export default {
   setup() {
-    const user = ref({ email: "", password: "" });
-    const router = useRouter();
+    const user = ref({ email: '', password: '' })
+    const router = useRouter()
 
     async function submitForm() {
       try {
         const response = await fetch(apiURL.loginUser, {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             email: user.value.email,
-            password: user.value.password,
-          }),
-        });
+            password: user.value.password
+          })
+        })
 
         if (!response.ok) {
-          const data = await response.json();
-          throw new Error(data.error);
+          const data = await response.json()
+          throw new Error(data.error)
         }
 
-        const data = await response.json();
-        console.log(data);
-        localStorage.setItem("token", data.token);
-        router.push("/");
+        const data = await response.json()
+        console.log(data)
+        localStorage.setItem('token', data.token)
+        router.push('/')
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
     }
-    return { user, submitForm };
-  },
-};
+    return { user, submitForm }
+  }
+}
 </script>
