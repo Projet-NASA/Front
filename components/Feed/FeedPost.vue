@@ -1,37 +1,16 @@
 <template>
-  <div>
-    <button @click="openPopup">Open Popup</button>
-    <div v-if="showPopup" class="popup">
-      <!-- Popup content goes here -->
-      <h2>Popup Window</h2>
-      <p>This is a popup window.</p>
-      <button @click="closePopup">Close</button>
-    </div>
+  <div id="addPopup" class="flex justify-center p-5 bg-background-default border-2 border-accent-default rounded-lg">
+    <form id="createPost" class="w-full">
+      <div>
+        <input type="text" class="w-full bg-background-default " placeholder="Title">
+      </div>
+    </form>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
+<script setup lang="ts"></script>
 
-const showPopup = ref(false);
+<style scoped></style>
 
-function openPopup() {
-  showPopup.value = true;
-}
 
-function closePopup() {
-  showPopup.value = false;
-}
-</script>
 
-<style scoped>
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border: 1px solid black;
-}
-</style>
