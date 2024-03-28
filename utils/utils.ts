@@ -13,6 +13,7 @@ export function checkTokenAndRedirect() {
       console.error('le jeton a été falsifié', err)
       localStorage.removeItem('token')
       router.push('/inscription')
+      localStorage.removeItem('token')
     }
   }
 }
