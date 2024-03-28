@@ -4,6 +4,8 @@
   >
     <div class="w-96">
       <form
+        schema:schema
+        state:state
         @submit.prevent="submitForm"
         class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-2"
       >
@@ -112,41 +114,34 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import { useFormStore } from '../../stores/value';
-export default {
-  emits: ['next-step','previous-step'],
-  setup(_, { emit }) {
-    const formStore = useFormStore();
-    const formData = formStore.formData;
+import { defineEmits } from 'vue';
+import { z } from 'zod';
 
-    const nextStep = () => {
+const schema = z.object({
+    firstName: z.string(),
+    lastName:z.string(),
+    email: z.string().email('Mail invalide'),
+    password: z.string().min(8,'Votre mot de passe doit contenir 8 charactéres'),
+})
 
-      formStore.setFormData(formData);
-      emit('next-step');
-    };
-    const previousStep = () => {
-       if (formData) {
+const state = reactive({
+  firsName: undefined,
+  lastName:undefined,
+  email: undefined,
+  password: undefined,
+})
+
+const  emit  = defineEmits([ 'next-step']);
+
+const formStore = useFormStore();
+const formData = formStore.formData;
+
+
+const nextStep = () => {
     formStore.setFormData(formData);
     emit('next-step');
-  } else {
-    console.error("formData is undefined");
-  }
-    };
+};
 
-    return {
-      formData,
-      nextStep,
-      previousStep,
-    };
-  },
-}
 </script>
-
-<style>
-html,
-body {
-  height: 100%;
-  margin: 0;
-}
-</style>

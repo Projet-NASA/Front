@@ -2,6 +2,7 @@
   <section class="bg-[#2D3758] w-screen h-screen flex justify-center">
     <div class="w-96 my-28">
       <form
+        :schema="schema"
         @submit.prevent="submitForm"
         class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-2"
       >
@@ -98,7 +99,24 @@
 import { useFormStore } from '../../stores/value';
 import { ref, defineEmits } from 'vue';
 import { useRouter } from "vue-router";
+import { z } from 'zod';
+import type { FormSubmitEvent } from '#ui/types'
 
+const schema = z.object({
+    country: z.string(),
+    city: z.string(),
+    dateofbirth: z.date(),
+    phone: z.number(),
+})
+
+type Schema = z.output<typeof schema>
+
+const state = reactive({
+  country: undefined,
+  city:undefined,
+  dateofbirth: undefined,
+  phone: undefined,
+})
 const  emit  = defineEmits([ 'previous-step']);
 
 const formStore = useFormStore();
@@ -123,7 +141,7 @@ const previousStep = () => {
   }
 };
 
-const submitForm = async () => {
+async function submitForm (event: FormSubmitEvent<Schema>){
   if (isSubmitting.value) return; 
   isSubmitting.value = true; 
 
