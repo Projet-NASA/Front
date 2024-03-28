@@ -53,47 +53,47 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { checkTokenAndRedirect } from "../../utils/utils";
+import { onMounted, ref } from 'vue'
+import { checkTokenAndRedirect } from '../../utils/utils'
 
 const user = ref({
-  email: "",
-  name: "",
-});
+  email: '',
+  name: ''
+})
 
-const message = ref("");
+const message = ref('')
 
 async function submitForm() {
   if (!user.value.email || !user.value.name) {
-    message.value = "Veuillez remplir tous les champs";
-    return;
+    message.value = 'Veuillez remplir tous les champs'
+    return
   }
 
   try {
-    const response = await fetch("http://localhost:3003/user/addUser", {
-      method: "POST",
+    const response = await fetch('http://localhost:3003/user/addUser', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         email: user.value.email,
-        name: user.value.name,
-      }),
-    });
+        name: user.value.name
+      })
+    })
 
     if (!response.ok) {
-      throw new Error("La requête a échoué");
+      throw new Error('La requête a échoué')
     }
 
-    const data = await response.json();
-    message.value = "Utilisateur ajouté avec succès";
-    console.log(data);
-    user.value.email = "";
-    user.value.name = "";
+    const data = await response.json()
+    message.value = 'Utilisateur ajouté avec succès'
+    console.log(data)
+    user.value.email = ''
+    user.value.name = ''
   } catch (error) {
-    message.value = "Erreur lors de l'ajout de l'utilisateur";
-    console.error(error);
+    message.value = "Erreur lors de l'ajout de l'utilisateur"
+    console.error(error)
   }
 }
-onMounted(checkTokenAndRedirect);
+onMounted(checkTokenAndRedirect)
 </script>

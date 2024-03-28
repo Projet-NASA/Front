@@ -6,7 +6,7 @@
     <header
       :class="{
         'fixed w-11/12 ml-20 mt-2 rounded-2xl': isScrollingDown,
-        'bg-secondary-100 text-black shadow-lg z-50': true,
+        'bg-secondary-100 text-black shadow-lg z-50': true
       }"
     >
       <div
@@ -50,7 +50,7 @@
           </ul>
           <div>
             <button @click="toggleTheme" class="text-text-default">
-              Switch to {{ isDarkTheme ? "Light" : "Dark" }} Theme
+              Switch to {{ isDarkTheme ? 'Light' : 'Dark' }} Theme
             </button>
           </div>
         </nav>
@@ -60,37 +60,37 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useCookie } from "#app";
+import { ref, onMounted } from 'vue'
+import { useCookie } from '#app'
 
-const isScrollingDown = ref(false);
-const isDarkTheme = useCookie("isDarkTheme", false);
+const isScrollingDown = ref(false)
+const isDarkTheme = useCookie('isDarkTheme', false)
 
 const applyTheme = () => {
   if (isDarkTheme.value) {
-    document.body.classList.add("dark");
+    document.body.classList.add('dark')
   } else {
-    document.body.classList.remove("dark");
+    document.body.classList.remove('dark')
   }
-};
+}
 
 const handleScroll = () => {
   const currentScrollPosition =
-    window.pageYOffset || document.documentElement.scrollTop;
-  isScrollingDown.value = currentScrollPosition > 0;
-};
+    window.pageYOffset || document.documentElement.scrollTop
+  isScrollingDown.value = currentScrollPosition > 0
+}
 
 const toggleTheme = () => {
-  isDarkTheme.value = !isDarkTheme.value;
-  applyTheme();
-};
+  isDarkTheme.value = !isDarkTheme.value
+  applyTheme()
+}
 
 onMounted(() => {
-  applyTheme(); // Applique le thème lors du montage du composant
-  window.addEventListener("scroll", handleScroll);
-});
+  applyTheme() // Applique le thème lors du montage du composant
+  window.addEventListener('scroll', handleScroll)
+})
 
 onBeforeUnmount(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
