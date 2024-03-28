@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import apiURL from "../../utils/apiUrls";
+import apiURL from "../../utils/apiURLs";
 
 const getPosts = async () => {
   const response = await fetch(apiURL.getPost);
