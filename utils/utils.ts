@@ -9,10 +9,10 @@ export function checkTokenAndRedirect() {
   if (token) {
     try {
       jwt.verify(token, SECRET_KEY)
-      router.push('/')
     } catch (err) {
       console.error('le jeton a été falsifié', err)
       localStorage.removeItem('token')
+      router.push('/inscription')
     }
   }
 }
