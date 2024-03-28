@@ -64,6 +64,7 @@
 import { ref, onMounted } from "vue";
 import { useCookie } from "#app";
 
+
 const isScrollingDown = ref(false);
 const isDarkTheme = useCookie("isDarkTheme", false);
 

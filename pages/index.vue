@@ -8,7 +8,7 @@
         >
           Start a post
         </button>
-        
+
         <div class="flex justify-end mt-2">
           <ul>
             <li></li>
