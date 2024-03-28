@@ -13,7 +13,10 @@ export function checkTokenAndRedirect() {
       console.error('le jeton a été falsifié', err)
       localStorage.removeItem('token')
       router.push('/inscription')
+<<<<<<< HEAD
       localStorage.removeItem('token')
+=======
+>>>>>>> 6810a44 (Fix: token verification and redirect issue)
     }
   }
 }
