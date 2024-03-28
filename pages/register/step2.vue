@@ -13,41 +13,41 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
-import { checkTokenAndRedirect } from "../../utils/utils";
+import { onMounted, ref } from 'vue'
+import { checkTokenAndRedirect } from '../../utils/utils'
 
 export default {
   setup() {
-    const user = ref({ email: "", password: "" });
+    const user = ref({ email: '', password: '' })
 
     async function submitForm() {
       try {
-        const response = await fetch("http://localhost:3003/user/loginUser", {
-          method: "POST",
+        const response = await fetch('http://localhost:3003/user/loginUser', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             email: user.value.email,
-            password: user.value.password,
-          }),
-        });
+            password: user.value.password
+          })
+        })
 
         if (!response.ok) {
-          const data = await response.json();
-          throw new Error(data.error);
+          const data = await response.json()
+          throw new Error(data.error)
         }
 
-        const data = await response.json();
-        console.log(data);
+        const data = await response.json()
+        console.log(data)
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
     }
 
-    onMounted(checkTokenAndRedirect);
-    return { user, submitForm };
-  },
-};
+    onMounted(checkTokenAndRedirect)
+    return { user, submitForm }
+  }
+}
 </script>
 ../../utils/utils
