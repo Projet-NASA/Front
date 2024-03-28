@@ -59,6 +59,7 @@
 </template>
 
 <script setup>
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSun, faMoon, faArrowRightToBracket, faPenToSquare, faEnvelope, faBell, faIdCard } from '@fortawesome/free-solid-svg-icons'
 import { useCookie } from "#app";
@@ -68,20 +69,20 @@ const isDarkTheme = useCookie("isDarkTheme", false);
 
 const applyTheme = () => {
   if (isDarkTheme.value) {
-    document.body.classList.add("dark");
+    document.body.classList.add('dark')
   } else {
-    document.body.classList.remove("dark");
+    document.body.classList.remove('dark')
   }
-};
+}
 
-const toggleTheme = () => {
-  isDarkTheme.value = !isDarkTheme.value;
-  applyTheme();
-};
 
-const isFloating = ref('w-full top-0');
+const handleScroll = () => {
+  const currentScrollPosition =
+    window.pageYOffset || document.documentElement.scrollTop
+  isScrollingDown.value = currentScrollPosition > 0
+}
 
-onMounted(() => {
+
   window.addEventListener('scroll', handleScroll);
 });
 
@@ -93,5 +94,14 @@ const handleScroll = () => {
     isFloating.value = 'w-full top-0';
   }
 };
+
+
+  applyTheme() // Applique le thème lors du montage du composant
+  window.addEventListener('scroll', handleScroll)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 
 </script>
