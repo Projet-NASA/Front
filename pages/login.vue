@@ -52,7 +52,7 @@
         <div class="flex justify-center gap-4 mb-4">
           <p class="text-text-default">Pas de compte ?</p>
           <NuxtLink
-            to="/register/step1"
+            to="/register"
             class="hover:underline decoration-solid text-text-default"
           >
             S'inscrire
