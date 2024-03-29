@@ -48,8 +48,8 @@
         id="navbar"
       >
         <li>
-          <nuxt-link to="login" class="text-text-default">
-            <span v-if="$route.path === '/login'">
+          <nuxt-link to="/Login" class="text-text-default">
+            <span v-if="$route.path === '/Login'">
               <FontAwesomeIcon :icon="faArrowRightToBracket" bounce />
             </span>
             <span v-else>
