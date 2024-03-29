@@ -85,6 +85,8 @@
         <li>
           <button @click="toggleTheme" class="text-text-default">
             <FontAwesomeIcon :icon="isDarkTheme ? faSun : faMoon" />
+            <FontAwesomeIcon :icon='isDarkTheme ? faMoon : faSun' />
+
           </button>
         </li>
       </ul>
