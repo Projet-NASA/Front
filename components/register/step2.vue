@@ -1,11 +1,14 @@
 <template>
-  <section class="bg-background-default min-h-screen flex justify-center items-center w-full">
+  <section
+    class="bg-background-default min-h-screen flex justify-center items-center w-full"
+  >
     <div class="w-full sm:w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4 my-8">
-      <form @submit.prevent="submitForm" class="bg-background-200 shadow-md rounded px-8 pt-6 pb-8 mb-2">
-
+      <form
+        @submit.prevent="submitForm"
+        class="bg-background-200 shadow-md rounded px-8 pt-6 pb-8 mb-2"
+      >
         <button @click="previousStep">
-          <Icon name="octicon:arrow-left-24" class="text-text-default"/>
-
+          <Icon name="octicon:arrow-left-24" class="text-text-default" />
         </button>
         <div class="flex justify-center items-center">
           <img src="/assets/images/logo-transparent.png" class="w-28 h-28" />
@@ -15,77 +18,145 @@
           Ajouter un utilisateur
         </h1>
         <div class="mb-4">
-          <label for="country" class="block text-text-default text-sm font-bold mb-2">Pays</label>
+          <label
+            for="country"
+            class="block text-text-default text-sm font-bold mb-2"
+            >Pays</label
+          >
           <div class="relative">
-            <input id="country" name="country" v-model="formData.country" type="text" @change="v$.country.$touch"
+            <input
+              id="country"
+              name="country"
+              v-model="formData.country"
+              type="text"
+              @change="v$.country.$touch"
               class="bg-background-default shadow appearance-none border-primary-800 border rounded w-full py-2 px-3 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline"
               :class="{
-        'border-red-500 focus:border-red-500': v$.country.$error,
-        'border-[#42d392] ': !v$.country.$invalid,
-      }" />
-            <Icon v-if="!v$.country.$invalid || v$.country.$error"
+                'border-red-500 focus:border-red-500': v$.country.$error,
+                'border-[#42d392] ': !v$.country.$invalid
+              }"
+            />
+            <Icon
+              v-if="!v$.country.$invalid || v$.country.$error"
               class="absolute right-2 h-full text-xl text-green-500"
-              :class="{ 'text-green-500': !v$.country.$invalid, 'text-yellow-500': v$.country.$error }"
-              :name="`heroicons-solid:${!v$.country.$error ? 'check-circle' : 'exclamation'}`" />
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="city" class="block text-text-default text-sm font-bold mb-2">Ville</label>
-          <div class="relative">
-            <input id="city" name="city" v-model="formData.city" type="text" @change="v$.city.$touch"
-            class="bg-background-default shadow appearance-none border-primary-800 border rounded w-full py-2 px-3 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline"
               :class="{
-        'border-red-500 focus:border-red-500 align-middle': v$.city.$error,
-        'border-[#42d392] ': !v$.city.$invalid,
-      }" />
-            <Icon v-if="!v$.city.$invalid || v$.city.$error" class="absolute right-2 h-full text-xl text-green-500"
-              :class="{ 'text-green-500': !v$.city.$invalid, 'text-yellow-500': v$.city.$error }"
-              :name="`heroicons-solid:${!v$.city.$error ? 'check-circle' : 'exclamation'}`" />
+                'text-green-500': !v$.country.$invalid,
+                'text-yellow-500': v$.country.$error
+              }"
+              :name="`heroicons-solid:${!v$.country.$error ? 'check-circle' : 'exclamation'}`"
+            />
           </div>
         </div>
         <div class="mb-3">
-          <label for="city" class="block text-text-default text-sm font-bold mb-2">Date de naissance</label>
+          <label
+            for="city"
+            class="block text-text-default text-sm font-bold mb-2"
+            >Ville</label
+          >
+          <div class="relative">
+            <input
+              id="city"
+              name="city"
+              v-model="formData.city"
+              type="text"
+              @change="v$.city.$touch"
+              class="bg-background-default shadow appearance-none border-primary-800 border rounded w-full py-2 px-3 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              :class="{
+                'border-red-500 focus:border-red-500 align-middle':
+                  v$.city.$error,
+                'border-[#42d392] ': !v$.city.$invalid
+              }"
+            />
+            <Icon
+              v-if="!v$.city.$invalid || v$.city.$error"
+              class="absolute right-2 h-full text-xl text-green-500"
+              :class="{
+                'text-green-500': !v$.city.$invalid,
+                'text-yellow-500': v$.city.$error
+              }"
+              :name="`heroicons-solid:${!v$.city.$error ? 'check-circle' : 'exclamation'}`"
+            />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label
+            for="city"
+            class="block text-text-default text-sm font-bold mb-2"
+            >Date de naissance</label
+          >
           <VDatePicker v-model="formData.dateOfBirth" :popover="false">
             <template #default="{ togglePopover, inputValue, inputEvents }">
               <div class="flex items-center">
                 <button
                   class="shadow appearance-none border border-primary-800 rounded w-12 py-2 pb-3 px-2 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  @click="() => togglePopover()">
+                  @click="() => togglePopover()"
+                >
                   <Icon name="octicon:calendar" color="white" />
-
-    </button>
-<div class="relative">
-  <input
-        id="date"
-        name="date"
-          :value="inputValue"
-          v-on="inputEvents"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-70 leading-tight focus:outline-none focus:shadow-outline"
-        />
-</div>
-        
-      </div>
-    </template>
-  </VDatePicker>
+                </button>
+                <div class="relative">
+                  <input
+                    id="dateOfBirth"
+                    name="dateOfBirth"
+                    :value="inputValue"
+                    v-on="inputEvents"
+                    @change="v$.dateOfBirth.$touch"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-70 leading-tight focus:outline-none focus:shadow-outline"
+                    :class="{
+                      'border-red-500 focus:border-red-500 align-middle':
+                        v$.dateOfBirth.$error,
+                      'border-[#42d392] ': !v$.dateOfBirth.$invalid
+                    }"
+                  />
+                  <Icon
+                    v-if="!v$.dateOfBirth.$invalid || v$.dateOfBirth.$error"
+                    class="absolute right-2 h-full text-xl text-green-500"
+                    :class="{
+                      'text-green-500': !v$.dateOfBirth.$invalid,
+                      'text-yellow-500': v$.dateOfBirth.$error
+                    }"
+                    :name="`heroicons-solid:${!v$.dateOfBirth.$error ? 'check-circle' : 'exclamation'}`"
+                  />
+                </div>
+              </div>
+            </template>
+          </VDatePicker>
         </div>
         <div class="mb-6">
-          <label for="phone" class="block text-text-default text-sm font-bold mb-2">Numéro de téléphone</label>
+          <label
+            for="phone"
+            class="block text-text-default text-sm font-bold mb-2"
+            >Numéro de téléphone</label
+          >
           <div class="relative">
-            <input id="phone" name="phone" v-model="formData.phone" type="text" @change="v$.phone.$touch"
-            class="bg-background-default shadow appearance-none border-primary-800 border rounded w-full py-2 px-3 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            <input
+              id="phone"
+              name="phone"
+              v-model="formData.phone"
+              type="text"
+              @change="v$.phone.$touch"
+              class="bg-background-default shadow appearance-none border-primary-800 border rounded w-full py-2 px-3 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline"
               :class="{
-        'border-red-500 focus:border-red-500': v$.phone.$error,
-        'border-[#42d392] ': !v$.phone.$invalid,
-      }" />
-            <Icon v-if="!v$.phone.$invalid || v$.phone.$error" class="absolute right-2 h-full text-xl text-green-500"
-              :class="{ 'text-green-500': !v$.phone.$invalid, 'text-yellow-500': v$.phone.$error }"
-              :name="`heroicons-solid:${!v$.phone.$error ? 'check-circle' : 'exclamation'}`" />
+                'border-red-500 focus:border-red-500': v$.phone.$error,
+                'border-[#42d392] ': !v$.phone.$invalid
+              }"
+            />
+            <Icon
+              v-if="!v$.phone.$invalid || v$.phone.$error"
+              class="absolute right-2 h-full text-xl text-green-500"
+              :class="{
+                'text-green-500': !v$.phone.$invalid,
+                'text-yellow-500': v$.phone.$error
+              }"
+              :name="`heroicons-solid:${!v$.phone.$error ? 'check-circle' : 'exclamation'}`"
+            />
           </div>
         </div>
         <div class="flex items-center justify-between">
           <button
-          onclick=submitForm
-          class="bg-bleu hover:bg-violet text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mb-2"          >
+            id="register"
+            @click="submitForm"
+            class="bg-bleu hover:bg-violet text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mb-2"
+          >
             Inscription
           </button>
         </div>
@@ -95,119 +166,124 @@
 </template>
 
 <script setup>
-import { useFormStore } from '../../stores/value';
-import { required, email, sameAs, maxLength, helpers } from '@vuelidate/validators';
-import { useVuelidate } from '@vuelidate/core';
-import { ref, defineEmits } from 'vue';
-import { useRouter } from "vue-router";
+import { useFormStore } from '../../stores/value'
+import {
+  minLength,
+  required,
+  email,
+  sameAs,
+  maxLength,
+  helpers
+} from '@vuelidate/validators'
+import { useVuelidate } from '@vuelidate/core'
+import { ref, defineEmits } from 'vue'
+import { useRouter } from 'vue-router'
 
 const rules = computed(() => {
   return {
     country: {
-      required: helpers.withMessage('The firstname field is required', required),
+      required: helpers.withMessage('The firstname field is required', required)
     },
     city: {
-      required: helpers.withMessage('The lastname field is required', required),
+      required: helpers.withMessage('The lastname field is required', required)
+    },
+    dateOfBirth: {
+      required: helpers.withMessage('The lastname field is required', required)
     },
     phone: {
       required: helpers.withMessage('The password field is required', required),
-      number: maxLength(10),
-    },
-  };
-});
+      int: maxLength(10),
+      int: minLength(10)
+    }
+  }
+})
 
-const emit = defineEmits(['previous-step']);
+const emit = defineEmits(['previous-step'])
 
-const formStore = useFormStore();
-const formData = formStore.formData;
-const router = useRouter();
+const formStore = useFormStore()
+const formData = formStore.formData
+const router = useRouter()
 
-const date = ref(new Date());
+const message = ref('')
+const messageClass = ref('')
 
-const message = ref("");
-const messageClass = ref("");
-
-const isSubmitting = ref(false);
-const v$ = useVuelidate(rules, formData);
-
+const isSubmitting = ref(false)
+const v$ = useVuelidate(rules, formData)
 
 const previousStep = () => {
   if (formData) {
-    formStore.setFormData(formData);
-    emit('previous-step');
-    console.log(formData);
+    formStore.setFormData(formData)
+    emit('previous-step')
+    console.log(formData)
   } else {
-    console.error("formData is undefined");
+    console.error('formData is undefined')
   }
-};
+}
 
 const submitForm = async () => {
 
-  v$.value.$validate();
-  if (isSubmitting.value) return;
-  isSubmitting.value = true;
+  if (isSubmitting.value) return
+  isSubmitting.value = true
 
-  if (!v$.value.$error) {
-    try {
-      console.log("Soumission du formulaire", formData);
-      console.log("JSON.stringify(formData)", JSON.stringify(formData));
-      console.log(formData.dateOfBirth);
+  v$.value.$validate()
 
-      const isoDateString = formData.dateOfBirth.toISOString();
+  // if (!v$.value.$error) {
+  try {
+    console.log('Soumission du formulaire', formData)
+    console.log('JSON.stringify(formData)', JSON.stringify(formData))
+    console.log(formData.dateOfBirth)
 
-      const dateInUTC = new Date(isoDateString);
+    const isoDateString = formData.dateOfBirth.toISOString()
 
-      const dateInCEST = new Date(dateInUTC.getTime() + (60 * 120 * 1000));
+    const dateInUTC = new Date(isoDateString)
 
-      const formattedDateOfBirth = dateInCEST.toISOString();
+    const dateInCEST = new Date(dateInUTC.getTime() + 60 * 120 * 1000)
 
-      console.log(formattedDateOfBirth);
+    const formattedDateOfBirth = dateInCEST.toISOString()
 
+    console.log(formattedDateOfBirth)
 
+    const response = await fetch('http://localhost:3003/user/createUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        country: formData.country,
+        city: formData.city,
+        dateofbirth: formattedDateOfBirth,
+        phone: formData.phone
+      })
+    })
 
-      const response = await fetch("http://localhost:3003/user/createUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          password: formData.password,
-          country: formData.country,
-          city: formData.city,
-          dateofbirth: formattedDateOfBirth,
-          phone: formData.phone,
-        }),
-      });
+    if (!response.ok) {
+      const data = await response.json()
+      throw new Error(data.error)
+    }
 
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error);
-      }
-
-    const data = await response.json();
-    message.value = "Utilisateur ajouté avec succès";
-    messageClass.value = "text-green-500";
-    console.log("Inscription réussie", data);
-    formData.firstName = "";
-    formData.lastName = "";
-    formData.email = "";
-    formData.password = "";
-    formData.country = "";
-    formData.city = "";
-    formData.dateofbirth = "";
-    formData.phone = "";
+    const data = await response.json()
+    message.value = 'Utilisateur ajouté avec succès'
+    messageClass.value = 'text-green-500'
+    console.log('Inscription réussie', data)
+    formData.firstName = ''
+    formData.lastName = ''
+    formData.email = ''
+    formData.password = ''
+    formData.country = ''
+    formData.city = ''
+    formData.dateOfBirth = ''
+    formData.phone = ''
   } catch (error) {
-    console.error("Erreur lors de la requête fetch", error);
-    message.value = error.message;
-    messageClass.value = "text-red-500";
-  }finally {
-    isSubmitting.value = false; 
+    console.error('Erreur lors de la requête fetch', error)
+    message.value = error.message
+    messageClass.value = 'text-red-500'
+  } finally {
+    isSubmitting.value = false
   }
-  }
-
-
-};
+  // }
+}
 </script>
