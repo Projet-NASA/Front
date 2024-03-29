@@ -23,3 +23,5 @@ logs
 .env.*
 !.env.example
 bun.lockb
+pnpm-lock.yaml
+package-lock.json
