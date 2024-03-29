@@ -127,7 +127,7 @@
         </div>
         <div class="flex items-center justify-between">
           <button
-          @click="submitForm"
+          onclick=submitForm
           class="bg-bleu hover:bg-violet text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mb-2"          >
             Inscription
         </button>
@@ -184,7 +184,7 @@ const previousStep = () => {
   }
 };
 
-async function submitForm (){
+const submitForm = async () => {
 
   v$.value.$validate(); 
   if (isSubmitting.value) return; 
@@ -240,7 +240,7 @@ console.log(formattedDateOfBirth);
     formData.password = "";
     formData.country = "";
     formData.city = "";
-    formData.date = "";
+    formData.dateofbirth = "";
     formData.phone = "";
   } catch (error) {
     console.error("Erreur lors de la requête fetch", error);

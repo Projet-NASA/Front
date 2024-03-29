@@ -206,8 +206,12 @@ const formData = formStore.formData;
 const v$ = useVuelidate(rules, formData);
 
 const nextStep = () => {
+  v$.value.$validate();
+  if (!v$.value.$error) {
     formStore.setFormData(formData);
     emit('next-step');
+  }
+   
 };
 
 </script>
