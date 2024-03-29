@@ -14,9 +14,13 @@
     "@nuxt/ui": "^2.15.0",
     "@pinia/nuxt": "^0.5.1",
     "@popperjs/core": "^2.11.8",
+    "@vee-validate/nuxt": "^4.12.6",
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
     "date-fns": "^2.30.0",
     "datepicker": "^0.0.0",
     "datepickerdate": "^1.5.1",
+    "h3-zod": "^0.5.3",
     "iconify-icon": "^2.0.0-beta.1",
     "lucide-vue-next": "^0.363.0",
     "nuxt": "^3.11.1",
@@ -28,7 +32,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "npm:@nuxtjs/tailwindcss@nightly",
+    "@nuxtjs/tailwindcss": "^6.11.5-1711212104.11c980a",
     "@samk-dev/nuxt-vcalendar": "^1.0.2",
     "autoprefixer": "^10.4.19",
     "nuxt-icon": "^0.6.10",

@@ -2,7 +2,6 @@
   <section class="bg-[#2D3758] w-screen h-screen flex justify-center">
     <div class="w-96 my-28">
       <form
-        :schema="schema"
         @submit.prevent="submitForm"
         class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-2"
       >
@@ -25,25 +24,51 @@
             class="block text-gray-700 text-sm font-bold mb-2"
             >Pays</label
           >
-          <input
+          <div class="relative">
+            <input
             id="country"
+            name="country"
             v-model="formData.country"
-            type="country"
-            required
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            @change="v$.country.$touch"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
+            :class="{
+                      'border-red-500 focus:border-red-500': v$.country.$error,
+                      'border-[#42d392] ': !v$.country.$invalid,
+                    }"
           />
+          <Icon
+              v-if="!v$.country.$invalid || v$.country.$error"
+              class="absolute right-2 h-full text-xl text-green-500"
+              :class="{ 'text-green-500': !v$.country.$invalid, 'text-yellow-500': v$.country.$error }"
+              :name="`heroicons-solid:${!v$.country.$error ? 'check-circle' : 'exclamation'}`"
+          />
+          </div>
         </div>
         <div class="mb-3">
           <label for="city" class="block text-gray-700 text-sm font-bold mb-2"
             >Ville</label
           >
-          <input
+          <div class="relative">
+            <input
             id="city"
+            name="city"
             v-model="formData.city"
-            type="city"
-            required
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            @change="v$.city.$touch"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
+            :class="{
+                      'border-red-500 focus:border-red-500': v$.city.$error,
+                      'border-[#42d392] ': !v$.city.$invalid,
+                    }"
           />
+          <Icon
+              v-if="!v$.city.$invalid || v$.city.$error"
+              class="absolute right-2 h-full text-xl text-green-500"
+              :class="{ 'text-green-500': !v$.city.$invalid, 'text-yellow-500': v$.city.$error }"
+              :name="`heroicons-solid:${!v$.city.$error ? 'check-circle' : 'exclamation'}`"
+          />
+          </div>
         </div>
         <div class="mb-3">
           <label for="city" class="block text-gray-700 text-sm font-bold mb-2"
@@ -60,13 +85,28 @@
         >
         <Icon name="octicon:calendar" color="white" />
 
-        </button>
-        <input
+    </button>
+<div class="relative">
+  <input
+        id="date"
+        name="date"
           :value="inputValue"
           v-on="inputEvents"
-      
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          @change="v$.date.$touch"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-70 leading-tight focus:outline-none focus:shadow-outline"
+          :class="{
+                      'border-red-500 focus:border-red-500': v$.date.$error,
+                      'border-[#42d392] ': !v$.date.$invalid,
+                    }"
         />
+        <Icon
+              v-if="!v$.date.$invalid || v$.date.$error"
+              class="absolute right-2 h-full text-xl text-green-500"
+              :class="{ 'text-green-500': !v$.date.$invalid, 'text-yellow-500': v$.date.$error }"
+              :name="`heroicons-solid:${!v$.date.$error ? 'check-circle' : 'exclamation'}`"
+          />
+</div>
+        
       </div>
     </template>
   </VDatePicker>
@@ -75,13 +115,26 @@
           <label for="phone" class="block text-gray-700 text-sm font-bold mb-2"
             >Numéro de téléphone</label
           >
-          <input
+          <div class="relative">
+            <input
             id="phone"
+            name="phone"
             v-model="formData.phone"
-            type="phone"
-            required
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            @change="v$.phone.$touch"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
+            :class="{
+                      'border-red-500 focus:border-red-500': v$.phone.$error,
+                      'border-[#42d392] ': !v$.phone.$invalid,
+                    }"
           />
+          <Icon
+              v-if="!v$.phone.$invalid || v$.phone.$error"
+              class="absolute right-2 h-full text-xl text-green-500"
+              :class="{ 'text-green-500': !v$.phone.$invalid, 'text-yellow-500': v$.phone.$error }"
+              :name="`heroicons-solid:${!v$.phone.$error ? 'check-circle' : 'exclamation'}`"
+          />
+          </div>
         </div>
         <div class="flex items-center justify-between">
           <button
@@ -97,26 +150,29 @@
 
 <script setup>
 import { useFormStore } from '../../stores/value';
+import { required, email, sameAs, maxLength, helpers } from '@vuelidate/validators';
+import { useVuelidate } from '@vuelidate/core';
 import { ref, defineEmits } from 'vue';
 import { useRouter } from "vue-router";
-import { z } from 'zod';
-import type { FormSubmitEvent } from '#ui/types'
 
-const schema = z.object({
-    country: z.string(),
-    city: z.string(),
-    dateofbirth: z.date(),
-    phone: z.number(),
-})
+const rules = computed(() => {
+  return {
+    country:{
+      required: helpers.withMessage('The firstname field is required', required),
+    },
+    city:{
+      required: helpers.withMessage('The lastname field is required', required),
+    },
+    date: {
+      required: helpers.withMessage('The email field is required', required),
+    },
+    phone: {
+      required: helpers.withMessage('The password field is required', required),
+      number: maxLength(10),
+    },
+  };
+});
 
-type Schema = z.output<typeof schema>
-
-const state = reactive({
-  country: undefined,
-  city:undefined,
-  dateofbirth: undefined,
-  phone: undefined,
-})
 const  emit  = defineEmits([ 'previous-step']);
 
 const formStore = useFormStore();
@@ -128,7 +184,8 @@ const date = ref(new Date());
 const message = ref("");
 const messageClass = ref("");
 
-const isSubmitting = ref(false)
+const isSubmitting = ref(false);
+const v$ = useVuelidate(rules, formData);
 
 
 const previousStep = () => {
@@ -141,11 +198,14 @@ const previousStep = () => {
   }
 };
 
-async function submitForm (event: FormSubmitEvent<Schema>){
+async function submitForm (){
+
+  v$.value.$validate(); 
   if (isSubmitting.value) return; 
   isSubmitting.value = true; 
-
-  try {
+  
+  if (!v$.value.$error) {
+    try {
     console.log("Soumission du formulaire", formData);
     console.log("JSON.stringify(formData)", JSON.stringify(formData));
     console.log(formData.dateOfBirth);
@@ -203,5 +263,8 @@ console.log(formattedDateOfBirth);
   }finally {
     isSubmitting.value = false; 
   }
+  }
+
+  
 };
 </script>
