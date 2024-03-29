@@ -1,11 +1,34 @@
 <template>
-  <div class="flex justify-center items-center h-screen">
-    <NuxtLink
-      to="/register"
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-    >
-      Aller au formulaire
-    </NuxtLink>
+  <div class="flex flex-col items-center pt-7 bg-background-default">
+    <div class="w-full max-w-2xl">
+      <div class="p-4 bg-secondary-200 rounded shadow mb-4">
+        <input
+          class="w-full p-2 border rounded"
+          type="text"
+          placeholder="Start a post..."
+        />
+        <div class="flex justify-end mt-2">
+          <button
+            class="px-4 py-2 bg-primary-default text-text-default rounded"
+          >
+            Post
+          </button>
+        </div>
+      </div>
+      <div>
+        <FeedPost />
+        <FeedPost />
+        <FeedPost />
+        <FeedPost />
+        <FeedPost />
+      </div>
+    </div>
   </div>
 
 </template>
+
+<script setup></script>
+
+<style scoped>
+/* CSS styles here... */
+</style>
