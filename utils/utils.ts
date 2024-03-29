@@ -2,7 +2,9 @@ import { useRouter } from 'vue-router'
 
 export function checkTokenAndRedirect() {
   const router = useRouter()
-  if (localStorage.getItem('token')) {
+  const token = localStorage.getItem('token')
+
+  if (token) {
     router.push('/')
   }
 }
