@@ -30,7 +30,7 @@ const getPosts = async () => {
   return data
 }
 
-console.log(getPosts)
+// console.log(getPosts)
 </script>
 
 <style scoped></style>
