@@ -53,15 +53,20 @@
                   @click="() => togglePopover()">
                   <Icon name="octicon:calendar" color="white" />
 
-                </button>
-                <div class="relative">
-                  <input id="date" name="date" :value="inputValue" v-on="inputEvents"
-                  class="bg-background-default shadow appearance-none border-primary-800 border rounded w-full py-2 px-3 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline"/>
-                </div>
-
-              </div>
-            </template>
-          </VDatePicker>
+    </button>
+<div class="relative">
+  <input
+        id="date"
+        name="date"
+          :value="inputValue"
+          v-on="inputEvents"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-70 leading-tight focus:outline-none focus:shadow-outline"
+        />
+</div>
+        
+      </div>
+    </template>
+  </VDatePicker>
         </div>
         <div class="mb-6">
           <label for="phone" class="block text-text-default text-sm font-bold mb-2">Numéro de téléphone</label>
@@ -78,8 +83,9 @@
           </div>
         </div>
         <div class="flex items-center justify-between">
-          <button @click="submitForm"
-          class="bg-primary-800 hover:bg-primary-default transition-colors duration-300 text-text-50 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full ">
+          <button
+          onclick=submitForm
+          class="bg-bleu hover:bg-violet text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mb-2"          >
             Inscription
           </button>
         </div>
@@ -135,7 +141,7 @@ const previousStep = () => {
   }
 };
 
-async function submitForm() {
+const submitForm = async () => {
 
   v$.value.$validate();
   if (isSubmitting.value) return;
@@ -181,25 +187,25 @@ async function submitForm() {
         throw new Error(data.error);
       }
 
-      const data = await response.json();
-      message.value = "Utilisateur ajouté avec succès";
-      messageClass.value = "text-green-500";
-      console.log("Inscription réussie", data);
-      formData.firstName = "";
-      formData.lastName = "";
-      formData.email = "";
-      formData.password = "";
-      formData.country = "";
-      formData.city = "";
-      formData.date = "";
-      formData.phone = "";
-    } catch (error) {
-      console.error("Erreur lors de la requête fetch", error);
-      message.value = error.message;
-      messageClass.value = "text-red-500";
-    } finally {
-      isSubmitting.value = false;
-    }
+    const data = await response.json();
+    message.value = "Utilisateur ajouté avec succès";
+    messageClass.value = "text-green-500";
+    console.log("Inscription réussie", data);
+    formData.firstName = "";
+    formData.lastName = "";
+    formData.email = "";
+    formData.password = "";
+    formData.country = "";
+    formData.city = "";
+    formData.dateofbirth = "";
+    formData.phone = "";
+  } catch (error) {
+    console.error("Erreur lors de la requête fetch", error);
+    message.value = error.message;
+    messageClass.value = "text-red-500";
+  }finally {
+    isSubmitting.value = false; 
+  }
   }
 
 
