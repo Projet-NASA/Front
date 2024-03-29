@@ -88,33 +88,35 @@
             <template #default="{ togglePopover, inputValue, inputEvents }">
               <div class="flex items-center">
                 <button
+                  id="calendar"
                   class="shadow appearance-none border border-primary-800 rounded w-12 py-2 pb-3 px-2 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  @click="() => togglePopover()"
+                  @click="togglePopover()"
                 >
                   <Icon name="octicon:calendar" color="white" />
                 </button>
+
                 <div class="relative">
                   <input
-                    id="dateOfBirth"
-                    name="dateOfBirth"
+                    id="date"
+                    name="date"
                     :value="inputValue"
                     v-on="inputEvents"
-                    @change="v$.dateOfBirth.$touch"
+                    @change="v$.date.$touch"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-70 leading-tight focus:outline-none focus:shadow-outline"
                     :class="{
                       'border-red-500 focus:border-red-500 align-middle':
-                        v$.dateOfBirth.$error,
-                      'border-[#42d392] ': !v$.dateOfBirth.$invalid
+                        v$.date.$error,
+                      'border-[#42d392] ': !v$.date.$invalid
                     }"
                   />
                   <Icon
-                    v-if="!v$.dateOfBirth.$invalid || v$.dateOfBirth.$error"
+                    v-if="!v$.date.$invalid || v$.date.$error"
                     class="absolute right-2 h-full text-xl text-green-500"
                     :class="{
-                      'text-green-500': !v$.dateOfBirth.$invalid,
-                      'text-yellow-500': v$.dateOfBirth.$error
+                      'text-green-500': !v$.date.$invalid,
+                      'text-yellow-500': v$.date.$error
                     }"
-                    :name="`heroicons-solid:${!v$.dateOfBirth.$error ? 'check-circle' : 'exclamation'}`"
+                    :name="`heroicons-solid:${!v$.date.$error ? 'check-circle' : 'exclamation'}`"
                   />
                 </div>
               </div>
@@ -182,13 +184,16 @@ import { useRouter } from 'vue-router'
 const rules = computed(() => {
   return {
     country: {
-      required: helpers.withMessage('The firstname field is required', required)
+      required: helpers.withMessage('The country field is required', required)
     },
     city: {
-      required: helpers.withMessage('The lastname field is required', required)
+      required: helpers.withMessage('The city field is required', required)
     },
-    dateOfBirth: {
-      required: helpers.withMessage('The lastname field is required', required)
+    date: {
+      required: helpers.withMessage(
+        'The dateOfBirth field is required',
+        required
+      )
     },
     phone: {
       required: helpers.withMessage('The password field is required', required),
@@ -221,7 +226,6 @@ const previousStep = () => {
 }
 
 const submitForm = async () => {
-
   if (isSubmitting.value) return
   isSubmitting.value = true
 
