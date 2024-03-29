@@ -20,8 +20,8 @@
       </div>
       <ul class="hidden sm:flex flex-row mx-auto items-center space-x-5 lg:space-x-10 text-2xl font-bold" id="navbar">
         <li>
-          <nuxt-link to="login" class="text-text-default">
-            <span v-if="$route.path === '/login'">
+          <nuxt-link to="/Login" class="text-text-default">
+            <span v-if="$route.path === '/Login'">
               <FontAwesomeIcon :icon="faArrowRightToBracket" bounce />
             </span>
             <span v-else>
