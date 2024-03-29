@@ -6,4 +6,14 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { defineComponent } from 'vue'
+
+defineComponent({
+  head() {
+    return {
+      title: 'AutoLinkedIn'
+    }
+  }
+})
+</script>

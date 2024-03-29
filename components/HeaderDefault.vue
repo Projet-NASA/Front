@@ -1,8 +1,5 @@
 <template>
   <div>
-    <head>
-      <title>AutoLinkedIn</title>
-    </head>
     <header
       :class="{
         'fixed w-11/12 ml-20 mt-2 rounded-2xl': isScrollingDown,
