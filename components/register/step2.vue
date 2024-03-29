@@ -92,19 +92,8 @@
         name="date"
           :value="inputValue"
           v-on="inputEvents"
-          @change="v$.date.$touch"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-70 leading-tight focus:outline-none focus:shadow-outline"
-          :class="{
-                      'border-red-500 focus:border-red-500': v$.date.$error,
-                      'border-[#42d392] ': !v$.date.$invalid,
-                    }"
         />
-        <Icon
-              v-if="!v$.date.$invalid || v$.date.$error"
-              class="absolute right-2 h-full text-xl text-green-500"
-              :class="{ 'text-green-500': !v$.date.$invalid, 'text-yellow-500': v$.date.$error }"
-              :name="`heroicons-solid:${!v$.date.$error ? 'check-circle' : 'exclamation'}`"
-          />
 </div>
         
       </div>
@@ -162,9 +151,6 @@ const rules = computed(() => {
     },
     city:{
       required: helpers.withMessage('The lastname field is required', required),
-    },
-    date: {
-      required: helpers.withMessage('The email field is required', required),
     },
     phone: {
       required: helpers.withMessage('The password field is required', required),
