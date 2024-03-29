@@ -89,8 +89,9 @@
               <div class="flex items-center">
                 <button
                   id="calendar"
+                  type="button"
                   class="shadow appearance-none border border-primary-800 rounded w-12 py-2 pb-3 px-2 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  @click="togglePopover()"
+                  @click.stop="togglePopover()"
                 >
                   <Icon name="octicon:calendar" color="white" />
                 </button>
