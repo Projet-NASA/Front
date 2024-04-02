@@ -58,8 +58,8 @@
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="register/step1" class="text-text-default">
-            <span v-if="$route.path === '/register/step1'">
+          <nuxt-link to="register" class="text-text-default">
+            <span v-if="$route.path === '/register'">
               <FontAwesomeIcon :icon="faPenToSquare" bounce />
             </span>
             <span v-else>
@@ -84,9 +84,7 @@
         </li>
         <li>
           <button @click="toggleTheme" class="text-text-default">
-            <FontAwesomeIcon :icon="isDarkTheme ? faSun : faMoon" />
             <FontAwesomeIcon :icon="isDarkTheme ? faMoon : faSun" />
-
           </button>
         </li>
       </ul>
