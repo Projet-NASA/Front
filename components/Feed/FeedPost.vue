@@ -30,6 +30,7 @@ import { ref } from 'vue'
 import apiURL from '../../utils/apiURLs'
 
 const postContent = ref('')
+const emits = defineEmits(['update'])
 // const { message, userId } = req.body
 
 const createPost = async () => {
@@ -44,7 +45,7 @@ const createPost = async () => {
         },
         body: JSON.stringify({
           message: postContent.value,
-          userId: '660bd003b71be280bca29c1d'
+          userId: '660c0462b7a076125a0dfd08'
         })
       })
 
@@ -55,6 +56,10 @@ const createPost = async () => {
 
       const data = await response.json()
       console.log('Created post:', data)
+
+      postContent.value = ''
+
+      emits('update', false)
     } catch (error) {
       console.error(error)
       const errorMessage = ref('') // declare the errorMessage variable

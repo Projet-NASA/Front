@@ -12,7 +12,7 @@
         </button>
       </div>
         <div v-else-if="postField == true">
-          <FeedPost />
+          <FeedPost :postField="postField" @update="postField = $event" />
         </div>
         <div class="flex justify-end mt-2">
           <ul>
