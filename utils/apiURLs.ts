@@ -5,6 +5,7 @@ const apiURL = {
   updateUser: 'http://localhost:3003/user/User',
   deleteUser: 'http://localhost:3003/user/User',
   loginUser: 'http://localhost:3003/user/loginUser',
+  sessionUser: 'http://localhost:3003/user/sessionUser',
 
   addComment: 'http://localhost:3003/comment/createComment',
   getComment: 'http://localhost:3003/comment/Comment',
