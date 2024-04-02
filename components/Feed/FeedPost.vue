@@ -30,10 +30,12 @@ import { ref } from 'vue'
 import apiURL from '../../utils/apiURLs'
 
 const postContent = ref('')
+// const { message, userId } = req.body
 
 const createPost = async () => {
   console.log('Creating post:', postContent.value)
   if (postContent.value != '') {
+    console.log(apiURL.addPost)
     try {
       const response = await fetch(apiURL.addPost, {
         method: 'POST',
@@ -41,12 +43,12 @@ const createPost = async () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          userId: '1',
-          message: postContent.value
+          message: postContent.value,
+          userId: '660bd003b71be280bca29c1d'
         })
       })
 
-      console.log(response.body)
+      console.log()
       if (!response.ok) {
         throw new Error(`Failed to create post`)
       }
