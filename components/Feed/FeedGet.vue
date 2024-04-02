@@ -18,8 +18,8 @@
       </div>
       <div class="text-text-default mb-2">{{ post.message }}</div>
       <div class="flex justify-between text-gray-500 text-sm">
-        <!-- <div>{{ post.like }} Likes</div>
-        <div>{{ post.comments.length }} Comments</div> -->
+        <div>{{ post.like }} Likes</div>
+        <div>0 Comments</div>
       </div>
     </div>
   </div>
@@ -32,6 +32,7 @@ import apiURL from '../../utils/apiURLs'
 interface Post {
   id: string;
   message: string;
+  like: number;
 }
 
 const posts = ref<Post[]>([])
