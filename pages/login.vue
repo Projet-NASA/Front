@@ -1,7 +1,7 @@
 <template>
-
-  <section class="bg-background-default min-h-screen flex justify-center items-center w-full">
-
+  <section
+    class="bg-background-default min-h-screen flex justify-center items-center w-full"
+  >
     <div class="w-full sm:w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4 my-8">
       <form
         @submit.prevent="submitForm"
