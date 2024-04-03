@@ -55,7 +55,7 @@
           </nuxt-link>
         </li>
         <li>
-          <button @click="toggleTheme" class="text-text-default">
+          <button @click="toggleTheme" class="text-text-50">
             <FontAwesomeIcon :icon='isDarkTheme ? faMoon : faSun' />
           </button>
         </li>
