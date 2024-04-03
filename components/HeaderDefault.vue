@@ -38,7 +38,7 @@
             class="w-32 md:w-48 lg:w-64 xl:w-96 text-black px-4 py-2 border bg-white border-secondary-default rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary-300"
           />
         </div>
-        <button class="flex items-center sm:hidden" @click="developMenu" title="Toggle Menu">
+        <button class="flex items-center sm:hidden" @click="developMenu">
           <FontAwesomeIcon :icon="faChevronDown" class="block" id="develop"/>
           <FontAwesomeIcon :icon="faChevronUp" class="hidden" id="hide" />
         </button>
@@ -48,7 +48,7 @@
         id="navbar"
       >
         <li>
-          <nuxt-link to="/Login" class="text-text-default" title="Login">
+          <nuxt-link to="/Login" class="text-text-default">
             <span v-if="$route.path === '/Login'">
               <FontAwesomeIcon :icon="faArrowRightToBracket" bounce />
             </span>
@@ -58,7 +58,7 @@
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="register/step1" class="text-text-default" title="Register">
+          <nuxt-link to="register" class="text-text-default">
             <span v-if="$route.path === '/register'">
               <FontAwesomeIcon :icon="faPenToSquare" bounce />
             </span>
@@ -68,22 +68,22 @@
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/" class="text-text-default" title="Messages">
+          <nuxt-link to="/" class="text-text-default">
             <FontAwesomeIcon :icon=faEnvelope />
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/" class="text-text-default" title="Notifications">
+          <nuxt-link to="/" class="text-text-default">
             <FontAwesomeIcon :icon=faBell />
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/" class="text-text-default" title="Profile">
+          <nuxt-link to="/" class="text-text-default">
             <FontAwesomeIcon :icon=faIdCard />
           </nuxt-link>
         </li>
         <li>
-          <button @click="toggleTheme" class="text-text-50" title="Switch Theme">
+          <button @click="toggleTheme" class="text-text-50">
             <FontAwesomeIcon :icon='isDarkTheme ? faMoon : faSun' />
           </button>
         </li>
