@@ -80,11 +80,12 @@
         <li>
           <nuxt-link to="/profile" class="text-text-default" title="Profile">
             <span v-if="$route.path === '/profile'">
-              <FontAwesomeIcon :icon="faPenToSquare" bounce />
+              <FontAwesomeIcon :icon="faIdCard" bounce />
             </span>
             <span v-else>
-              <FontAwesomeIcon :icon="faPenToSquare" />
+              <FontAwesomeIcon :icon=faIdCard />
             </span>
+
           </nuxt-link>
         </li>
         <li>
