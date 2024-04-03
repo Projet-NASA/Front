@@ -88,12 +88,9 @@
             <template #default="{ togglePopover, inputValue, inputEvents }">
               <div class="flex items-center">
                 <button
-                  id="calendar"
-                  type="button"
-                  class="shadow appearance-none border border-primary-800 rounded w-12 py-2 pb-3 px-2 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  @click.stop="togglePopover()"
-                >
-                  <Icon name="octicon:calendar" color="white" />
+                  class="shadow hover:bg-accent-default transition-colors duration-300 appearance-none border border-primary-800 rounded w-12 py-2 pb-3 px-2 text-primary-800 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  @click="() => togglePopover()">
+                  <Icon name="octicon:calendar" />
                 </button>
 
                 <div class="relative">
