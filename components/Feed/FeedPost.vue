@@ -26,12 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import apiURL from '../../utils/apiURLs'
 
 const postContent = ref('')
 const emits = defineEmits(['update'])
-// const { message, userId } = req.body
 
 const createPost = async () => {
   console.log('Creating post:', postContent.value)
@@ -62,9 +60,9 @@ const createPost = async () => {
       emits('update', false)
     } catch (error) {
       console.error(error)
-      const errorMessage = ref('') // declare the errorMessage variable
+      const errorMessage = ref('') 
 
-      errorMessage.value = 'Failed to create post' // show error to user
+      errorMessage.value = 'Failed to create post' 
     }
   }
 }
