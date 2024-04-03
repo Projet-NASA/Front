@@ -18,7 +18,7 @@
       </div>
       <div class="text-text-default mb-2">{{ post.message }}</div>
       <div class="flex justify-between text-gray-500 text-sm">
-        <div>{{ post.like }} Likes</div>
+        <button @click="likePost(post)">{{post.like}} Like</button>
         <div>0 Comments</div>
       </div>
     </div>
@@ -29,10 +29,14 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import apiURL from '../../utils/apiURLs'
 
+const userId = '660c0462b7a076125a0dfd08'
+
 interface Post {
   id: string;
+  createdAt: string;
   message: string;
   like: number;
+  userliked: { userId: string }[];
 }
 
 const posts = ref<Post[]>([])
@@ -64,6 +68,44 @@ onUnmounted(() => {
   }
 })
 const reversedPosts = computed(() => [...posts.value].reverse())
+
+// update posts for likes
+
+const likePost = async (post: Post) => {
+  try {
+    // Check if the user has already liked the post
+    if (post.userliked.some(user => user.userId === userId)) {
+      console.log('User has already liked this post')
+      return
+    }
+
+    const response = await fetch(apiURL.addLike, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        postId: post.id,
+        userId: userId
+      })
+    })
+
+    if (!response.ok) {
+      throw new Error(`Failed to like post`)
+    }
+
+    const data = await response.json()
+    console.log('Liked post:', data)
+    fetchPosts()
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+
+
+
+
 
 const timeSince = (date: string) => {
   const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000)
