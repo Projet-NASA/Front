@@ -78,7 +78,7 @@
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/" class="text-text-default" title="Profile">
+          <nuxt-link to="/profile" class="text-text-default" title="Profile">
             <FontAwesomeIcon :icon=faIdCard />
           </nuxt-link>
         </li>
