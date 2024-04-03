@@ -1,13 +1,13 @@
 <template>
   <div
     id="addPopup"
-    class="flex justify-center p-5 bg-background-default border-2 border-accent-default rounded-lg"
+    class="flex justify-center p-5 bg-background-200 border-2 border-accent-default rounded-lg"
   >
     <form id="createPost" class="w-full">
       <textarea
         type="text"
         id="postContent"
-        class="w-full bg-background-default outline-none"
+        class="w-full bg-background-200 outline-none text-text-default"
         placeholder="Title"
         v-model="postContent"
       ></textarea>
@@ -15,7 +15,7 @@
         <button
           type="submit"
           id="createPost"
-          class="bg-primary-200 px-2 py-1 rounded-lg"
+          class="bg-primary-200 px-2 py-1 rounded-lg text-text-default hover:bg-primary-default hover:text-text-50 transition-colors duration-300 focus:outline-none focus:shadow-outline"
           @click.prevent="createPost"
         >
           POST

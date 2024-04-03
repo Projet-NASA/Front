@@ -79,7 +79,13 @@
         </li>
         <li>
           <nuxt-link to="/profile" class="text-text-default" title="Profile">
-            <FontAwesomeIcon :icon=faIdCard />
+            <span v-if="$route.path === '/profile'">
+              <FontAwesomeIcon :icon="faIdCard" bounce />
+            </span>
+            <span v-else>
+              <FontAwesomeIcon :icon=faIdCard />
+            </span>
+
           </nuxt-link>
         </li>
         <li>
