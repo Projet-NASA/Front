@@ -60,9 +60,9 @@ const createPost = async () => {
       emits('update', false)
     } catch (error) {
       console.error(error)
-      const errorMessage = ref('') 
+      const errorMessage = ref('')
 
-      errorMessage.value = 'Failed to create post' 
+      errorMessage.value = 'Failed to create post'
     }
   }
 }
