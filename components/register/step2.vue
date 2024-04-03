@@ -281,6 +281,7 @@ const submitForm = async () => {
     formData.city = ''
     formData.dateofbirth = ''
     formData.phone = ''
+    router.push('/login')
   } catch (error) {
     console.error('Erreur lors de la requête fetch', error)
     message.value = error.message
