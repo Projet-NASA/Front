@@ -58,7 +58,7 @@
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="register/step1" class="text-text-default" title="Register">
+          <nuxt-link to="register" class="text-text-default" title="Register">
             <span v-if="$route.path === '/register'">
               <FontAwesomeIcon :icon="faPenToSquare" bounce />
             </span>
