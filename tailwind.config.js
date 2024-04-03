@@ -2,6 +2,11 @@
 module.exports = {
   // content: [],
   theme: {
+    fontFamily: {
+     title: ["",""], 
+     primary: ['Montserrat', 'sans-serif'],
+     secondary: ['Trade Gothic Pro Bold',''],
+    },
     extend: {
       colors: {
         text: {
