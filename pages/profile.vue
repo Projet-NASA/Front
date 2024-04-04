@@ -1,13 +1,9 @@
 <template>
-  <div class="profile-page">
-    <h1>Profil</h1>
-    <div v-if="user">
-      <p>Email: {{ user.email }}</p>
-      <p>Téléphone: {{ user.phone }}</p>
-      <button @click="logout">Déconnexion</button>
-    </div>
+  <div>
+    <div v-if="error">{{ error }}</div>
     <div v-else>
-      <p>Chargement des informations de l'utilisateur...</p>
+      <h1>Informations utilisateur</h1>
+      <pre>{{ user }}</pre>
     </div>
   </div>
 </template>
@@ -16,45 +12,29 @@
 export default {
   data() {
     return {
-      user: null
-    };
+      user: null,
+      error: null
+    }
   },
+
   async mounted() {
-    await this.fetchUserData();
-  },
-  methods: {
-    async fetchUserData() {
-      try {
-        const response = await fetch('http://localhost:3003/user/session', {
-          credentials: 'include' 
-        });
+    try {
+      const userId = localStorage.getItem('userId')
+      const response = await fetch(
+        `http://localhost:3003/user/OneUser/${userId}`
+      )
 
-        if (!response.ok) {
-          throw new Error("Impossible de récupérer les informations de l'utilisateur");
-        }
+      const data = await response.json()
+      console.log(data)
 
-        const { user } = await response.json();
-        this.user = user;
-      } catch (error) {
-        console.error(error.message);
+      if (!response.ok) {
+        this.error = data.error
+      } else {
+        this.user = data
       }
-    },
-    async logout() {
-      try {
-        const response = await fetch('http://localhost:3003/user/logout', {
-          method: 'POST',
-          credentials: 'include' 
-        });
-
-        if (!response.ok) {
-          throw new Error("Erreur lors de la déconnexion");
-        }
-
-        this.user = null;
-
-      } catch (error) {
-        console.error(error.message);
-      }
+    } catch (error) {
+      this.error =
+        'erreur lors de la conversion de la réponse en JSON: ' + error.message
     }
   }
 }
