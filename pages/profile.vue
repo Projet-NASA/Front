@@ -35,6 +35,11 @@
             <p class="font-light">Description</p>
           </div>
         </div>
+        <button class="bg-red-500 hover:bg-red-800 text-white rounded p-2 mx-auto flex items-center justify-center transition-colors duration-300">
+          Log out
+          <Icon name="material-symbols:logout" class="w-6 h-6 ml-2" />
+        </button>
+
       </div>
     </div>
     <div v-else class="w-full sm:w-3/4 md:w-3/4 lg:w-3/4 xl:w-3/4">
@@ -96,7 +101,15 @@ import {
 export default {
   data() {
     return {
-
+      user: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        city: '',
+        country: ''
+      
+      }
     }
   },
   async mounted() {
