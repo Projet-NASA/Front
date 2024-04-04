@@ -34,28 +34,28 @@
       </div>
       <ul class="hidden sm:flex flex-row mx-auto items-center space-x-5 lg:space-x-10 text-2xl font-bold" id="navbar">
         <li>
-          <nuxt-link to="/Login" class="text-text-default">
-            <Icon name="material-symbols:login" class="hover:animate-bounce click:animate-bounce"/>
+          <nuxt-link to="/Login" class="text-text-default" title="Login">
+            <Icon name="ph:flag-checkered-fill" class="hover:animate-bounce click:animate-bounce"/>
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="register" class="text-text-default">
-            <Icon name="material-symbols:edit-square-outline" class="hover:animate-bounce click:animate-bounce" />
+          <nuxt-link to="register" class="text-text-default" title="Register">
+            <Icon name="fluent-emoji-high-contrast:racing-car" class="hover:animate-bounce click:animate-bounce" />
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/" class="text-text-default">
+          <nuxt-link to="/" class="text-text-default" title="Messages">
             <Icon name="material-symbols:chat" class="hover:animate-bounce click:animate-bounce" />
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/" class="text-text-default">
+          <nuxt-link to="/" class="text-text-default" title="Notifications">
             <Icon name="material-symbols:circle-notifications" class="hover:animate-bounce click:animate-bounce" />
           </nuxt-link>
         </li>
         <li>
           <nuxt-link to="/profile" class="text-text-default" title="Profile">
-            <Icon name="material-symbols:account-circle-full" class="hover:animate-bounce click:animate-bounce" />
+            <Icon name="mdi:racing-helmet" class="hover:animate-bounce click:animate-bounce" />
           </nuxt-link>
         </li>
         <li>
