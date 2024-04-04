@@ -30,7 +30,7 @@
             class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer" />
         </button>
       </div>
-    <FeedComment postId="${post.id}"/>
+    <FeedComment :postId="`${post.id}`"/>
         <div v-if="postComments(post.id).length > 0" class="comments-section">
         <div
           v-for="comment in postComments(post.id)"
