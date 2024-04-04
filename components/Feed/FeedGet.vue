@@ -55,7 +55,7 @@ interface Post {
   comments: Comment[]
 }
 
-const userId = '660c0462b7a076125a0dfd08'
+const userId = localStorage.getItem('userId')
 
 const posts = ref<Post[]>([])
 
