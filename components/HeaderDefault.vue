@@ -27,36 +27,36 @@
         </div>
         <button class="flex items-center sm:hidden text-3xl" @click="developMenu">
           <span v-if="menuDeveloped">
-            <Icon name="material-symbols:keyboard-arrow-up-rounded" class="hover:animate-bounce click:animate-bounce" />
+            <Icon name="material-symbols:keyboard-arrow-up-rounded" class="hover:animate-ping click:animate-ping" />
           </span>
           <span v-else>
-            <Icon name="material-symbols:keyboard-arrow-down-rounded" class="hover:animate-bounce click:animate-bounce" />
+            <Icon name="material-symbols:keyboard-arrow-down-rounded" class="hover:animate-ping click:animate-ping" />
           </span>
         </button>
       </div>
       <ul class="hidden sm:flex flex-row mx-auto items-center space-x-5 lg:space-x-10 text-3xl font-bold" id="navbar">
         <li>
           <nuxt-link to="/" class="text-text-default" title="Messages">
-            <Icon name="material-symbols:chat" class="hover:animate-bounce click:animate-bounce" />
+            <Icon name="material-symbols:chat" class="hover:animate-ping click:animate-ping" />
           </nuxt-link>
         </li>
         <li>
           <nuxt-link to="/" class="text-text-default" title="Notifications">
-            <Icon name="material-symbols:circle-notifications" class="hover:animate-bounce click:animate-bounce" />
+            <Icon name="material-symbols:circle-notifications" class="hover:animate-ping click:animate-ping" />
           </nuxt-link>
         </li>
         <li>
           <nuxt-link to="/profile" class="text-text-default" title="Profile">
-            <Icon name="mdi:racing-helmet" class="hover:animate-bounce click:animate-bounce" />
+            <Icon name="mdi:racing-helmet" class="hover:animate-ping click:animate-ping" />
           </nuxt-link>
         </li>
         <li>
           <button @click="toggleTheme" class="text-text-50">
             <span v-if="isDarkTheme">
-              <Icon name="material-symbols:dark-mode" class="hover:animate-bounce click:animate-bounce" />
+              <Icon name="material-symbols:dark-mode" class="hover:animate-ping click:animate-ping" />
             </span>
             <span v-else>
-              <Icon name="material-symbols:clear-day-rounded" class="hover:animate-bounce click:animate-bounce" />
+              <Icon name="material-symbols:clear-day-rounded" class="hover:animate-ping click:animate-ping" />
             </span>
           </button>
         </li>
