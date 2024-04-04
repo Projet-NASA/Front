@@ -12,7 +12,7 @@
           alt="User avatar"
         />
         <div class="ml-2">
-          <div class="text-text-default font-bold">User Name</div>
+          <div class="text-text-default font-bold">{{ post.user.firstName }} {{ post.user.lastName }}</div>
           <div class="text-text-default text-sm text-gray-500">
             {{ timeSince(post.createdAt) }}
           </div>
@@ -20,18 +20,30 @@
       </div>
       <div class="text-text-default mb-2">{{ post.message }}</div>
       <div class="flex justify-between text-gray-500 text-sm">
-        <button @click="likePost(post)">{{ post.like }} Like</button>
-        <div>0 Comments</div>
+        <button @click="likePost(post)">
+          {{ post.like }} Like{{ post.like !== 1 ? 's' : '' }}
+        </button>
+        <div>{{ post.comments.length }} Comment{{ post.comments.length !== 1 ? 's' : '' }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-// import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import apiURL from '../../utils/apiURLs'
 
-const userId = '660c0462b7a076125a0dfd08'
+interface User {
+  id: string
+  firstName: string
+  lastName: string
+  avatar?: string
+}
+
+interface Comment {
+  id: string
+  message: string
+}
 
 interface Post {
   id: string
@@ -39,74 +51,45 @@ interface Post {
   message: string
   like: number
   userliked: { userId: string }[]
+  user: User
+  comments: Comment[]
 }
-interface Like {
-  userId: string
-  likeId: string
-}
+
+const userId = '660c0462b7a076125a0dfd08'
+
 const posts = ref<Post[]>([])
 
 const fetchPosts = async () => {
   try {
     const response = await fetch(apiURL.getPost)
-
     if (!response.ok) {
       throw new Error('Failed to fetch posts')
     }
-
     posts.value = await response.json()
   } catch (error) {
     console.error(error)
   }
 }
 
-onMounted(() => {
-  fetchPosts()
-})
-
+onMounted(fetchPosts)
 const reversedPosts = computed(() => [...posts.value].reverse())
 
-// update posts for likes
-
 const likePost = async (post: Post) => {
+  const hasLiked = post.userliked.some(user => user.userId === userId);
+
+  if (hasLiked) {
+    console.log('Removing like from this post');
+    await removeLikeFromPost(post);
+  } else {
+    console.log('Adding like to this post');
+    await addLikeToPost(post);
+  }
+
+  await fetchPosts();
+};
+
+const addLikeToPost = async (post: Post) => {
   try {
-    // Check if the user has already liked the post
-    if (post.userliked.some(user => user.userId === userId)) {
-      console.log('User has already liked this post')
-
-      try {
-        post.like -= 1
-
-        const response = await fetch(
-          `http://localhost:3003/like/LikeByPostId/${post.id}`
-        )
-
-        if (!response.ok) {
-          throw new Error(`Failed to like post`)
-        }
-
-        const likes = await response.json()
-        console.log(likes)
-        if (likes) {
-          console.log('deleting like')
-          const removeLike = await fetch(`http://localhost:3003/like/Like/${likes.id}`, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          })
-          if (!removeLike.ok) {
-            throw new Error(`Failed to remove like`)
-          }
-          const data = await removeLike.json()
-          console.log('Data returned by the server:', data)
-        }
-      } catch (error) {
-        console.error(error)
-      }
-      return
-    }
-    post.like++
     const response = await fetch(apiURL.addLike, {
       method: 'POST',
       headers: {
@@ -116,46 +99,56 @@ const likePost = async (post: Post) => {
         postId: post.id,
         userId: userId
       })
-    })
+    });
 
     if (!response.ok) {
-      throw new Error(`Failed to like post`)
+      throw new Error(`Failed to like post`);
     }
 
-    const data = await response.json()
-    console.log('Liked post:', data)
-    fetchPosts()
+    console.log('Post liked successfully');
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-}
+};
+
+const removeLikeFromPost = async (post: Post) => {
+  try {
+    const findLikeResponse = await fetch(`http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId}`);
+    if (!findLikeResponse.ok) {
+      throw new Error('Failed to find like for removal');
+    }
+    const like = await findLikeResponse.json();
+
+    const removeLikeResponse = await fetch(`http://localhost:3003/like/Like/${like.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!removeLikeResponse.ok) {
+      throw new Error('Failed to remove like');
+    }
+
+    console.log('Like removed successfully');
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
 const timeSince = (date: string) => {
-  const seconds = Math.floor(
-    (new Date().getTime() - new Date(date).getTime()) / 1000
-  )
-
+  const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000)
   let interval = seconds / 31536000
-
-  if (interval > 1) {
-    return Math.floor(interval) + ' years'
-  }
+  if (interval > 1) return Math.floor(interval) + ' years'
   interval = seconds / 2592000
-  if (interval > 1) {
-    return Math.floor(interval) + ' months'
-  }
+  if (interval > 1) return Math.floor(interval) + ' months'
   interval = seconds / 86400
-  if (interval > 1) {
-    return Math.floor(interval) + ' days'
-  }
+  if (interval > 1) return Math.floor(interval) + ' days'
   interval = seconds / 3600
-  if (interval > 1) {
-    return Math.floor(interval) + ' hours'
-  }
+  if (interval > 1) return Math.floor(interval) + ' hours'
   interval = seconds / 60
-  if (interval > 1) {
-    return Math.floor(interval) + ' minutes'
-  }
+  if (interval > 1) return Math.floor(interval) + ' minutes'
   return Math.floor(seconds) + ' seconds'
 }
 </script>
