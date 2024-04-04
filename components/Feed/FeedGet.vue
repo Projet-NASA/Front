@@ -75,14 +75,14 @@ const fetchPosts = async () => {
 }
 
 onMounted(() => {
-  userId.value = localStorage.getItem('userId') || ''
+  userId.value = localStorage.getItem('userId') || '' 
   fetchPosts()
 })
 
 const reversedPosts = computed(() => [...posts.value].reverse())
 
 const likePost = async (post: Post) => {
-  const hasLiked = post.userliked.some(user => user.userId === userId)
+  const hasLiked = post.userliked.some(userLike => userLike.userId === userId.value);
 
   if (hasLiked) {
     console.log('Removing like from this post')
@@ -104,7 +104,7 @@ const addLikeToPost = async (post: Post) => {
       },
       body: JSON.stringify({
         postId: post.id,
-        userId: userId
+        userId: userId.value
       })
     })
 
@@ -113,6 +113,7 @@ const addLikeToPost = async (post: Post) => {
     }
 
     console.log('Post liked successfully')
+    await fetchPosts()
   } catch (error) {
     console.error(error)
   }
@@ -121,12 +122,12 @@ const addLikeToPost = async (post: Post) => {
 const removeLikeFromPost = async (post: Post) => {
   try {
     const findLikeResponse = await fetch(
-      `http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId}`
-    )
+      `http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId.value}` // Utilisez .value ici
+    );
     if (!findLikeResponse.ok) {
-      throw new Error('Failed to find like for removal')
+      throw new Error('Failed to find like for removal');
     }
-    const like = await findLikeResponse.json()
+    const like = await findLikeResponse.json();
 
     const removeLikeResponse = await fetch(
       `http://localhost:3003/like/Like/${like.id}`,
@@ -136,17 +137,19 @@ const removeLikeFromPost = async (post: Post) => {
           'Content-Type': 'application/json'
         }
       }
-    )
+    );
 
     if (!removeLikeResponse.ok) {
-      throw new Error('Failed to remove like')
+      throw new Error('Failed to remove like');
     }
 
-    console.log('Like removed successfully')
+    console.log('Like removed successfully');
+    await fetchPosts()
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-}
+};
+
 
 const timeSince = (date: string) => {
   const seconds = Math.floor(

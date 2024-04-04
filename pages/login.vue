@@ -80,8 +80,7 @@
   </section>
 </template>
 
-<script>
-import { useRoute, useRouter } from 'vue-router'
+<script lang="ts">
 import apiURL from '../utils/apiURLs'
 
 export default {
@@ -110,6 +109,8 @@ export default {
         const data = await response.json()
         console.log(data)
         router.push('/')
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('userId', data.user.id)
       } catch (error) {
         console.error(error)
       }
