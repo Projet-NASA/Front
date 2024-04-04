@@ -89,14 +89,11 @@ const likePost = async (post: Post) => {
         console.log(likes)
         if (likes) {
           console.log('deleting like')
-          const removeLike = await fetch(apiURL.deleteLike, {
+          const removeLike = await fetch(`http://localhost:3003/like/Like/${likes.id}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              id: likes.id
-            })
+            }
           })
           if (!removeLike.ok) {
             throw new Error(`Failed to remove like`)
