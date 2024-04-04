@@ -13,12 +13,14 @@
         />
         <div class="ml-2">
           <div class="text-text-default font-bold">User Name</div>
-          <div class="text-text-default text-sm text-gray-500">{{ timeSince(post.createdAt) }}</div>
+          <div class="text-text-default text-sm text-gray-500">
+            {{ timeSince(post.createdAt) }}
+          </div>
         </div>
       </div>
       <div class="text-text-default mb-2">{{ post.message }}</div>
       <div class="flex justify-between text-gray-500 text-sm">
-        <button @click="likePost(post)">{{post.like}} Like</button>
+        <button @click="likePost(post)">{{ post.like }} Like</button>
         <div>0 Comments</div>
       </div>
     </div>
@@ -26,19 +28,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+// import { ref, onMounted, onUnmounted } from 'vue'
 import apiURL from '../../utils/apiURLs'
 
 const userId = '660c0462b7a076125a0dfd08'
 
 interface Post {
-  id: string;
-  createdAt: string;
-  message: string;
-  like: number;
-  userliked: { userId: string }[];
+  id: string
+  createdAt: string
+  message: string
+  like: number
+  userliked: { userId: string }[]
 }
-
+interface Like {
+  userId: string
+  likeId: string
+}
 const posts = ref<Post[]>([])
 
 const fetchPosts = async () => {
@@ -55,18 +60,10 @@ const fetchPosts = async () => {
   }
 }
 
-let intervalId: number | undefined
-
 onMounted(() => {
   fetchPosts()
-  intervalId = window.setInterval(fetchPosts, 2000)
 })
 
-onUnmounted(() => {
-  if (intervalId) {
-    window.clearInterval(intervalId)
-  }
-})
 const reversedPosts = computed(() => [...posts.value].reverse())
 
 // update posts for likes
@@ -76,9 +73,43 @@ const likePost = async (post: Post) => {
     // Check if the user has already liked the post
     if (post.userliked.some(user => user.userId === userId)) {
       console.log('User has already liked this post')
+
+      try {
+        post.like -= 1
+
+        const response = await fetch(
+          `http://localhost:3003/like/LikeByPostId/${post.id}`
+        )
+
+        if (!response.ok) {
+          throw new Error(`Failed to like post`)
+        }
+
+        const likes = await response.json()
+        console.log(likes)
+        if (likes) {
+          console.log('deleting like')
+          const removeLike = await fetch(apiURL.deleteLike, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              id: likes.id
+            })
+          })
+          if (!removeLike.ok) {
+            throw new Error(`Failed to remove like`)
+          }
+          const data = await removeLike.json()
+          console.log('Data returned by the server:', data)
+        }
+      } catch (error) {
+        console.error(error)
+      }
       return
     }
-
+    post.like++
     const response = await fetch(apiURL.addLike, {
       method: 'POST',
       headers: {
@@ -102,36 +133,32 @@ const likePost = async (post: Post) => {
   }
 }
 
-
-
-
-
-
 const timeSince = (date: string) => {
-  const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000)
-  
+  const seconds = Math.floor(
+    (new Date().getTime() - new Date(date).getTime()) / 1000
+  )
+
   let interval = seconds / 31536000
 
   if (interval > 1) {
-    return Math.floor(interval) + " years"
+    return Math.floor(interval) + ' years'
   }
   interval = seconds / 2592000
   if (interval > 1) {
-    return Math.floor(interval) + " months"
+    return Math.floor(interval) + ' months'
   }
   interval = seconds / 86400
   if (interval > 1) {
-    return Math.floor(interval) + " days"
+    return Math.floor(interval) + ' days'
   }
   interval = seconds / 3600
   if (interval > 1) {
-    return Math.floor(interval) + " hours"
+    return Math.floor(interval) + ' hours'
   }
   interval = seconds / 60
   if (interval > 1) {
-    return Math.floor(interval) + " minutes"
+    return Math.floor(interval) + ' minutes'
   }
-  return Math.floor(seconds) + " seconds"
+  return Math.floor(seconds) + ' seconds'
 }
-
 </script>
