@@ -84,13 +84,16 @@
             class="block text-text-default text-sm font-bold mb-2"
             >Date de naissance</label
           >
-          <VDatePicker v-model="formData.dateOfBirth" :popover="false">
+          <VDatePicker v-model="formData.dateofbirth" :popover="false">
             <template #default="{ togglePopover, inputValue, inputEvents }">
               <div class="flex items-center">
                 <button
-                  class="shadow hover:bg-accent-default transition-colors duration-300 appearance-none border border-primary-800 rounded w-12 py-2 pb-3 px-2 text-primary-800 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  @click="() => togglePopover()">
-                  <Icon name="octicon:calendar" />
+                  id="calendar"
+                  type="button"
+                  class="shadow appearance-none border border-primary-800 rounded w-12 py-2 pb-3 px-2 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  @click.stop="togglePopover()"
+                >
+                  <Icon name="octicon:calendar" color="white" />
                 </button>
 
                 <div class="relative">
@@ -103,15 +106,13 @@
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-70 leading-tight focus:outline-none focus:shadow-outline"
                     :class="{
                       'border-red-500 focus:border-red-500 align-middle':
-                        v$.date.$error,
-                      'border-[#42d392] ': !v$.date.$invalid
+                        v$.date.$error
                     }"
                   />
                   <Icon
-                    v-if="!v$.date.$invalid || v$.date.$error"
+                    v-if="v$.date.$error"
                     class="absolute right-2 h-full text-xl text-green-500"
                     :class="{
-                      'text-green-500': !v$.date.$invalid,
                       'text-yellow-500': v$.date.$error
                     }"
                     :name="`heroicons-solid:${!v$.date.$error ? 'check-circle' : 'exclamation'}`"
@@ -233,19 +234,19 @@ const submitForm = async () => {
   try {
     console.log('Soumission du formulaire', formData)
     console.log('JSON.stringify(formData)', JSON.stringify(formData))
-    console.log(formData.dateOfBirth)
+    console.log(formData.dateofbirth)
 
-    const isoDateString = formData.dateOfBirth.toISOString()
+    const isoDateString = formData.dateofbirth.toISOString()
 
     const dateInUTC = new Date(isoDateString)
 
-    const dateInCEST = new Date(dateInUTC.getTime() + 60 * 120 * 1000)
+    const dateInCEST = new Date(dateInUTC.getTime() + 60 * 60 * 1000)
 
     const formattedDateOfBirth = dateInCEST.toISOString()
 
     console.log(formattedDateOfBirth)
 
-    const response = await fetch('http://localhost:3003/user/createUser', {
+    const response = await fetch('http://localhost:3003/User/User', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -277,8 +278,9 @@ const submitForm = async () => {
     formData.password = ''
     formData.country = ''
     formData.city = ''
-    formData.dateOfBirth = ''
+    formData.dateofbirth = ''
     formData.phone = ''
+    router.push('/login')
   } catch (error) {
     console.error('Erreur lors de la requête fetch', error)
     message.value = error.message

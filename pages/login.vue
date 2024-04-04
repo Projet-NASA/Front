@@ -109,8 +109,6 @@ export default {
 
         const data = await response.json()
         console.log(data)
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('userId', data.user.id);
         router.push('/')
       } catch (error) {
         console.error(error)

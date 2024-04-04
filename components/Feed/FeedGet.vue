@@ -13,6 +13,7 @@
         />
         <div class="ml-2">
           <div class="text-text-default font-bold">{{ post.user.firstName }} {{ post.user.lastName }}</div>
+
           <div class="text-text-default text-sm text-gray-500">
             {{ timeSince(post.createdAt) }}
           </div>
@@ -24,13 +25,13 @@
           {{ post.like }} Like{{ post.like !== 1 ? 's' : '' }}
         </button>
         <div>{{ post.comments.length }} Comment{{ post.comments.length !== 1 ? 's' : '' }}</div>
+
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
 import apiURL from '../../utils/apiURLs'
 
 interface User {
@@ -85,11 +86,14 @@ const likePost = async (post: Post) => {
     await addLikeToPost(post);
   }
 
-  await fetchPosts();
-};
 
-const addLikeToPost = async (post: Post) => {
+const likePost = async (post: Post) => {
   try {
+    if (post.userliked.some(user => user.userId === userId)) {
+      console.log('User has already liked this post')
+      return
+    }
+
     const response = await fetch(apiURL.addLike, {
       method: 'POST',
       headers: {
@@ -149,6 +153,7 @@ const timeSince = (date: string) => {
   if (interval > 1) return Math.floor(interval) + ' hours'
   interval = seconds / 60
   if (interval > 1) return Math.floor(interval) + ' minutes'
+
   return Math.floor(seconds) + ' seconds'
 }
 </script>
