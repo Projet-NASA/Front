@@ -16,7 +16,7 @@
       <div class="flex justify-between items-center text-gray-500 text-sm">
         <button @click="likePost(post)">
           {{ post.like }}
-          <span v-if="post.userliked.some(user => user.userId === userId)">phare
+          <span v-if="post.userliked.some(user => user.userId === userId)">
             <Icon name="material-symbols:favorite" class="text-primary-default" />
           </span>
           <span v-else>
