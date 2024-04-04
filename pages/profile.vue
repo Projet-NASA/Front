@@ -87,10 +87,26 @@
       <div class="mb-8 bg-background-200 shadow-md rounded py-8">
         <div class="flex flex-col mb-8">
           <div class="mx-6">
-            <div class="h-6 bg-background-300 animate-pulse w-1/2 mt-4"></div>
-            <div class="h-6 bg-background-300 animate-pulse w-1/2 mt-4"></div>
-            <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-4"></div>
-            <div class="h-6 bg-background-300 animate-pulse w-3/4 mt-1"></div>
+            <div class="mb-8">
+              <div class="h-6 bg-background-300 animate-pulse w-1/4"></div>
+              <div class="mx-6 mt-4 border-t border-background-300 pt-4">
+                <div class="flex flex-col justify-between">
+                  <div class="h-6 bg-background-300 animate-pulse w-1/2"></div>
+                  <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
+                </div>
+                <div class="h-6 bg-background-300 animate-pulse w-3/4 mt-1"></div>
+              </div>
+            </div>
+            <div class="mb-8">
+              <div class="h-6 bg-background-300 animate-pulse w-1/4"></div>
+              <div class="mx-6 mt-4 border-t border-background-300 pt-4">
+                <div class="flex flex-col justify-between">
+                  <div class="h-6 bg-background-300 animate-pulse w-1/2"></div>
+                  <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
+                </div>
+                <div class="h-6 bg-background-300 animate-pulse w-3/4 mt-1"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
