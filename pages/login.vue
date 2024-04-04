@@ -80,7 +80,7 @@
   </section>
 </template>
 
-<script>
+<!-- <script>
 import { useRoute, useRouter } from 'vue-router'
 import apiURL from '../utils/apiURLs'
 
@@ -117,4 +117,28 @@ export default {
     return { user, submitForm }
   }
 }
+</script> -->
+
+<script setup lang="ts">
+import { supabase } from '../utils/supabase'
+
+const user = ref({ email: '', password: '' })
+const message = ref('')
+async function submitForm() {
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: user.value.email,
+      password: user.value.password
+    })
+    console.log(data)
+    if (error) {
+      throw new Error(error.message)
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+onMounted(() => {
+  console.log(supabase)
+})
 </script>

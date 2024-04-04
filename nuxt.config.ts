@@ -2,6 +2,8 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
+    '@nuxtjs/supabase',
+    '@nuxtjs/dotenv',
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
     '@samk-dev/nuxt-vcalendar',
