@@ -37,6 +37,7 @@ const apiURL = {
   updateLike: 'http://localhost:3003/like/Like',
   deleteLike: 'http://localhost:3003/like/Like',
   getLikeByUser: 'http://localhost:3003/like/LikeByUser',
+  getLikeByPost: 'http://localhost:3003/like/LikeByPostId',
 
   addFollower: 'http://localhost:3003/follower/createFollower',
   getFollower: 'http://localhost:3003/follower/Follower',
