@@ -150,48 +150,52 @@ export default {
   data() {
     return {
       user: null,
-      error: null,
-    };
+      error: null
+    }
   },
   async mounted() {
-    checkTokenAndRedirect();
+    checkTokenAndRedirect()
     try {
-      const userId = localStorage.getItem('userId');
-      const token = localStorage.getItem('token');
+      const userId = localStorage.getItem('userId')
+      const token = localStorage.getItem('token')
       if (!userId || !token) {
-        throw new Error('Aucun ID utilisateur ou token trouvé');
+        throw new Error('Aucun ID utilisateur ou token trouvé')
       }
-      const response = await fetch(`http://localhost:3003/user/OneUser/${userId}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `http://localhost:3003/user/OneUser/${userId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      )
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || "Impossible de récupérer les données de l'utilisateur");
+        const data = await response.json()
+        throw new Error(
+          data.error || "Impossible de récupérer les données de l'utilisateur"
+        )
       }
 
-      const data = await response.json();
-      this.user = data;
+      const data = await response.json()
+      this.user = data
     } catch (error) {
-      this.error = error.message;
-      console.error(error.message);
+      this.error = error.message
+      console.error(error.message)
     }
   },
   methods: {
     logout() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('userId');
-      this.$router.push('/login');
+      localStorage.removeItem('token')
+      localStorage.removeItem('userId')
+      this.$router.push('/login')
     },
-    checkTokenAndRedirect() {
-    },
+    checkTokenAndRedirect() {},
     formatDate(date) {
-      return new Date(date).toLocaleDateString();
-    },
-  },
+      return new Date(date).toLocaleDateString()
+    }
+  }
 }
 </script>

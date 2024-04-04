@@ -1,8 +1,16 @@
 <template>
   <div>
-    <div v-for="post in reversedPosts" :key="post.id" class="p-4 bg-secondary-200 rounded shadow mb-4">
+    <div
+      v-for="post in reversedPosts"
+      :key="post.id"
+      class="p-4 bg-secondary-200 rounded shadow mb-4"
+    >
       <div class="flex items-center mb-2">
-        <img class="w-10 h-10 rounded-full" src="../../public/logo-rounded.png" alt="User avatar" />
+        <img
+          class="w-10 h-10 rounded-full"
+          src="../../public/logo-rounded.png"
+          alt="User avatar"
+        />
         <div class="ml-2">
           <div class="text-text-default font-bold">
             {{ post.user.firstName }} {{ post.user.lastName }}
@@ -75,14 +83,16 @@ const fetchPosts = async () => {
 }
 
 onMounted(() => {
-  userId.value = localStorage.getItem('userId') || '' 
+  userId.value = localStorage.getItem('userId') || ''
   fetchPosts()
 })
 
 const reversedPosts = computed(() => [...posts.value].reverse())
 
 const likePost = async (post: Post) => {
-  const hasLiked = post.userliked.some(userLike => userLike.userId === userId.value);
+  const hasLiked = post.userliked.some(
+    userLike => userLike.userId === userId.value
+  )
 
   if (hasLiked) {
     console.log('Removing like from this post')
@@ -122,12 +132,12 @@ const addLikeToPost = async (post: Post) => {
 const removeLikeFromPost = async (post: Post) => {
   try {
     const findLikeResponse = await fetch(
-      `http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId.value}` // Utilisez .value ici
-    );
+      `http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId.value}`
+    )
     if (!findLikeResponse.ok) {
-      throw new Error('Failed to find like for removal');
+      throw new Error('Failed to find like for removal')
     }
-    const like = await findLikeResponse.json();
+    const like = await findLikeResponse.json()
 
     const removeLikeResponse = await fetch(
       `http://localhost:3003/like/Like/${like.id}`,
@@ -137,19 +147,18 @@ const removeLikeFromPost = async (post: Post) => {
           'Content-Type': 'application/json'
         }
       }
-    );
+    )
 
     if (!removeLikeResponse.ok) {
-      throw new Error('Failed to remove like');
+      throw new Error('Failed to remove like')
     }
 
-    console.log('Like removed successfully');
+    console.log('Like removed successfully')
     await fetchPosts()
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
-};
-
+}
 
 const timeSince = (date: string) => {
   const seconds = Math.floor(
