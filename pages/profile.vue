@@ -124,50 +124,36 @@ import { checkTokenAndRedirect } from '../utils/utils'
 export default {
   data() {
     return {
-      user: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        city: '',
-        country: ''
-      }
+      user: null,
+      error: null
     }
   },
+
   async mounted() {
     checkTokenAndRedirect()
-    await this.fetchUserData()
-  },
-  methods: {
-    async mounted() {
-      try {
-        const userId = localStorage.getItem('userId')
-        const response = await fetch(
-          `http://localhost:3003/user/OneUser/${userId}`
-        )
+    try {
+      const userId = localStorage.getItem('userId')
+      const response = await fetch(
+        `http://localhost:3003/user/OneUser/${userId}`
+      )
 
-        const data = await response.json()
-        console.log(data)
+      const data = await response.json()
+      console.log(data)
 
-        if (!response.ok) {
-          this.error = data.error
-        } else {
-          this.user = data
-        }
-      } catch (error) {
-        this.error =
-          'erreur lors de la conversion de la réponse en JSON: ' + error.message
+      if (!response.ok) {
+        this.error = data.error
+      } else {
+        this.user = data
       }
-    },
-    logout() {
-      console.log(localStorage.getItem('token'))
-      console.log(localStorage.getItem('userId'))
-      localStorage.removeItem('token')
-      localStorage.removeItem('userId')
-      this.$router.push('/login')
-      console.log(localStorage.getItem('token'))
-      console.log(localStorage.getItem('userId'))
+    } catch (error) {
+      this.error =
+        'erreur lors de la conversion de la réponse en JSON: ' + error.message
     }
+  },
+  logout() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('userId')
+    this.$router.push('/login')
   }
 }
 </script>
