@@ -113,6 +113,7 @@ const addLikeToPost = async (post: Post) => {
     }
 
     console.log('Post liked successfully')
+    await fetchPosts()
   } catch (error) {
     console.error(error)
   }
@@ -143,6 +144,7 @@ const removeLikeFromPost = async (post: Post) => {
     }
 
     console.log('Like removed successfully');
+    await fetchPosts()
   } catch (error) {
     console.error(error);
   }
