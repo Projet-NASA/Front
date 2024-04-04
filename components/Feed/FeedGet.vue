@@ -17,17 +17,17 @@
         <button @click="likePost(post)">
           {{ post.like }}
           <span v-if="post.userliked.some(user => user.userId === userId)">
-            <Icon name="material-symbols:favorite" class="text-primary-default" />
+            <Icon name="material-symbols:favorite" class="text-primary-default text-lg" />
           </span>
           <span v-else>
             <Icon name="material-symbols:favorite-outline"
-              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default" />
+              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-lg" />
           </span>
         </button>
         <div>
           {{ post.comments.length }}
           <Icon name="material-symbols:chat"
-            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer" />
+            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-lg" />
         </div>
       </div>
     </div>

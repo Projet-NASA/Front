@@ -19,9 +19,11 @@
             AutoLinkedIn
           </div>
         </nuxt-link>
-        <div class="flex items-center">
-          <input type="text" placeholder="Search"
-            class="w-32 md:w-48 lg:w-64 xl:w-96 text-black px-4 py-2 border bg-white border-secondary-default rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary-300" />
+        <div class="flex items-center bg-white border-secondary-default rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary-300">
+          <Icon name="material-symbols:search" class="text-black ml-2" />
+          <input type="text" placeholder="Search..."
+            class="w-32 md:w-48 lg:w-64 xl:w-96 text-black px-4 py-2 rounded-lg" />
+          
         </div>
         <button class="flex items-center sm:hidden text-3xl" @click="developMenu">
           <span v-if="menuDeveloped">

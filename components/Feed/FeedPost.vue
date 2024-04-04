@@ -1,14 +1,14 @@
 <template>
   <div
     id="addPopup"
-    class="flex justify-center p-5 bg-background-200 border-2 border-accent-default rounded-lg"
+    class="flex justify-center p-5 bg-background-default border-2 border-accent-default rounded-lg"
   >
     <form id="createPost" class="w-full">
       <textarea
         type="text"
         id="postContent"
-        class="w-full bg-background-200 outline-none text-text-default"
-        placeholder="Title"
+        class="w-full bg-background-default outline-none text-text-default"
+        placeholder="Enter your post here..."
         v-model="postContent"
       ></textarea>
       <div class="flex justify-end">

@@ -4,12 +4,8 @@
       <div class="p-4 bg-secondary-200 rounded shadow mb-4">
         <div v-if="postField == false">
           <button
-
             class="w-full p-2 border rounded text-left text-text-900 bg-background-default hover:outline-primary-default hover:outline hover:shadow-outline"
-            type="button"
-            @click="postField = true"
-
-          >
+            type="button" @click="postField = true">
             Start a post
           </button>
         </div>
