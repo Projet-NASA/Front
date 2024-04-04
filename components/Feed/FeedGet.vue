@@ -222,7 +222,7 @@ const fetchComments = async () => {
 }
 
 const postComments = (postId: string) => {
-  return comments.value.filter(comment => comment.postId === postId)
+  return comments.value.filter((comment: { postId: string }) => comment.postId === postId)
 }
 
 const timeSince = (date: string) => {
