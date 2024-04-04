@@ -93,7 +93,7 @@
                   class="shadow appearance-none border border-primary-800 rounded w-12 py-2 pb-3 px-2 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline"
                   @click.stop="togglePopover()"
                 >
-                  <Icon name="octicon:calendar" color="white" />
+                  <Icon name="octicon:calendar" />
                 </button>
 
                 <div class="relative">
@@ -106,18 +106,17 @@
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-70 leading-tight focus:outline-none focus:shadow-outline"
                     :class="{
                       'border-red-500 focus:border-red-500 align-middle':
-                        v$.date.$error,
+                        v$.date.$error
                     }"
                   />
                   <Icon
-                    v-if=" v$.date.$error"
+                    v-if="v$.date.$error"
                     class="absolute right-2 h-full text-xl text-green-500"
                     :class="{
                       'text-yellow-500': v$.date.$error
                     }"
                     :name="`heroicons-solid:${!v$.date.$error ? 'check-circle' : 'exclamation'}`"
                   />
-
                 </div>
               </div>
             </template>
