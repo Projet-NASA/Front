@@ -1,16 +1,8 @@
 <template>
   <div>
-    <div
-      v-for="post in reversedPosts"
-      :key="post.id"
-      class="p-4 bg-secondary-200 rounded shadow mb-4"
-    >
+    <div v-for="post in reversedPosts" :key="post.id" class="p-4 bg-secondary-200 rounded shadow mb-4">
       <div class="flex items-center mb-2">
-        <img
-          class="w-10 h-10 rounded-full"
-          src="../../public/logo-rounded.png"
-          alt="User avatar"
-        />
+        <img class="w-10 h-10 rounded-full" src="../../public/logo-rounded.png" alt="User avatar" />
         <div class="ml-2">
           <div class="text-text-default font-bold">
             {{ post.user.firstName }} {{ post.user.lastName }}
@@ -21,14 +13,21 @@
         </div>
       </div>
       <div class="text-text-default mb-2">{{ post.message }}</div>
-      <div class="flex justify-between text-gray-500 text-sm">
+      <div class="flex justify-between items-center text-gray-500 text-sm">
         <button @click="likePost(post)">
-          {{ post.like }} Like{{ post.like !== 1 ? 's' : '' }}
+          {{ post.like }}
+          <span v-if="post.userliked.some(user => user.userId === userId)">
+            <Icon name="material-symbols:favorite" class="text-primary-default" />
+          </span>
+          <span v-else>
+            <Icon name="material-symbols:favorite-outline"
+              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default" />
+          </span>
         </button>
         <div>
-          {{ post.comments.length }} Comment{{
-            post.comments.length !== 1 ? 's' : ''
-          }}
+          {{ post.comments.length }}
+          <Icon name="material-symbols:chat"
+            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer" />
         </div>
       </div>
     </div>
