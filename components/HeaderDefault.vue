@@ -25,46 +25,46 @@
         </div>
         <button class="flex items-center sm:hidden" @click="developMenu">
           <span v-if="menuDeveloped">
-            <Icon name="material-symbols:keyboard-arrow-up-rounded" />
+            <Icon name="material-symbols:keyboard-arrow-up-rounded" class="hover:animate-bounce click:animate-bounce" />
           </span>
           <span v-else>
-            <Icon name="material-symbols:keyboard-arrow-down-rounded" />
+            <Icon name="material-symbols:keyboard-arrow-down-rounded" class="hover:animate-bounce click:animate-bounce" />
           </span>
         </button>
       </div>
       <ul class="hidden sm:flex flex-row mx-auto items-center space-x-5 lg:space-x-10 text-2xl font-bold" id="navbar">
         <li>
           <nuxt-link to="/Login" class="text-text-default">
-            <Icon name="material-symbols:login" />
+            <Icon name="material-symbols:login" class="hover:animate-bounce click:animate-bounce"/>
           </nuxt-link>
         </li>
         <li>
           <nuxt-link to="register" class="text-text-default">
-            <Icon name="material-symbols:edit-square-outline" />
+            <Icon name="material-symbols:edit-square-outline" class="hover:animate-bounce click:animate-bounce" />
           </nuxt-link>
         </li>
         <li>
           <nuxt-link to="/" class="text-text-default">
-            <Icon name="material-symbols:chat" />
+            <Icon name="material-symbols:chat" class="hover:animate-bounce click:animate-bounce" />
           </nuxt-link>
         </li>
         <li>
           <nuxt-link to="/" class="text-text-default">
-            <Icon name="material-symbols:circle-notifications" />
+            <Icon name="material-symbols:circle-notifications" class="hover:animate-bounce click:animate-bounce" />
           </nuxt-link>
         </li>
         <li>
           <nuxt-link to="/profile" class="text-text-default" title="Profile">
-            <Icon name="material-symbols:account-circle-full" />
+            <Icon name="material-symbols:account-circle-full" class="hover:animate-bounce click:animate-bounce" />
           </nuxt-link>
         </li>
         <li>
           <button @click="toggleTheme" class="text-text-50">
             <span v-if="isDarkTheme">
-              <Icon name="material-symbols:dark-mode" />
+              <Icon name="material-symbols:dark-mode" class="hover:animate-bounce click:animate-bounce" />
             </span>
             <span v-else>
-              <Icon name="material-symbols:clear-day-rounded" />
+              <Icon name="material-symbols:clear-day-rounded" class="hover:animate-bounce click:animate-bounce" />
             </span>
           </button>
         </li>
