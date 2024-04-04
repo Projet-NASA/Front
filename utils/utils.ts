@@ -5,7 +5,7 @@ export function checkTokenAndRedirect() {
   const token = localStorage.getItem('token')
   const userId = localStorage.getItem('userId')
 
-  if(token === null || userId === null) {
+  if (token === null || userId === null) {
     console.log(localStorage.getItem('token'))
     console.log(localStorage.getItem('userId'))
     router.push('/login')
