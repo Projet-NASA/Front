@@ -1,4 +1,4 @@
-import { useRouter } from 'vue-router'
+/* import { useRouter } from 'vue-router'
 
 export function checkTokenAndRedirect() {
   const router = useRouter()
@@ -8,3 +8,4 @@ export function checkTokenAndRedirect() {
     router.push('/')
   }
 }
+*/
