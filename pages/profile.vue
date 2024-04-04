@@ -4,7 +4,7 @@
       <div class=" my-8 bg-background-200 shadow-md rounded pb-8">
         <div class="flex flex-col mb-8">
           <div class="flex flex-row-reverse">
-            <img src="../assets/images/logo.png" class="w-full h-40 rounded" />
+            <img src="../assets/images/sacha_wide.png" class="w-full h-40 rounded" />
             <button
               class="bg-primary-default hover:bg-primary-400 text-white rounded-full h-10 w-10 mt-4 mr-4 absolute flex items-center justify-center transition-colors duration-300">
               <Icon name="material-symbols:edit" class="w-6 h-6" />
