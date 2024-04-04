@@ -1,16 +1,8 @@
 <template>
   <div>
-    <div
-      v-for="post in reversedPosts"
-      :key="post.id"
-      class="p-4 bg-secondary-200 rounded shadow mb-4"
-    >
+    <div v-for="post in reversedPosts" :key="post.id" class="p-4 bg-secondary-200 rounded shadow mb-4">
       <div class="flex items-center mb-2">
-        <img
-          class="w-10 h-10 rounded-full"
-          src="../../public/logo-rounded.png"
-          alt="User avatar"
-        />
+        <img class="w-10 h-10 rounded-full" src="../../public/logo-rounded.png" alt="User avatar" />
         <div class="ml-2">
           <div class="text-text-default font-bold">User Name</div>
           <div class="text-text-default text-sm text-gray-500">
@@ -19,9 +11,21 @@
         </div>
       </div>
       <div class="text-text-default mb-2">{{ post.message }}</div>
-      <div class="flex justify-between text-gray-500 text-sm">
-        <button @click="likePost(post)">{{ post.like }} Like</button>
-        <div>0 Comments</div>
+      <div class="flex justify-between items-center text-gray-500 text-sm">
+        <button @click="likePost(post)">
+          <span v-if="post.userliked.some(user => user.userId === userId)">
+            <Icon name="material-symbols:favorite" class="w-4 h-4 mr-1 my-auto text-primary-default" />
+          </span>
+          <span v-else>
+            <Icon name="material-symbols:favorite-outline"
+              class="w-4 h-4 mr-1 hover:animate-ping click:animate-ping hover:text-primary-default" />
+          </span>
+          {{ post.like }}
+        </button>
+        <div>
+          0
+          <Icon name="material-symbols:comment" class="w-4 h-4 ml-1 my-auto" />
+        </div>
       </div>
     </div>
   </div>
