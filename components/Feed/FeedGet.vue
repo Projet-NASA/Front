@@ -70,7 +70,6 @@ onUnmounted(() => {
 })
 const reversedPosts = computed(() => [...posts.value].reverse())
 
-
 const likePost = async (post: Post) => {
   try {
     if (post.userliked.some(user => user.userId === userId)) {
