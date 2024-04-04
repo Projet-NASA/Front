@@ -19,8 +19,18 @@
       <div class="text-text-default mb-2">{{ post.message }}</div>
       <div class="flex justify-between text-gray-500 text-sm">
         <button @click="likePost(post)">{{post.like}} Like</button>
-        <div>0 Comments</div>
+        <button>0 Comments</button>
       </div>
+      <FeedComment/>
+        <div v-if="postComments(post.id).length > 0" class="comments-section">
+        <div
+          v-for="comment in postComments(post.id)"
+          :key="comment.id"
+          class="p-4 bg-secondary-200 rounded shadow mb-4"
+        >
+          <div class="text-text-default mb-2">{{ comment.message }}</div>
+        </div>
+    </div>
     </div>
   </div>
 </template>
@@ -39,7 +49,19 @@ interface Post {
   userliked: { userId: string }[];
 }
 
+interface Comment {
+  id: string;
+  createdAt: string;
+  message: string;
+  postId: string;
+}
+
+
+const comments = ref<Comment[]>([])
+
+
 const posts = ref<Post[]>([])
+
 
 const fetchPosts = async () => {
   try {
@@ -55,11 +77,24 @@ const fetchPosts = async () => {
   }
 }
 
+// const invisible = async (id) =>{
+//   if (document.getElementById(id).style.display == 'none')
+//   {
+//        document.getElementById(id).style.display = 'block';
+//   }
+//   else
+//   {
+//        document.getElementById(id).style.display = 'none';
+//   }
+// }
+
 let intervalId: number | undefined
 
 onMounted(() => {
   fetchPosts()
+  fetchComments()
   intervalId = window.setInterval(fetchPosts, 2000)
+  intervalId = window.setInterval(fetchComments, 2000)
 })
 
 onUnmounted(() => {
@@ -68,6 +103,8 @@ onUnmounted(() => {
   }
 })
 const reversedPosts = computed(() => [...posts.value].reverse())
+const reversedcomments = computed(() => [...comments.value].reverse())
+
 
 // update posts for likes
 
@@ -103,9 +140,24 @@ const likePost = async (post: Post) => {
 }
 
 
+const fetchComments = async () => {
+  try {
+  
+    const response = await fetch(apiURL.getComment)
 
+    if (!response.ok) {
+      throw new Error('Failed to fetch comments')
+    }
 
+    comments.value = await response.json()
+  } catch (error) {
+    console.error(error)
+  }
+}
 
+const postComments = (postId: string) => {
+  return comments.value.filter(comment => comment.postId === postId)
+}
 
 const timeSince = (date: string) => {
   const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000)
