@@ -80,8 +80,7 @@
   </section>
 </template>
 
-<script>
-import { useRoute, useRouter } from 'vue-router'
+<script lang="ts">
 import apiURL from '../utils/apiURLs'
 
 export default {
