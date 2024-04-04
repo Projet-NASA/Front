@@ -1,24 +1,24 @@
 <template>
   <div>
-      <form id="createComment" class="w-full">
-          <textarea
-              type="text"
-              id="commentContent"
-              class="w-full bg-background-200 outline-none text-text-default"
-              placeholder="Ajouter un commentaire"
-              v-model="commentContent"
-          ></textarea>
-          <div class="flex justify-end">
-              <button
-                  type="submit"
-                  id="createComment"
-                  class="bg-primary-200 px-2 py-1 rounded-lg text-text-default hover:bg-primary-default hover:text-text-50 transition-colors duration-300 focus:outline-none focus:shadow-outline"
-                  @click.prevent="createComment"
-              >
-                  Comment
-              </button>
-          </div>
-      </form>
+    <form id="createComment" class="w-full">
+      <textarea
+        type="text"
+        id="commentContent"
+        class="w-full bg-background-200 outline-none text-text-default"
+        placeholder="Ajouter un commentaire"
+        v-model="commentContent"
+      ></textarea>
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          id="createComment"
+          class="bg-primary-200 px-2 py-1 rounded-lg text-text-default hover:bg-primary-default hover:text-text-50 transition-colors duration-300 focus:outline-none focus:shadow-outline"
+          @click.prevent="createComment"
+        >
+          Comment
+        </button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -39,35 +39,35 @@ const props = defineProps({
 const createComment = async () => {
   console.log('Creating comment:', commentContent.value)
   if (commentContent.value != '') {
-      try {
-          const response = await fetch(apiURL.addComment, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                  message: commentContent.value,
-                  userId: userId,
-                  postId: props.postId, // Utiliser l'ID du post passé depuis les props
-              })
-          })
+    try {
+      const response = await fetch(apiURL.addComment, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: commentContent.value,
+          userId: userId,
+          postId: props.postId // Utiliser l'ID du post passé depuis les props
+        })
+      })
 
-          console.log(props.postId);
-          
-          if (!response.ok) {
-              throw new Error(`Failed to create comment`)
-          }
+      console.log(props.postId)
 
-          const data = await response.json()
-          console.log('Created comment:', data)
-
-          commentContent.value = ''
-
-          emits('update', false)
-      } catch (error) {
-          console.error(error)
-          // Gérer les erreurs ici
+      if (!response.ok) {
+        throw new Error(`Failed to create comment`)
       }
+
+      const data = await response.json()
+      console.log('Created comment:', data)
+
+      commentContent.value = ''
+
+      emits('update', false)
+    } catch (error) {
+      console.error(error)
+      // Gérer les erreurs ici
+    }
   }
 }
 </script>

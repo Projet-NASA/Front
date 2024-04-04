@@ -45,8 +45,8 @@
           />
         </button>
       </div>
-    <FeedComment :postId="`${post.id}`"/>
-        <div v-if="postComments(post.id).length > 0" class="comments-section">
+      <FeedComment :postId="`${post.id}`" />
+      <div v-if="postComments(post.id).length > 0" class="comments-section">
         <div
           v-for="comment in postComments(post.id)"
           :key="comment.id"
@@ -54,7 +54,7 @@
         >
           <div class="text-text-default mb-2">{{ comment.message }}</div>
         </div>
-    </div>
+      </div>
     </div>
   </div>
 </template>
@@ -69,8 +69,6 @@ interface User {
   avatar?: string
 }
 
-
-
 interface Post {
   id: string
   createdAt: string
@@ -83,18 +81,15 @@ interface Post {
 const userId = ref('')
 
 interface Comment {
-  id: string;
-  createdAt: string;
-  message: string;
-  postId: string;
+  id: string
+  createdAt: string
+  message: string
+  postId: string
 }
-
 
 const comments = ref<Comment[]>([])
 
-
 const posts = ref<Post[]>([])
-
 
 const fetchPosts = async () => {
   try {
@@ -131,7 +126,6 @@ onMounted(() => {
 
 const reversedPosts = computed(() => [...posts.value].reverse())
 const reversedcomments = computed(() => [...comments.value].reverse())
-
 
 // update posts for likes
 
@@ -204,11 +198,10 @@ const removeLikeFromPost = async (post: Post) => {
   } catch (error) {
     console.error(error)
   }
-};
+}
 
 const fetchComments = async () => {
   try {
-  
     const response = await fetch(apiURL.getComment)
 
     if (!response.ok) {
@@ -222,7 +215,9 @@ const fetchComments = async () => {
 }
 
 const postComments = (postId: string) => {
-  return comments.value.filter((comment: { postId: string }) => comment.postId === postId)
+  return comments.value.filter(
+    (comment: { postId: string }) => comment.postId === postId
+  )
 }
 
 const timeSince = (date: string) => {
