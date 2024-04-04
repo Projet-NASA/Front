@@ -160,10 +160,11 @@ import { checkTokenAndRedirect } from '../utils/utils'
 export default {
   data() {
     return {
-      formatDate: (date) => {
-        return new Date(date).toLocaleDateString();
+      user: null,
+      error: null,
+      formaDate: (date) => {
+        return new Date(date).toLocaleDateString()
       }
-
     }
   },
 
