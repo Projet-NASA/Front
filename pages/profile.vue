@@ -6,7 +6,7 @@
       <div class="my-8 bg-background-200 shadow-md rounded pb-8">
         <div class="flex flex-col mb-8">
           <div class="flex flex-row-reverse">
-            <img src="../assets/images/logo.png" class="w-full h-40 rounded" />
+            <img src="../assets/images/sacha_wide.png" class="w-full h-40 rounded" />
             <button
               class="bg-primary-default hover:bg-primary-400 text-white rounded-full h-10 w-10 mt-4 mr-4 absolute flex items-center justify-center transition-colors duration-300"
             >
@@ -39,15 +39,37 @@
       <div class="mb-8 bg-background-200 shadow-md rounded py-8">
         <div class="flex flex-col mb-8">
           <div class="mx-6">
-            <h1 class="text-2xl font-bold">Experience</h1>
-            <div class="flex flex-row justify-between">
-              <h2 class="text-lg">Company</h2>
-              <h2 class="text-lg">Date</h2>
+            <div class="mb-8">
+              <h1 class="text-2xl font-bold">Experiences</h1>
+              <div v-for="experience in user.experiences" :key="experience.id"
+                class="mx-6 mt-4 border-t border-background-300 pt-4">
+                <div class="flex flex-col justify-between">
+                  <h2 class="text-lg">{{ experience.title }}</h2>
+                  <div class="flex flex-row justify-between">
+                    <h2 class="text-lg">{{ experience.company }}</h2>
+                    <h2 class="text-lg">{{ formatDate(experience.from) }} - {{ formatDate(experience.to) }}</h2>
+                  </div>
+                </div>
+                <p class="font-light">{{ experience.description }}</p>
+              </div>
             </div>
-            <p class="font-light">Description</p>
+            <div class="mb-8">
+              <h1 class="text-2xl font-bold">Jobs</h1>
+              <div v-for="job in user.jobs" :key="job.id" class="mx-6 mt-4 border-t border-background-300 pt-4">
+                <div class="flex flex-col justify-between">
+                  <h2 class="text-lg">{{ job.title }}</h2>
+                  <div class="flex flex-row justify-between">
+                    <h2 class="text-lg">{{ job.company }}</h2>
+                    <h2 class="text-lg">{{ formatDate(job.from) }} - {{ formatDate(job.to) }}</h2>
+                  </div>
+                </div>
+                <p class="font-light">{{ job.description }}</p>
+              </div>
+            </div>
           </div>
         </div>
         <button
+
           @click="logout()"
           class="bg-red-500 hover:bg-red-800 text-white rounded p-2 mx-auto flex items-center justify-center transition-colors duration-300"
         >
@@ -82,12 +104,26 @@
       <div class="mb-8 bg-background-200 shadow-md rounded py-8">
         <div class="flex flex-col mb-8">
           <div class="mx-6">
-            <div class="h-6 bg-background-300 animate-pulse w-1/2 mt-4"></div>
-            <div class="flex flex-row justify-between">
-              <div class="h-6 bg-background-300 animate-pulse w-1/2 mt-4"></div>
-              <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-4"></div>
+            <div class="mb-8">
+              <div class="h-6 bg-background-300 animate-pulse w-1/4"></div>
+              <div class="mx-6 mt-4 border-t border-background-300 pt-4">
+                <div class="flex flex-col justify-between">
+                  <div class="h-6 bg-background-300 animate-pulse w-1/2"></div>
+                  <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
+                </div>
+                <div class="h-6 bg-background-300 animate-pulse w-3/4 mt-1"></div>
+              </div>
             </div>
-            <div class="h-6 bg-background-300 animate-pulse w-3/4 mt-1"></div>
+            <div class="mb-8">
+              <div class="h-6 bg-background-300 animate-pulse w-1/4"></div>
+              <div class="mx-6 mt-4 border-t border-background-300 pt-4">
+                <div class="flex flex-col justify-between">
+                  <div class="h-6 bg-background-300 animate-pulse w-1/2"></div>
+                  <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
+                </div>
+                <div class="h-6 bg-background-300 animate-pulse w-3/4 mt-1"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -124,8 +160,10 @@ import { checkTokenAndRedirect } from '../utils/utils'
 export default {
   data() {
     return {
-      user: null,
-      error: null
+      formatDate: (date) => {
+        return new Date(date).toLocaleDateString();
+      }
+
     }
   },
 
