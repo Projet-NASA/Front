@@ -12,7 +12,9 @@
           alt="User avatar"
         />
         <div class="ml-2">
-          <div class="text-text-default font-bold">{{ post.user.firstName }} {{ post.user.lastName }}</div>
+          <div class="text-text-default font-bold">
+            {{ post.user.firstName }} {{ post.user.lastName }}
+          </div>
           <div class="text-text-default text-sm text-gray-500">
             {{ timeSince(post.createdAt) }}
           </div>
@@ -23,7 +25,11 @@
         <button @click="likePost(post)">
           {{ post.like }} Like{{ post.like !== 1 ? 's' : '' }}
         </button>
-        <div>{{ post.comments.length }} Comment{{ post.comments.length !== 1 ? 's' : '' }}</div>
+        <div>
+          {{ post.comments.length }} Comment{{
+            post.comments.length !== 1 ? 's' : ''
+          }}
+        </div>
       </div>
     </div>
   </div>
@@ -53,8 +59,7 @@ interface Post {
   user: User
   comments: Comment[]
 }
-
-const userId =  localStorage.getItem('userId') || ''
+const userId = ref('')
 
 const posts = ref<Post[]>([])
 
@@ -70,23 +75,26 @@ const fetchPosts = async () => {
   }
 }
 
-onMounted(fetchPosts)
+onMounted(() => {
+  userId.value = localStorage.getItem('userId') || ''
+  fetchPosts()
+})
 
 const reversedPosts = computed(() => [...posts.value].reverse())
 
 const likePost = async (post: Post) => {
-  const hasLiked = post.userliked.some(user => user.userId === userId);
+  const hasLiked = post.userliked.some(user => user.userId === userId)
 
   if (hasLiked) {
-    console.log('Removing like from this post');
-    await removeLikeFromPost(post);
+    console.log('Removing like from this post')
+    await removeLikeFromPost(post)
   } else {
-    console.log('Adding like to this post');
-    await addLikeToPost(post);
+    console.log('Adding like to this post')
+    await addLikeToPost(post)
   }
 
-  await fetchPosts();
-};
+  await fetchPosts()
+}
 
 const addLikeToPost = async (post: Post) => {
   try {
@@ -99,46 +107,52 @@ const addLikeToPost = async (post: Post) => {
         postId: post.id,
         userId: userId
       })
-    });
+    })
 
     if (!response.ok) {
-      throw new Error(`Failed to like post`);
+      throw new Error(`Failed to like post`)
     }
 
-    console.log('Post liked successfully');
+    console.log('Post liked successfully')
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
-};
+}
 
 const removeLikeFromPost = async (post: Post) => {
   try {
-
-    const findLikeResponse = await fetch(`http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId}`);
+    const findLikeResponse = await fetch(
+      `http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId}`
+    )
     if (!findLikeResponse.ok) {
-      throw new Error('Failed to find like for removal');
+      throw new Error('Failed to find like for removal')
     }
-    const like = await findLikeResponse.json();
+    const like = await findLikeResponse.json()
 
-    const removeLikeResponse = await fetch(`http://localhost:3003/like/Like/${like.id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
+    const removeLikeResponse = await fetch(
+      `http://localhost:3003/like/Like/${like.id}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-    });
+    )
 
     if (!removeLikeResponse.ok) {
-      throw new Error('Failed to remove like');
+      throw new Error('Failed to remove like')
     }
 
-    console.log('Like removed successfully');
+    console.log('Like removed successfully')
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
-};
+}
 
 const timeSince = (date: string) => {
-  const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000)
+  const seconds = Math.floor(
+    (new Date().getTime() - new Date(date).getTime()) / 1000
+  )
   let interval = seconds / 31536000
   if (interval > 1) return Math.floor(interval) + ' years'
   interval = seconds / 2592000
