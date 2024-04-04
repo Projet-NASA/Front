@@ -23,7 +23,7 @@
           <input type="text" placeholder="Search"
             class="w-32 md:w-48 lg:w-64 xl:w-96 text-black px-4 py-2 border bg-white border-secondary-default rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary-300" />
         </div>
-        <button class="flex items-center sm:hidden" @click="developMenu">
+        <button class="flex items-center sm:hidden text-3xl" @click="developMenu">
           <span v-if="menuDeveloped">
             <Icon name="material-symbols:keyboard-arrow-up-rounded" class="hover:animate-bounce click:animate-bounce" />
           </span>
@@ -32,17 +32,7 @@
           </span>
         </button>
       </div>
-      <ul class="hidden sm:flex flex-row mx-auto items-center space-x-5 lg:space-x-10 text-2xl font-bold" id="navbar">
-        <li>
-          <nuxt-link to="/Login" class="text-text-default" title="Login">
-            <Icon name="ph:flag-checkered-fill" class="hover:animate-bounce click:animate-bounce"/>
-          </nuxt-link>
-        </li>
-        <li>
-          <nuxt-link to="register" class="text-text-default" title="Register">
-            <Icon name="fluent-emoji-high-contrast:racing-car" class="hover:animate-bounce click:animate-bounce" />
-          </nuxt-link>
-        </li>
+      <ul class="hidden sm:flex flex-row mx-auto items-center space-x-5 lg:space-x-10 text-3xl font-bold" id="navbar">
         <li>
           <nuxt-link to="/" class="text-text-default" title="Messages">
             <Icon name="material-symbols:chat" class="hover:animate-bounce click:animate-bounce" />
