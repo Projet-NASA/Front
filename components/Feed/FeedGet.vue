@@ -1,8 +1,16 @@
 <template>
   <div>
-    <div v-for="post in reversedPosts" :key="post.id" class="p-4 bg-secondary-200 rounded shadow mb-4">
+    <div
+      v-for="post in reversedPosts"
+      :key="post.id"
+      class="p-4 bg-secondary-200 rounded shadow mb-4"
+    >
       <div class="flex items-center mb-2">
-        <img class="w-10 h-10 rounded-full" src="../../public/logo-rounded.png" alt="User avatar" />
+        <img
+          class="w-10 h-10 rounded-full"
+          src="../../public/logo-rounded.png"
+          alt="User avatar"
+        />
         <div class="ml-2">
           <div class="text-text-default font-bold">
             {{ post.user.firstName }} {{ post.user.lastName }}
@@ -17,17 +25,24 @@
         <button @click="likePost(post)">
           {{ post.like }}
           <span v-if="post.userliked.some(user => user.userId === userId)">
-            <Icon name="material-symbols:favorite" class="text-primary-default" />
+            <Icon
+              name="material-symbols:favorite"
+              class="text-primary-default"
+            />
           </span>
           <span v-else>
-            <Icon name="material-symbols:favorite-outline"
-              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default" />
+            <Icon
+              name="material-symbols:favorite-outline"
+              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default"
+            />
           </span>
         </button>
         <button>
           {{ post.comments.length }}
-          <Icon name="material-symbols:chat"
-            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer" />
+          <Icon
+            name="material-symbols:chat"
+            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer"
+          />
         </button>
       </div>
     <FeedComment :postId="`${post.id}`"/>
@@ -107,7 +122,7 @@ const fetchPosts = async () => {
 let intervalId: number | undefined
 
 onMounted(() => {
-  userId.value = localStorage.getItem('userId') || '' 
+  userId.value = localStorage.getItem('userId') || ''
   fetchPosts()
   fetchComments()
   intervalId = window.setInterval(fetchPosts, 2000)
@@ -121,7 +136,9 @@ const reversedcomments = computed(() => [...comments.value].reverse())
 // update posts for likes
 
 const likePost = async (post: Post) => {
-  const hasLiked = post.userliked.some(userLike => userLike.userId === userId.value);
+  const hasLiked = post.userliked.some(
+    userLike => userLike.userId === userId.value
+  )
 
   if (hasLiked) {
     console.log('Removing like from this post')
@@ -161,12 +178,12 @@ const addLikeToPost = async (post: Post) => {
 const removeLikeFromPost = async (post: Post) => {
   try {
     const findLikeResponse = await fetch(
-      `http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId.value}` // Utilisez .value ici
-    );
+      `http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId.value}`
+    )
     if (!findLikeResponse.ok) {
-      throw new Error('Failed to find like for removal');
+      throw new Error('Failed to find like for removal')
     }
-    const like = await findLikeResponse.json();
+    const like = await findLikeResponse.json()
 
     const removeLikeResponse = await fetch(
       `http://localhost:3003/like/Like/${like.id}`,
@@ -176,16 +193,16 @@ const removeLikeFromPost = async (post: Post) => {
           'Content-Type': 'application/json'
         }
       }
-    );
+    )
 
     if (!removeLikeResponse.ok) {
-      throw new Error('Failed to remove like');
+      throw new Error('Failed to remove like')
     }
 
-    console.log('Like removed successfully');
+    console.log('Like removed successfully')
     await fetchPosts()
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 };
 

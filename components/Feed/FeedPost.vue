@@ -43,7 +43,7 @@ const createPost = async () => {
         },
         body: JSON.stringify({
           message: postContent.value,
-          userId: '660c0462b7a076125a0dfd08'
+          userId: localStorage.getItem('userId')
         })
       })
 
