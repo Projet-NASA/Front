@@ -10,7 +10,7 @@ export const useFormStore = defineStore('form', {
             phone:'',
             country:'',
             city:'',
-            dateOfBirth:'',
+            dateofbirth:'',
         }
     }),
     actions:{

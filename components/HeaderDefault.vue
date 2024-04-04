@@ -38,8 +38,8 @@
             class="w-32 md:w-48 lg:w-64 xl:w-96 text-black px-4 py-2 border bg-white border-secondary-default rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary-300"
           />
         </div>
-        <button class="flex items-center sm:hidden" @click="developMenu">
-          <FontAwesomeIcon :icon="faChevronDown" class="block" id="develop" />
+        <button class="flex items-center sm:hidden" @click="developMenu" title="Toggle Menu">
+          <FontAwesomeIcon :icon="faChevronDown" class="block" id="develop"/>
           <FontAwesomeIcon :icon="faChevronUp" class="hidden" id="hide" />
         </button>
       </div>
@@ -48,7 +48,7 @@
         id="navbar"
       >
         <li>
-          <nuxt-link to="/Login" class="text-text-default">
+          <nuxt-link to="/Login" class="text-text-default" title="Login">
             <span v-if="$route.path === '/Login'">
               <FontAwesomeIcon :icon="faArrowRightToBracket" bounce />
             </span>
@@ -58,7 +58,7 @@
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="register" class="text-text-default">
+          <nuxt-link to="register" class="text-text-default" title="Register">
             <span v-if="$route.path === '/register'">
               <FontAwesomeIcon :icon="faPenToSquare" bounce />
             </span>
@@ -68,23 +68,29 @@
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/" class="text-text-default">
-            <FontAwesomeIcon :icon="faEnvelope" />
+          <nuxt-link to="/" class="text-text-default" title="Messages">
+            <FontAwesomeIcon :icon=faEnvelope />
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/" class="text-text-default">
-            <FontAwesomeIcon :icon="faBell" />
+          <nuxt-link to="/" class="text-text-default" title="Notifications">
+            <FontAwesomeIcon :icon=faBell />
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/" class="text-text-default">
-            <FontAwesomeIcon :icon="faIdCard" />
+          <nuxt-link to="/profile" class="text-text-default" title="Profile">
+            <span v-if="$route.path === '/profile'">
+              <FontAwesomeIcon :icon="faIdCard" bounce />
+            </span>
+            <span v-else>
+              <FontAwesomeIcon :icon=faIdCard />
+            </span>
+
           </nuxt-link>
         </li>
         <li>
-          <button @click="toggleTheme" class="text-text-default">
-            <FontAwesomeIcon :icon="isDarkTheme ? faMoon : faSun" />
+          <button @click="toggleTheme" class="text-text-50" title="Switch Theme">
+            <FontAwesomeIcon :icon='isDarkTheme ? faMoon : faSun' />
           </button>
         </li>
       </ul>
