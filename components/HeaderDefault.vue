@@ -63,7 +63,7 @@
           </nuxt-link>
         </li>
         <li>
-          <button @click="toggleTheme" class="text-text-50">
+          <button @click="toggleTheme" class="text-text-50" title="Toggle theme">
             <span v-if="isDarkTheme">
               <Icon name="material-symbols:dark-mode" class="hover:animate-ping click:animate-ping" />
             </span>
