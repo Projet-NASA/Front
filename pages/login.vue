@@ -119,8 +119,11 @@ export default {
         const data = await response.json()
         console.log(data)
         router.push('/')
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('userId', data.user.id)
+
+        const encryptedToken = btoa(data.token)
+        const encryptedUserId = btoa(data.user.id)
+        localStorage.setItem('token', encryptedToken)
+        localStorage.setItem('userId', encryptedUserId)
       } catch (error) {
         console.error(error)
       }
