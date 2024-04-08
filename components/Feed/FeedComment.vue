@@ -26,12 +26,10 @@
 import { ref, defineEmits, defineProps } from 'vue'
 import apiURL from '../../utils/apiURLs'
 
-const userId = '660c0462b7a076125a0dfd08'
 
 const commentContent = ref('')
 const emits = defineEmits(['update'])
 
-// Définir une prop pour recevoir l'ID du post associé
 const props = defineProps({
   postId: String
 })
@@ -47,7 +45,7 @@ const createComment = async () => {
         },
         body: JSON.stringify({
           message: commentContent.value,
-          userId: userId,
+          userId: localStorage.getItem('userId'),
           postId: props.postId // Utiliser l'ID du post passé depuis les props
         })
       })
