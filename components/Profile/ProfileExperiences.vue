@@ -1,7 +1,7 @@
 <template>
   <section
     :class="[
-      'min-h-screen',
+      'h-full',
       'flex',
       'justify-center',
       'items-center',

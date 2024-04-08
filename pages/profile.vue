@@ -40,27 +40,37 @@
                 </button>
               </h1>
               <div v-if="showExperienceForm"
-                class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+                class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center pb-full">
                 <ProfileExperiences :class="showExperienceForm ? 'block' : 'hidden'" />
                 <button @click="showExperienceForm = false"
                   class="absolute top-2 left-2 sm:top-10 sm:left-24 md:left-40 md:top-10 lg:left-1/4 z-50 ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:close" class="w-6 h-6" />
                 </button>
               </div>
-              <div v-for="experience in user.experiences" :key="experience.id"
-                class="mx-6 mt-4 border-t border-background-300 pt-4">
-                <div class="flex flex-col justify-between">
-                  <h2 class="text-lg">{{ experience.title }}</h2>
-                  <div class="flex flex-row justify-between">
-                    <h2 class="text-lg">{{ experience.company }}</h2>
-                    <h2 class="text-lg">
-                      {{ formatDate(experience.from) }} -
-                      {{ formatDate(experience.to) }}
-                    </h2>
+              <div v-for="experience in experiences" :key="experience.id">
+                <div v-if="experience.userId == user.id" class="mx-6 mt-4 border-t border-background-300 pt-4">
+                  <div class="flex flex-col justify-between">
+                    <div class="flex flex-row justify-between items-center">
+                      <div class="flex flex-row items-start space-x-5">
+                        <h2 class="text-lg">{{ experience.title }}</h2>
+                        <h2 class="text-lg">{{ experience.company }}</h2>
+                      </div>
+                      <div class="flex flex-row items-center">
+
+                        <h2 class="text-lg">
+                          {{ formatDate(experience.from) }} - {{ formatDate(experience.to) }}
+                        </h2>
+                      </div>
+                    </div>
+                    <div class="flex flex-row justify-start mt-2 space-x-4">
+                      <h2 class="text-lg">{{ experience.type }}</h2>
+                      <h2 class="text-lg">{{ experience.location }}</h2>
+                    </div>
                   </div>
+                  <p class="font-light mt-2">{{ experience.description }}</p>
                 </div>
-                <p class="font-light">{{ experience.description }}</p>
               </div>
+
             </div>
             <div class="mb-8">
               <h1 class="text-2xl font-bold flex">
@@ -74,21 +84,25 @@
                 class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
                 <ProfileJobs :class="showJobForm ? 'block' : 'hidden'" />
                 <button @click="showJobForm = false"
-                class="absolute top-2 left-2 sm:top-10 sm:left-24 md:left-40 md:top-10 lg:left-1/4 z-50 ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
+                  class="absolute top-2 left-2 sm:top-10 sm:left-24 md:left-40 md:top-10 lg:left-1/4 z-50 ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:close" class="w-6 h-6" />
                 </button>
               </div>
-              <div v-for="job in user.jobs" :key="job.id" class="mx-6 mt-4 border-t border-background-300 pt-4">
-                <div class="flex flex-col justify-between">
-                  <h2 class="text-lg">{{ job.title }}</h2>
-                  <div class="flex flex-row justify-between">
-                    <h2 class="text-lg">{{ job.company }}</h2>
-                    <h2 class="text-lg">
-                      {{ formatDate(job.from) }} - {{ formatDate(job.to) }}
-                    </h2>
+              <div v-for="job in jobs" :key="job.id">
+                <div v-if="job.userId == user.id" class="mx-6 mt-4 border-t border-background-300 pt-4">
+                  <div class="flex flex-col justify-between">
+                    <h2 class="text-lg">{{ job.title }}</h2>
+                    <div class="flex flex-row justify-between">
+                      <h2 class="text-lg">{{ job.company }}</h2>
+                      <h2 class="text-lg">
+                        {{ formatDate(job.from) }} - {{ formatDate(job.to) }}
+                      </h2>
+                      <h2 class="text-lg">{{ job.type }}</h2>
+                      <h2 class="text-lg">{{ job.location }}</h2>
+                    </div>
                   </div>
+                  <p class="font-light">{{ job.description }}</p>
                 </div>
-                <p class="font-light">{{ job.description }}</p>
               </div>
             </div>
           </div>
@@ -128,6 +142,8 @@
                 <div class="flex flex-col justify-between">
                   <div class="h-6 bg-background-300 animate-pulse w-1/2"></div>
                   <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
+                  <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
+                  <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
                 </div>
                 <div class="h-6 bg-background-300 animate-pulse w-3/4 mt-1"></div>
               </div>
@@ -137,6 +153,8 @@
               <div class="mx-6 mt-4 border-t border-background-300 pt-4">
                 <div class="flex flex-col justify-between">
                   <div class="h-6 bg-background-300 animate-pulse w-1/2"></div>
+                  <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
+                  <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
                   <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
                 </div>
                 <div class="h-6 bg-background-300 animate-pulse w-3/4 mt-1"></div>
@@ -173,13 +191,23 @@ export default {
     }
   },
   async mounted() {
-    checkTokenAndRedirect()
+    this.checkTokenAndRedirect();
     try {
-      const userId = localStorage.getItem('userId')
-      const token = localStorage.getItem('token')
+      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
       if (!userId || !token) {
-        throw new Error('Aucun ID utilisateur ou token trouvé')
+        throw new Error('Aucun ID utilisateur ou token trouvé');
       }
+      await this.getUserData(userId, token);
+      //await this.getJobs(userId, token);
+      await this.getExperiences(userId, token);
+    } catch (error) {
+      this.error = error.message;
+      console.error(error.message);
+    }
+  },
+  methods: {
+    async getUserData(userId, token) {
       const response = await fetch(
         `http://localhost:3003/user/OneUser/${userId}`,
         {
@@ -189,31 +217,66 @@ export default {
             'Content-Type': 'application/json'
           }
         }
-      )
-
+      );
       if (!response.ok) {
-        const data = await response.json()
+        const data = await response.json();
         throw new Error(
           data.error || "Impossible de récupérer les données de l'utilisateur"
-        )
+        );
       }
+      const data = await response.json();
+      this.user = data;
+    },
+    // async getJobs(userId, token) {
+    //   const response = await fetch(
+    //     `http://localhost:3003/job/AllJobsByUser/${userId}`,
+    //     {
+    //       method: 'GET',
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //         'Content-Type': 'application/json'
+    //       }
+    //     }
+    //   );
+    //   if (!response.ok) {
+    //     const data = await response.json();
+    //     throw new Error(
+    //       data.error || "Impossible de récupérer les emplois de l'utilisateur"
+    //     );
+    //   }
+    //   const data = await response.json();
+    //   this.jobs = data;
+    // },
+    async getExperiences(userId, token) {
+      const response = await fetch(
+        `http://localhost:3003/experience/ExperienceByUser/${userId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(
+          data.error || "Impossible de récupérer les expériences de l'utilisateur"
+        );
+      }
+      const data = await response.json();
+      this.experiences = data;
+      console.log("Expériences:", this.experiences);
 
-      const data = await response.json()
-      this.user = data
-    } catch (error) {
-      this.error = error.message
-      console.error(error.message)
-    }
-  },
-  methods: {
+    },
     logout() {
-      localStorage.removeItem('token')
-      localStorage.removeItem('userId')
-      this.$router.push('/login')
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      this.$router.push('/login');
     },
     checkTokenAndRedirect() { },
     formatDate(date) {
-      return new Date(date).toLocaleDateString()
+      return new Date(date).toLocaleDateString();
     }
   }
 }
