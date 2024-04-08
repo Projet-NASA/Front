@@ -31,8 +31,8 @@
                             class="bg-background-default shadow appearance-none border-primary-800 border rounded w-full py-2 px-3 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline" />
                     </div>
                     <div class="w-full mr-0 sm:mr-4">
-                        <label for="from" class="block text-text-default text-base font-bold mb-2">From</label>
-                        <input id="from" v-model="from" type="date" required
+                        <label for="start date" class="block text-text-default text-base font-bold mb-2">Start Date</label>
+                        <input id="start date" v-model="start_date" type="date" required
                             class="bg-background-default shadow appearance-none border-primary-800 border rounded w-full py-2 px-3 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline" />
                     </div>
                     <div>
@@ -55,11 +55,11 @@
 
 const title = ref('');
 const company = ref('');
-const from = ref('');
+const start_date = ref('');
 const to = ref(new Date().toISOString().split('T')[0]);
 const description = ref('');
 
 const submitForm = () => {
-    console.log(title.value, company.value, from.value, to.value, description.value);
+    console.log(title.value, company.value, start_date.value, to.value, description.value);
 };
 </script>
