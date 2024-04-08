@@ -171,7 +171,6 @@ const submitForm = async () => {
     })
 
     if (!response.ok) {
-        console.log(from.value, to.value)
       throw new Error(`Error: ${response.status}`)
     }
 
