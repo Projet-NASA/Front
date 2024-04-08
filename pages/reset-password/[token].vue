@@ -27,6 +27,7 @@ const resetPassword = async () => {
   try {
     console.log('bouton cliqué')
     console.log( newPassword.value)
+    console.log( token)
 
     const response = await fetch('http://localhost:3003/user/resetPassword', { 
       method: 'PUT',
