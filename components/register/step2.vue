@@ -166,19 +166,21 @@
           </section>
         </template>
 
-        <script setup>
-        import { useFormStore } from '../../stores/value'
-        import {
-          minLength,
-          required,
-          email,
-          sameAs,
-          maxLength,
-          helpers
-        } from '@vuelidate/validators'
-        import { useVuelidate } from '@vuelidate/core'
-        import { ref, defineEmits } from 'vue'
-        import { useRouter } from 'vue-router'
+
+<script setup>
+import { useFormStore } from '../../stores/register'
+import {
+  minLength,
+  required,
+  email,
+  sameAs,
+  maxLength,
+  helpers
+} from '@vuelidate/validators'
+import { useVuelidate } from '@vuelidate/core'
+import { ref, defineEmits } from 'vue'
+import { useRouter } from 'vue-router'
+
 
         const rules = computed(() => {
           return {

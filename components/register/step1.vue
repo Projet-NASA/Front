@@ -182,7 +182,7 @@
 </template>
 
 <script setup>
-import { useFormStore } from '../../stores/value'
+import { useFormStore } from '../../stores/register'
 import {
   required,
   email,
