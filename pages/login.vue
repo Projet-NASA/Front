@@ -74,6 +74,14 @@
             Sign Up
           </NuxtLink>
         </div>
+        <div class="text-right">
+          <NuxtLink
+            to="/forgot-password"
+            class="text-sm text-primary-800 hover:text-primary-default"
+          >
+            Mot de passe oublié ?
+          </NuxtLink>
+        </div>
       </form>
       <p v-if="message" class="text-center text-bold mt-3">{{ message }}</p>
     </div>
