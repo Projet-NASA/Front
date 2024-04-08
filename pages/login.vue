@@ -12,13 +12,13 @@
         </div>
 
         <h1 class="text-2xl font-bold mb-5 text-center text-text-default">
-          S'identifier
+          Sign In
         </h1>
         <div class="mb-4">
           <label
             for="email"
             class="block text-text-default text-sm font-bold mb-2"
-            >E-mail</label
+            >Email</label
           >
           <input
             id="email"
@@ -32,7 +32,7 @@
           <label
             for="password"
             class="block text-text-default text-sm font-bold mb-2"
-            >Mot de passe</label
+            >Password</label
           >
           <input
             id="password"
@@ -48,30 +48,30 @@
               type="submit"
               class="bg-primary-800 hover:bg-primary-default transition-colors duration-300 text-text-50 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full"
             >
-              Connexion
+              Sign In
             </button>
           </div>
           <div class="flex items-center mb-4">
             <div class="h-px w-36 bg-primary-default"></div>
-            <p class="mx-2 text-text-default">OU</p>
+            <p class="mx-2 text-text-default">OR</p>
             <div class="h-px w-36 bg-primary-default"></div>
           </div>
           <div class="flex items-center justify-between w-full">
             <button
               class="bg-primary-800 hover:bg-primary-default transition-colors duration-300 text-text-50 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full"
             >
-              S'identifier avec Google
+              Sign In with Google
             </button>
           </div>
         </div>
 
         <div class="flex justify-center gap-4 mb-4">
-          <p class="text-text-default">Pas de compte ?</p>
+          <p class="text-text-default">Don't have an account?</p>
           <NuxtLink
             to="/register"
             class="hover:underline decoration-solid text-text-default"
           >
-            S'inscrire
+            Sign Up
           </NuxtLink>
         </div>
       </form>

@@ -29,7 +29,7 @@
     "jsonwebtoken": "^9.0.2",
     "jwt": "^0.2.0",
     "lucide-vue-next": "^0.364.0",
-    "nuxt": "^3.11.1",
+    "nuxt": "^3.11.2",
     "pinia": "^2.1.7",
     "ui": "^0.2.4",
     "v-calendar": "next",
@@ -56,6 +56,6 @@
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.13",
     "tailwindcss": "^3.4.3",
-    "typescript": "5.4.3"
+    "typescript": "5.4.4"
   }
 }

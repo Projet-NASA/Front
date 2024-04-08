@@ -12,7 +12,7 @@
         </div>
 
         <h1 class="text-2xl font-bold mb-5 text-center text-text-default">
-          Ajouter un utilisateur
+          Add a user
         </h1>
 
         <div class="mb-4">
@@ -20,7 +20,7 @@
             for="firstName"
             class="block text-text-default text-sm font-bold mb-2"
           >
-            Prénom
+            First Name
           </label>
           <div class="relative">
             <input
@@ -52,7 +52,7 @@
             for="lastName"
             class="block text-text-default text-sm font-bold mb-2"
           >
-            Nom
+            Last Name
           </label>
           <div class="relative">
             <input
@@ -84,7 +84,7 @@
             for="email"
             class="block text-text-default text-sm font-bold mb-2"
           >
-            E-mail
+            Email
           </label>
           <div class="relative">
             <input
@@ -116,7 +116,7 @@
             for="password"
             class="block text-text-default text-sm font-bold mb-2"
           >
-            Mot de passe (Minimum 6 caractères)
+            Password (Minimum 6 characters)
           </label>
           <div class="relative">
             <input
@@ -150,30 +150,30 @@
               @click="nextStep"
               class="bg-primary-800 hover:bg-primary-default transition-colors duration-300 text-text-50 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full"
             >
-              Suivant
+              Next
             </button>
           </div>
           <div class="flex items-center mb-4">
             <div class="h-px w-36 bg-primary-default"></div>
-            <p class="mx-2 text-text-default">OU</p>
+            <p class="mx-2 text-text-default">OR</p>
             <div class="h-px w-36 bg-primary-default"></div>
           </div>
           <div class="flex items-center justify-between w-full">
             <button
               class="bg-primary-800 hover:bg-primary-default transition-colors duration-300 text-text-50 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full"
             >
-              S'identifier avec Google
+              Sign in with Google
             </button>
           </div>
         </div>
 
         <div class="flex justify-center gap-4 my-4">
-          <p class="text-text-default">Vous avez déjà un compte ?</p>
+          <p class="text-text-default">Already have an account?</p>
           <NuxtLink
             to="/Login"
             class="hover:underline decoration-solid text-text-default"
           >
-            Se Connecter
+            Log in
           </NuxtLink>
         </div>
       </form>
@@ -182,7 +182,7 @@
 </template>
 
 <script setup>
-import { useFormStore } from '../../stores/value'
+import { useFormStore } from '../../stores/register'
 import {
   required,
   email,

@@ -9,6 +9,7 @@ const apiURL = {
 
   addComment: 'http://localhost:3003/comment/createComment',
   getComment: 'http://localhost:3003/comment/Comment',
+  getCommentsByPost: 'http://localhost:3003/comment/CommentByPostId/{{postId}}',
   getOneComment: 'http://localhost:3003/comment/OneComment',
   updateComment: 'http://localhost:3003/comment/Comment',
   deleteComment: 'http://localhost:3003/comment/Comment',

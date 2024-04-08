@@ -1,8 +1,16 @@
 <template>
   <div>
-    <div v-for="post in reversedPosts" :key="post.id" class="p-4 bg-secondary-200 rounded shadow mb-4">
+    <div
+      v-for="post in reversedPosts"
+      :key="post.id"
+      class="p-4 bg-secondary-200 rounded shadow mb-4"
+    >
       <div class="flex items-center mb-2">
-        <img class="w-10 h-10 rounded-full" src="../../public/logo-rounded.png" alt="User avatar" />
+        <img
+          class="w-10 h-10 rounded-full"
+          src="../../public/logo-rounded.png"
+          alt="User avatar"
+        />
         <div class="ml-2">
           <div class="text-text-default font-bold">
             {{ post.user.firstName }} {{ post.user.lastName }}
@@ -17,17 +25,27 @@
         <button @click="likePost(post)">
           {{ post.like }}
           <span v-if="post.userliked.some(user => user.userId === userId)">
-            <Icon name="material-symbols:favorite" class="text-primary-default" />
+            <Icon name="material-symbols:favorite" class="text-primary-default text-lg" />
           </span>
           <span v-else>
             <Icon name="material-symbols:favorite-outline"
-              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default" />
+              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-lg" />
           </span>
         </button>
-        <div>
+        <button>
           {{ post.comments.length }}
           <Icon name="material-symbols:chat"
-            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer" />
+            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-lg" />
+        </button>
+      </div>
+      <FeedComment :postId="`${post.id}`" />
+      <div v-if="postComments(post.id).length > 0" class="comments-section">
+        <div
+          v-for="comment in postComments(post.id)"
+          :key="comment.id"
+          class="p-4 bg-secondary-200 rounded shadow mb-4"
+        >
+          <div class="text-text-default mb-2">{{ comment.message }}</div>
         </div>
       </div>
     </div>
@@ -44,11 +62,6 @@ interface User {
   avatar?: string
 }
 
-interface Comment {
-  id: string
-  message: string
-}
-
 interface Post {
   id: string
   createdAt: string
@@ -59,6 +72,15 @@ interface Post {
   comments: Comment[]
 }
 const userId = ref('')
+
+interface Comment {
+  id: string
+  createdAt: string
+  message: string
+  postId: string
+}
+
+const comments = ref<Comment[]>([])
 
 const posts = ref<Post[]>([])
 
@@ -74,15 +96,36 @@ const fetchPosts = async () => {
   }
 }
 
+// const invisible = async (id) =>{
+//   if (document.getElementById(id).style.display == 'none')
+//   {
+//        document.getElementById(id).style.display = 'block';
+//   }
+//   else
+//   {
+//        document.getElementById(id).style.display = 'none';
+//   }
+// }
+
+let intervalId: number | undefined
+
 onMounted(() => {
-  userId.value = localStorage.getItem('userId') || '' 
+  userId.value = localStorage.getItem('userId') || ''
   fetchPosts()
+  fetchComments()
+  intervalId = window.setInterval(fetchPosts, 2000)
+  intervalId = window.setInterval(fetchComments, 2000)
 })
 
 const reversedPosts = computed(() => [...posts.value].reverse())
+const reversedcomments = computed(() => [...comments.value].reverse())
+
+// update posts for likes
 
 const likePost = async (post: Post) => {
-  const hasLiked = post.userliked.some(userLike => userLike.userId === userId.value);
+  const hasLiked = post.userliked.some(
+    userLike => userLike.userId === userId.value
+  )
 
   if (hasLiked) {
     console.log('Removing like from this post')
@@ -122,12 +165,12 @@ const addLikeToPost = async (post: Post) => {
 const removeLikeFromPost = async (post: Post) => {
   try {
     const findLikeResponse = await fetch(
-      `http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId.value}` // Utilisez .value ici
-    );
+      `http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId.value}`
+    )
     if (!findLikeResponse.ok) {
-      throw new Error('Failed to find like for removal');
+      throw new Error('Failed to find like for removal')
     }
-    const like = await findLikeResponse.json();
+    const like = await findLikeResponse.json()
 
     const removeLikeResponse = await fetch(
       `http://localhost:3003/like/Like/${like.id}`,
@@ -137,19 +180,38 @@ const removeLikeFromPost = async (post: Post) => {
           'Content-Type': 'application/json'
         }
       }
-    );
+    )
 
     if (!removeLikeResponse.ok) {
-      throw new Error('Failed to remove like');
+      throw new Error('Failed to remove like')
     }
 
-    console.log('Like removed successfully');
+    console.log('Like removed successfully')
     await fetchPosts()
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
-};
+}
 
+const fetchComments = async () => {
+  try {
+    const response = await fetch(apiURL.getComment)
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch comments')
+    }
+
+    comments.value = await response.json()
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const postComments = (postId: string) => {
+  return comments.value.filter(
+    (comment: { postId: string }) => comment.postId === postId
+  )
+}
 
 const timeSince = (date: string) => {
   const seconds = Math.floor(
