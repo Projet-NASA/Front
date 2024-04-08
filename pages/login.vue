@@ -86,6 +86,7 @@ import apiURL from '../utils/apiURLs'
 export default {
   setup() {
     const user = ref({ email: '', password: '' })
+    const message = ref('')
     const router = useRouter()
 
     async function submitForm() {
@@ -103,6 +104,7 @@ export default {
 
         if (!response.ok) {
           const data = await response.json()
+          message.value = data.error
           throw new Error(data.error)
         }
 
@@ -115,7 +117,7 @@ export default {
         console.error(error)
       }
     }
-    return { user, submitForm }
+    return { user, submitForm, message }
   }
 }
 </script>
