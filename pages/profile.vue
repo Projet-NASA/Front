@@ -64,11 +64,18 @@
             <div class="mb-8">
               <h1 class="text-2xl font-bold flex">
                 Jobs
-                <button
+                <button @click="showJobForm = true"
                   class="ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:add" class="w-6 h-6" />
                 </button>
               </h1>
+              <ProfileJobs :class="showJobForm ? 'block' : 'hidden'" />
+              <div v-if="showJobForm" class="absolute top-14 lg-1/2 md:left-1/4 lg:left-1/4 z-50">
+                <button @click="showJobForm = false"
+                  class="ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
+                  <Icon name="material-symbols:close" class="w-6 h-6" />
+                </button>
+              </div>
               <div v-for="job in user.jobs" :key="job.id" class="mx-6 mt-4 border-t border-background-300 pt-4">
                 <div class="flex flex-col justify-between">
                   <h2 class="text-lg">{{ job.title }}</h2>
@@ -157,7 +164,8 @@ export default {
     return {
       user: null,
       error: null,
-      showExperienceForm: false
+      showExperienceForm: false,
+      showJobForm: false
     }
   },
   async mounted() {
