@@ -21,21 +21,21 @@
         </div>
       </div>
       <div class="text-text-default mb-2">{{ post.message }}</div>
-      <div class="flex justify-between items-center text-gray-500 text-sm">
-        <button @click="likePost(post)">
+      <div class="flex justify-between items-center text-gray-500">
+        <button @click="likePost(post)" class="text-lg">
           {{ post.like }}
           <span v-if="post.userliked.some(user => user.userId === userId)">
-            <Icon name="material-symbols:favorite" class="text-primary-default text-lg" />
+            <Icon name="material-symbols:favorite" class="text-primary-default text-2xl" />
           </span>
           <span v-else>
             <Icon name="material-symbols:favorite-outline"
-              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-lg" />
+              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-2xl" />
           </span>
         </button>
-        <button>
+        <button class="text-lg">
           {{ post.comments.length }}
           <Icon name="material-symbols:chat"
-            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-lg" />
+            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-2xl" />
         </button>
       </div>
       <FeedComment :postId="`${post.id}`" />
