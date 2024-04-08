@@ -43,7 +43,7 @@
                 class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
                 <ProfileExperiences :class="showExperienceForm ? 'block' : 'hidden'" />
                 <button @click="showExperienceForm = false"
-                  class="absolute top-14 lg-1/2 md:left-1/4 lg:left-1/4 z-50 ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
+                  class="absolute top-2 left-2 sm:top-10 sm:left-24 md:left-40 md:top-10 lg:left-1/4 z-50 ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:close" class="w-6 h-6" />
                 </button>
               </div>
@@ -74,7 +74,7 @@
                 class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
                 <ProfileJobs :class="showJobForm ? 'block' : 'hidden'" />
                 <button @click="showJobForm = false"
-                  class="absolute top-14 lg-1/2 md:left-1/4 lg:left-1/4 z-50 ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
+                class="absolute top-2 left-2 sm:top-10 sm:left-24 md:left-40 md:top-10 lg:left-1/4 z-50 ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:close" class="w-6 h-6" />
                 </button>
               </div>
@@ -167,7 +167,9 @@ export default {
       user: null,
       error: null,
       showExperienceForm: false,
-      showJobForm: false
+      showJobForm: false,
+      jobs: null,
+      experiences: null
     }
   },
   async mounted() {
