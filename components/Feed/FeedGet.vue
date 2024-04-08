@@ -32,7 +32,7 @@
               class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-lg" />
           </span>
         </button>
-        <nuxt-link to="/postComment">
+        <nuxt-link to="/postComment" :postId="`${post.id}`">
           {{ post.comments.length }}
           <Icon name="material-symbols:chat"
             class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-lg" />
@@ -44,6 +44,8 @@
 
 <script setup lang="ts">
 import apiURL from '../../utils/apiURLs'
+import type { Post } from '../../.nuxt/types/post.interface'
+
 
 interface User {
   id: string
@@ -52,15 +54,15 @@ interface User {
   avatar?: string
 }
 
-interface Post {
-  id: string
-  createdAt: string
-  message: string
-  like: number
-  userliked: { userId: string }[]
-  user: User
-  comments: Comment[]
-}
+// export interface Post {
+//   id: string
+//   createdAt: string
+//   message: string
+//   like: number
+//   userliked: { userId: string }[]
+//   user: User
+//   comments: Comment[]
+// }
 const userId = ref('')
 
 interface Comment {
