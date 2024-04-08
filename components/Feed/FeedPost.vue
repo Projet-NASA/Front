@@ -1,21 +1,21 @@
 <template>
   <div
     id="addPopup"
-    class="flex justify-center p-5 bg-background-200 border-2 border-accent-default rounded-lg"
+    class="flex justify-center"
   >
     <form id="createPost" class="w-full">
       <textarea
         type="text"
         id="postContent"
-        class="w-full bg-background-200 outline-none text-text-default"
-        placeholder="Title"
+        class="w-full h-full bg-background-default outline-none text-text-default p-5 border rounded-lg border-accent-default"
+        placeholder="Enter your post here..."
         v-model="postContent"
       ></textarea>
       <div class="flex justify-end">
         <button
           type="submit"
           id="createPost"
-          class="bg-primary-200 px-2 py-1 rounded-lg text-text-default hover:bg-primary-default hover:text-text-50 transition-colors duration-300 focus:outline-none focus:shadow-outline"
+          class="bg-primary-300 px-2 py-1 rounded-lg text-text-default hover:bg-primary-default hover:text-text-50 transition-colors duration-300 focus:outline-none focus:shadow-outline"
           @click.prevent="createPost"
         >
           POST
@@ -51,7 +51,7 @@ const createPost = async () => {
       if (!response.ok) {
         throw new Error(`Failed to create post`)
       }
-
+      location.reload();
       const data = await response.json()
       console.log('Created post:', data)
 
