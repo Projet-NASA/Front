@@ -39,10 +39,11 @@
                   <Icon name="material-symbols:add" class="w-6 h-6" />
                 </button>
               </h1>
-              <ProfileExperiences :class="showExperienceForm ? 'block' : 'hidden'" />
-              <div v-if="showExperienceForm" class="absolute top-14 lg-1/2 md:left-1/4 lg:left-1/4 z-50">
+              <div v-if="showExperienceForm"
+                class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+                <ProfileJobs :class="showExperienceForm ? 'block' : 'hidden'" />
                 <button @click="showExperienceForm = false"
-                  class="ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
+                  class="absolute top-14 lg-1/2 md:left-1/4 lg:left-1/4 z-50 ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:close" class="w-6 h-6" />
                 </button>
               </div>
@@ -69,10 +70,11 @@
                   <Icon name="material-symbols:add" class="w-6 h-6" />
                 </button>
               </h1>
-              <ProfileJobs :class="showJobForm ? 'block' : 'hidden'" />
-              <div v-if="showJobForm" class="absolute top-14 lg-1/2 md:left-1/4 lg:left-1/4 z-50">
+              <div v-if="showJobForm"
+                class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+                <ProfileJobs :class="showJobForm ? 'block' : 'hidden'" />
                 <button @click="showJobForm = false"
-                  class="ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
+                  class="absolute top-14 lg-1/2 md:left-1/4 lg:left-1/4 z-50 ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:close" class="w-6 h-6" />
                 </button>
               </div>
