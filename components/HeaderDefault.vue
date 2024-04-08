@@ -74,7 +74,7 @@
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/" class="text-text-default" title="Messages">
+          <nuxt-link to="/jobs" class="text-text-default" title="Messages">
             <Icon
               name="material-symbols:chat"
               class="hover:animate-bounce click:animate-bounce"
