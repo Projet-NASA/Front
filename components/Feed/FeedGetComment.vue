@@ -217,3 +217,4 @@ const timeSince = (date: string) => {
   return Math.floor(seconds) + ' seconds'
 }
 </script>
+../interfaces/post.interface

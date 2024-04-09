@@ -65,8 +65,7 @@ const selectedPostId = ref<string[]>([]);
 
 const selectPost = (postId: string) => {
   if (!selectedPostId.value.includes(postId)) {
-    selectedPostId.value.push(postId);
-    
+    selectedPostId.value.push(postId); 
   }
   router.push('/postComment')
 };
@@ -191,3 +190,4 @@ const timeSince = (date: string) => {
   return Math.floor(seconds) + ' seconds'
 }
 </script>
+../interfaces/post.interface../interfaces/user.interface
