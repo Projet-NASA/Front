@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <div
       v-for="post in reversedPosts"
@@ -197,4 +197,32 @@ const timeSince = (date: string) => {
   if (interval > 1) return Math.floor(interval) + ' minutes'
   return Math.floor(seconds) + ' seconds'
 }
+</script> -->
+
+
+<template>
+  <div v-if="selectedPost">
+    <div class="p-4 bg-secondary-200 rounded shadow mb-4">
+      <div class="flex items-center mb-2">
+      </div>
+      <div class="text-text-default mb-2">{{ selectedPost.message }}</div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
+import apiURL from '../../utils/apiURLs';
+import type { Post } from '../../.nuxt/types/post.interface';
+import { useRoute } from 'vue-router';
+
+const posts = ref<Post[]>([]);
+const selectedPostId = computed(() => $route.params.postId); 
+
+const selectedPost = computed(() => posts.value.find(post => post.id === selectedPostId.value));
+
+
+export default {
+  selectedPost,
+};
 </script>

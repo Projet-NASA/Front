@@ -159,12 +159,9 @@ const removeLikeFromPost = async (post: Post) => {
 }
 
 const selectPost = (postId: string) => {
-  if (!selectedPostId.value.includes(postId)) {
-    selectedPostId.value.push(postId); 
-  }
-  router.push('/postComment')
+  selectedPostId.value = postId;
+  router.push(`/post/${postId}`); 
 };
-
 const timeSince = (date: string) => {
   const seconds = Math.floor(
     (new Date().getTime() - new Date(date).getTime()) / 1000
@@ -182,4 +179,3 @@ const timeSince = (date: string) => {
   return Math.floor(seconds) + ' seconds'
 }
 </script>
-../interfaces/post.interface../interfaces/user.interface
