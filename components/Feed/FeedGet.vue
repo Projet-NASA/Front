@@ -27,7 +27,7 @@
           <span v-if="post.userliked.some(user => user.userId === userId)">
             <Icon
               name="material-symbols:favorite"
-              class="text-primary-default text-2xl"
+              class="text-primary-default text-2xl hover:animate-ping click:animate-ping"
             />
           </span>
           <span v-else>

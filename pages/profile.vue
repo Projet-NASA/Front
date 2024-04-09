@@ -3,7 +3,7 @@
     class="bg-background-default text-text-default flex flex-col items-center justify-between"
   >
     <div v-if="user" class="w-full sm:w-3/4 md:w-3/4 lg:w-3/4 xl:w-3/4">
-      <div class="my-8 bg-background-200 shadow-md rounded pb-8">
+      <div class="my-8 bg-secondary-200 shadow-md rounded pb-8">
         <div class="flex flex-col mb-8">
           <div class="flex flex-row-reverse">
             <img
@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div class="mb-8 bg-background-200 shadow-md rounded py-8">
+      <div class="mb-8 bg-secondary-200 shadow-md rounded py-8">
         <div class="flex flex-col mb-8">
           <div class="mx-6">
             <div class="mb-8">
@@ -147,7 +147,7 @@
       </div>
     </div>
     <div v-else class="w-full sm:w-3/4 md:w-3/4 lg:w-3/4 xl:w-3/4">
-      <div class="my-8 bg-background-200 shadow-md rounded pb-8">
+      <div class="my-8 bg-secondary-200 shadow-md rounded pb-8">
         <div class="flex flex-col mb-8">
           <div class="flex flex-row-reverse">
             <div
@@ -163,18 +163,18 @@
                 class="w-10 h-10 mt-4 p-2 text-primary-default hover:bg-primary-400 hover:text-white rounded-full cursor-pointer transition-colors duration-300 animate-pulse"
               ></div>
             </div>
-            <div class="h-6 bg-background-300 animate-pulse w-3/4 mt-4"></div>
-            <div class="h-6 bg-background-300 animate-pulse w-1/2 mt-1"></div>
-            <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
+            <div class="h-6 bg-secondary-300 animate-pulse w-3/4 mt-4"></div>
+            <div class="h-6 bg-secondary-300 animate-pulse w-1/2 mt-1"></div>
+            <div class="h-6 bg-secondary-300 animate-pulse w-1/4 mt-1"></div>
           </div>
         </div>
       </div>
-      <div class="mb-8 bg-background-200 shadow-md rounded py-8">
+      <div class="mb-8 bg-secondary-200 shadow-md rounded py-8">
         <div class="flex flex-col mb-8">
           <div class="mx-6">
             <div class="mb-8">
-              <div class="h-6 bg-background-300 animate-pulse w-1/4"></div>
-              <div class="mx-6 mt-4 border-t border-background-300 pt-4">
+              <div class="h-6 bg-secondary-300 animate-pulse w-1/4"></div>
+              <div class="mx-6 mt-4 border-t border-secondary-300 pt-4">
                 <div class="flex flex-col justify-between">
                   <div class="h-6 bg-background-300 animate-pulse w-1/2"></div>
                   <div
@@ -193,8 +193,8 @@
               </div>
             </div>
             <div class="mb-8">
-              <div class="h-6 bg-background-300 animate-pulse w-1/4"></div>
-              <div class="mx-6 mt-4 border-t border-background-300 pt-4">
+              <div class="h-6 bg-secondary-300 animate-pulse w-1/4"></div>
+              <div class="mx-6 mt-4 border-t border-secondary-300 pt-4">
                 <div class="flex flex-col justify-between">
                   <div class="h-6 bg-background-300 animate-pulse w-1/2"></div>
                   <div
