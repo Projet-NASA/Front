@@ -20,7 +20,8 @@
         class="bg-background-200 shadow-md rounded px-8 pt-6 pb-8 mb-2"
       >
         <h1 class="text-2xl font-bold mb-5 text-center text-text-default">
-          Add an experience
+          <span v-if="isEdit">Edit</span>
+          <span v-else>Add</span> Experience
         </h1>
         <div class="flex flex-col justify-center w-3/4 mx-auto space-y-3">
           <div>
