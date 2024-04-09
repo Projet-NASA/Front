@@ -74,6 +74,14 @@
             Sign Up
           </NuxtLink>
         </div>
+        <div class="text-right">
+          <NuxtLink
+            to="/forgot-password"
+            class="text-sm text-primary-800 hover:text-primary-default"
+          >
+            Mot de passe oublié ?
+          </NuxtLink>
+        </div>
       </form>
       <p v-if="message" class="text-center text-bold mt-3">{{ message }}</p>
     </div>
@@ -86,6 +94,7 @@ import apiURL from '../utils/apiURLs'
 export default {
   setup() {
     const user = ref({ email: '', password: '' })
+    const message = ref('')
     const router = useRouter()
 
     async function submitForm() {
@@ -103,6 +112,7 @@ export default {
 
         if (!response.ok) {
           const data = await response.json()
+          message.value = data.error
           throw new Error(data.error)
         }
 
@@ -115,7 +125,7 @@ export default {
         console.error(error)
       }
     }
-    return { user, submitForm }
+    return { user, submitForm, message }
   }
 }
 </script>
