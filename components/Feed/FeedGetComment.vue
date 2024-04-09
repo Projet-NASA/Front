@@ -54,34 +54,16 @@
 <script setup lang="ts">
 import apiURL from '../../utils/apiURLs'
 import type { Post } from '../../.nuxt/types/post.interface'
-import { selectedPostId } from './FeedGet.vue';
-
-const props = defineProps({
-  selectedPostId: String
-})
-
-interface User {
-  id: string
-  firstName: string
-  lastName: string
-  avatar?: string
-}
+import type { User } from '../../.nuxt/types/user.interface'
+import type { Comment } from '../../.nuxt/types/comment.interface'
 
 const userId = ref('')
-
-interface Comment {
-  id: string
-  createdAt: string
-  message: string
-  postId: string
-  user: User 
-}
 
 const comments = ref<Comment[]>([])
 
 const posts = ref<Post[]>([])
 
-const fetchPosts = async () => {
+const fetchPost = async () => {
   try {
     const response = await fetch(apiURL.getPost)
     if (!response.ok) {
@@ -93,18 +75,17 @@ const fetchPosts = async () => {
   }
 }
 
-
 let intervalId: number | undefined
 
 onMounted(() => {
   userId.value = localStorage.getItem('userId') || ''
-  fetchPosts()
+  fetchPost()
   fetchComments()
   intervalId = window.setInterval(fetchPosts, 2000)
   intervalId = window.setInterval(fetchComments, 2000)
 })
 
-const reversedPosts = computed(() => [...selectedPostId.value].reverse())
+const reversedPosts = computed(() => [...posts.value].reverse())
 const reversedcomments = computed(() => [...comments.value].reverse())
 
 // update posts for likes
@@ -217,4 +198,3 @@ const timeSince = (date: string) => {
   return Math.floor(seconds) + ' seconds'
 }
 </script>
-../interfaces/post.interface

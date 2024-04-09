@@ -49,27 +49,12 @@
 import apiURL from '../../utils/apiURLs'
 import type { Post } from '../../.nuxt/types/post.interface'
 import type { User } from '../../.nuxt/types/user.interface'
+import type { Comment } from '../../.nuxt/types/comment.interface'
 import { useRouter } from 'vue-router'
 
 const userId = ref('')
 
-interface Comment {
-  id: string
-  createdAt: string
-  message: string
-  postId: string
-  userComment: User
-}
-
 const selectedPostId = ref<string[]>([]);
-
-const selectPost = (postId: string) => {
-  if (!selectedPostId.value.includes(postId)) {
-    selectedPostId.value.push(postId); 
-  }
-  router.push('/postComment')
-};
-
 
 const comments = ref<Comment[]>([])
 
@@ -172,6 +157,13 @@ const removeLikeFromPost = async (post: Post) => {
     console.error(error)
   }
 }
+
+const selectPost = (postId: string) => {
+  if (!selectedPostId.value.includes(postId)) {
+    selectedPostId.value.push(postId); 
+  }
+  router.push('/postComment')
+};
 
 const timeSince = (date: string) => {
   const seconds = Math.floor(
