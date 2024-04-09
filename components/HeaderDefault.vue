@@ -98,7 +98,12 @@
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/about"></nuxt-Link>
+          <nuxt-link to="/about" class="" title="About us">
+            <Icon
+              name="fluent-emoji-high-contrast:rocket"
+              class="hover:animate-bounce click:animate-bounce"
+            />
+          </nuxt-Link>
         </li>
         <li>
           <button @click="toggleTheme" class="text-text-50">
