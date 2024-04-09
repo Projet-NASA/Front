@@ -80,7 +80,7 @@
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/profile" class="text-text-default" title="Profile">
+            <nuxt-link to="/profile/660e93b1b3e8e49debfc0d9c" class="text-text-default" title="Profile">
             <Icon
               name="mdi:racing-helmet"
               class="hover:animate-ping click:animate-ping"
