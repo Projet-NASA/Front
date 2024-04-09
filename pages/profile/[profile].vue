@@ -27,11 +27,10 @@
             <p class="font-light">
               <span>{{ user.city }}</span>, <span>{{ user.country }}</span>
             </p>
-            <div
-            v-if="visitorId != user.id" >
-              <button
+            <div v-if="visitorId != user.id">
+              <button @click="followUser()"
                 class="bg-primary-default hover:bg-primary-400 text-white text-lg rounded-lg h-10 p-5 mt-2 flex items-center justify-center transition-colors duration-300">
-                <Icon name="material-symbols:group-add" class="w-6 h-6 mr-2" />Connect
+                <Icon name="material-symbols:group-add" class="w-6 h-6 mr-2" />Follow
               </button>
             </div>
           </div>
@@ -43,9 +42,7 @@
             <div class="mb-8">
               <h1 class="text-2xl font-bold flex">
                 Experiences
-                <button 
-                v-if="visitorId === user.id"
-                @click="showExperienceForm = true"
+                <button v-if="visitorId === user.id" @click="showExperienceForm = true"
                   class="ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:add" class="w-6 h-6" />
                 </button>
@@ -66,9 +63,7 @@
             <div class="mb-8">
               <h1 class="text-2xl font-bold flex">
                 Jobs
-                <button 
-                v-if="visitorId === user.id"
-                @click="showJobForm = true"
+                <button v-if="visitorId === user.id" @click="showJobForm = true"
                   class="ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:add" class="w-6 h-6" />
                 </button>
@@ -87,9 +82,7 @@
             </div>
           </div>
         </div>
-        <button 
-        v-if="visitorId === user.id"
-        @click="logout()"
+        <button v-if="visitorId === user.id" @click="logout()"
           class="bg-red-500 hover:bg-red-800 text-white rounded p-2 mx-auto flex items-center justify-center transition-colors duration-300">
           Log out
           <Icon name="material-symbols:logout" class="w-6 h-6 ml-2" />
@@ -254,6 +247,31 @@ export default {
       this.experiences = data;
       console.log("Expériences:", this.experiences);
 
+    },
+    async followUser() {
+      const router = useRouter();
+      const followerId = localStorage.getItem('userId');
+      const followingId = router.currentRoute.value.params.profile;
+      console.log('Follower ID:', followerId);
+      console.log('Following ID:', followingId);
+      const response = await fetch(
+        `http://localhost:3003/follower/createFollower`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            followerID: followerId,
+            followingID: followingId
+          })
+        }
+      );
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to follow user');
+      }
+      console.log('User followed successfully');
     },
     logout() {
       localStorage.removeItem('token');
