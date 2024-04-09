@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="post in reversedPosts" :key="post.id" class="p-4 bg-secondary-200 rounded shadow mb-4">
-      <div class="flex items-center mb-2">
+      <NuxtLink :to="`/profile/${post.user.id}`" class="flex items-center mb-2">
         <img class="w-10 h-10 rounded-full" src="../../public/logo-rounded.png" alt="User avatar" />
         <div class="ml-2">
           <div class="text-text-default font-bold">
@@ -11,7 +11,7 @@
             {{ timeSince(post.createdAt) }}
           </div>
         </div>
-      </div>
+      </NuxtLink>
       <div class="text-text-default mb-2">{{ post.message }}</div>
       <div class="flex justify-between items-center text-gray-500">
         <button @click="likePost(post)" class="text-lg">

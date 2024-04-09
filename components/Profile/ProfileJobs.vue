@@ -12,18 +12,20 @@
             </div>
         </div>
         <p class="font-light">{{ job.description }}</p>
-        <div class="flex flex-row justify-start mt-4 space-x-4">
+        <div
+        v-if = "visitorId === user.id" 
+        class="flex flex-row justify-start space-x-4">
             <button
                 class="bg-primary-default hover:bg-primary-400 text-white rounded-full h-10 w-10 mt-4 mr-4 flex items-center justify-center transition-colors duration-300"
                 @click="showJobForm = true"
                 title="Edit job">
-                <Icon name="material-symbols:edit" class="text-white" />
+                <Icon name="material-symbols:edit" class="text-white w-6 h-6" />
             </button>
             <button
-                class="bg-red-500 hover:bg-red-400 text-white rounded-full h-10 w-10 mt-4 mr-4 flex items-center justify-center transition-colors duration-300"
+                class="bg-red-500 hover:bg-red-800 text-white rounded-full h-10 w-10 mt-4 mr-4 flex items-center justify-center transition-colors duration-300"
                 @click=""
                 title="Delete job">
-                <Icon name="material-symbols:delete" class="text-white" />
+                <Icon name="material-symbols:delete" class="text-white w-6 h-6" />
             </button>
         </div>
     </div>
@@ -39,6 +41,7 @@
 
 <script setup lang="ts">
 const showJobForm = ref(false)
+const visitorId = ref(localStorage.getItem('userId'))
 
 const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString();

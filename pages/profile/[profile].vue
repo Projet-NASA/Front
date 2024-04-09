@@ -4,18 +4,20 @@
       <div class="my-8 bg-secondary-200 shadow-md rounded pb-8">
         <div class="flex flex-col mb-8">
           <div class="flex flex-row-reverse">
-            <img src="../assets/images/sacha_wide.png" class="w-full h-40 rounded" />
-            <button
+            <img src="../../assets/images/sacha_wide.png" class="w-full h-40 rounded" />
+            <button v-if="visitorId === user.id"
               class="bg-primary-default hover:bg-primary-400 text-white rounded-full h-10 w-10 mt-4 mr-4 absolute flex items-center justify-center transition-colors duration-300">
               <Icon name="material-symbols:edit" class="w-6 h-6" />
             </button>
           </div>
           <div class="mx-6">
             <div class="flex flex-row justify-between">
-              <img src="../assets/images/logo.png"
+              <img src="../../assets/images/logo.png"
                 class="w-32 h-32 rounded-full -mt-20 border-primary-default border-4" />
-              <Icon name="material-symbols:edit"
-                class="w-10 h-10 mt-4 p-2 text-primary-default hover:bg-primary-400 hover:text-white rounded-full cursor-pointer transition-colors duration-300" />
+              <button v-if="visitorId === user.id">
+                <Icon name="material-symbols:edit"
+                  class="w-10 h-10 mt-4 p-2 text-primary-default hover:bg-primary-400 hover:text-white rounded-full cursor-pointer transition-colors duration-300" />
+              </button>
             </div>
             <h1 class="text-3xl font-bold">
               {{ user.firstName }} {{ user.lastName }}
@@ -25,6 +27,13 @@
             <p class="font-light">
               <span>{{ user.city }}</span>, <span>{{ user.country }}</span>
             </p>
+            <div
+            v-if="visitorId != user.id" >
+              <button
+                class="bg-primary-default hover:bg-primary-400 text-white text-lg rounded-lg h-10 p-5 mt-2 flex items-center justify-center transition-colors duration-300">
+                <Icon name="material-symbols:group-add" class="w-6 h-6 mr-2" />Connect
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -34,14 +43,16 @@
             <div class="mb-8">
               <h1 class="text-2xl font-bold flex">
                 Experiences
-                <button @click="showExperienceForm = true"
+                <button 
+                v-if="visitorId === user.id"
+                @click="showExperienceForm = true"
                   class="ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:add" class="w-6 h-6" />
                 </button>
               </h1>
               <div v-if="showExperienceForm"
                 class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center pb-full">
-                <ProfileExperiencesForm :isEdit="false" :class="showExperienceForm ? 'block' : 'hidden'" />
+                <ProfileExperiencesForm :class="showExperienceForm ? 'block' : 'hidden'" />
                 <button @click="showExperienceForm = false"
                   class="absolute top-2 left-2 sm:top-10 sm:left-24 md:left-40 md:top-10 lg:left-1/4 z-50 ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:close" class="w-6 h-6" />
@@ -55,14 +66,16 @@
             <div class="mb-8">
               <h1 class="text-2xl font-bold flex">
                 Jobs
-                <button @click="showJobForm = true"
+                <button 
+                v-if="visitorId === user.id"
+                @click="showJobForm = true"
                   class="ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:add" class="w-6 h-6" />
                 </button>
               </h1>
               <div v-if="showJobForm"
                 class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-                <ProfileJobsForm :isEdit="false" :class="showJobForm ? 'block' : 'hidden'" />
+                <ProfileJobsForm :class="showJobForm ? 'block' : 'hidden'" />
                 <button @click="showJobForm = false"
                   class="absolute top-2 left-2 sm:top-10 sm:left-24 md:left-40 md:top-10 lg:left-1/4 z-50 ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:close" class="w-6 h-6" />
@@ -74,7 +87,9 @@
             </div>
           </div>
         </div>
-        <button @click="logout()"
+        <button 
+        v-if="visitorId === user.id"
+        @click="logout()"
           class="bg-red-500 hover:bg-red-800 text-white rounded p-2 mx-auto flex items-center justify-center transition-colors duration-300">
           Log out
           <Icon name="material-symbols:logout" class="w-6 h-6 ml-2" />
@@ -154,13 +169,16 @@ export default {
       showExperienceForm: false,
       showJobForm: false,
       jobs: null,
-      experiences: null
+      experiences: null,
+      visitorId: null
     }
   },
   async mounted() {
     this.checkTokenAndRedirect();
     try {
-      const userId = localStorage.getItem('userId');
+      const router = useRouter()
+      const userId = router.currentRoute.value.params.profile;
+      console.log("userId:", userId);
       const token = localStorage.getItem('token');
       if (!userId || !token) {
         throw new Error('Aucun ID utilisateur ou token trouvé');
@@ -168,6 +186,7 @@ export default {
       await this.getUserData(userId, token);
       //await this.getJobs(userId, token);
       await this.getExperiences(userId, token);
+      this.visitorId = localStorage.getItem('userId');
     } catch (error) {
       this.error = error.message;
       console.error(error.message);
