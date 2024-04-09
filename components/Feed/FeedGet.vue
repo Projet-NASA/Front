@@ -32,11 +32,14 @@
               class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-lg" />
           </span>
         </button>
-        <nuxt-link to="/postComment" :postId="`${post.id}`">
+        <div>
+              {{ selectedPostId }}
+        </div>
+        <button @click="selectPost(post.id)">
           {{ post.comments.length }}
           <Icon name="material-symbols:chat"
             class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-lg" />
-        </nuxt-link>
+        </button>
       </div>
     </div>
   </div>
@@ -45,24 +48,9 @@
 <script setup lang="ts">
 import apiURL from '../../utils/apiURLs'
 import type { Post } from '../../.nuxt/types/post.interface'
+import type { User } from '../../.nuxt/types/user.interface'
+import { useRouter } from 'vue-router'
 
-
-interface User {
-  id: string
-  firstName: string
-  lastName: string
-  avatar?: string
-}
-
-// export interface Post {
-//   id: string
-//   createdAt: string
-//   message: string
-//   like: number
-//   userliked: { userId: string }[]
-//   user: User
-//   comments: Comment[]
-// }
 const userId = ref('')
 
 interface Comment {
@@ -73,9 +61,22 @@ interface Comment {
   userComment: User
 }
 
+const selectedPostId = ref<string[]>([]);
+
+const selectPost = (postId: string) => {
+  if (!selectedPostId.value.includes(postId)) {
+    selectedPostId.value.push(postId);
+    
+  }
+  router.push('/postComment')
+};
+
+
 const comments = ref<Comment[]>([])
 
 const posts = ref<Post[]>([])
+
+const router = useRouter()
 
 const fetchPosts = async () => {
   try {
