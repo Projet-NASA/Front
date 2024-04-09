@@ -1,7 +1,7 @@
 <template>
   <div class="bg-background-default text-text-default flex flex-col items-center justify-between">
     <div v-if="user" class="w-full sm:w-3/4 md:w-3/4 lg:w-3/4 xl:w-3/4">
-      <div class="my-8 bg-background-200 shadow-md rounded pb-8">
+      <div class="my-8 bg-secondary-200 shadow-md rounded pb-8">
         <div class="flex flex-col mb-8">
           <div class="flex flex-row-reverse">
             <img src="../assets/images/sacha_wide.png" class="w-full h-40 rounded" />
@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      <div class="mb-8 bg-background-200 shadow-md rounded py-8">
+      <div class="mb-8 bg-secondary-200 shadow-md rounded py-8">
         <div class="flex flex-col mb-8">
           <div class="mx-6">
             <div class="mb-8">
@@ -41,34 +41,14 @@
               </h1>
               <div v-if="showExperienceForm"
                 class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center pb-full">
-                <ProfileExperiences :class="showExperienceForm ? 'block' : 'hidden'" />
+                <ProfileExperiencesForm :isEdit="false" :class="showExperienceForm ? 'block' : 'hidden'" />
                 <button @click="showExperienceForm = false"
                   class="absolute top-2 left-2 sm:top-10 sm:left-24 md:left-40 md:top-10 lg:left-1/4 z-50 ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:close" class="w-6 h-6" />
                 </button>
               </div>
               <div v-for="experience in experiences" :key="experience.id">
-                <div v-if="experience.userId == user.id" class="mx-6 mt-4 border-t border-background-300 pt-4">
-                  <div class="flex flex-col justify-between">
-                    <div class="flex flex-row justify-between items-center">
-                      <div class="flex flex-row items-start space-x-5">
-                        <h2 class="text-lg">{{ experience.title }}</h2>
-                        <h2 class="text-lg">{{ experience.company }}</h2>
-                      </div>
-                      <div class="flex flex-row items-center">
-
-                        <h2 class="text-lg">
-                          {{ formatDate(experience.from) }} - {{ formatDate(experience.to) }}
-                        </h2>
-                      </div>
-                    </div>
-                    <div class="flex flex-row justify-start mt-2 space-x-4">
-                      <h2 class="text-lg">{{ experience.type }}</h2>
-                      <h2 class="text-lg">{{ experience.location }}</h2>
-                    </div>
-                  </div>
-                  <p class="font-light mt-2">{{ experience.description }}</p>
-                </div>
+                <ProfileExperience :user="user" :experience="experience" />
               </div>
 
             </div>
@@ -82,27 +62,14 @@
               </h1>
               <div v-if="showJobForm"
                 class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-                <ProfileJobs :class="showJobForm ? 'block' : 'hidden'" />
+                <ProfileJobsForm :isEdit="false" :class="showJobForm ? 'block' : 'hidden'" />
                 <button @click="showJobForm = false"
                   class="absolute top-2 left-2 sm:top-10 sm:left-24 md:left-40 md:top-10 lg:left-1/4 z-50 ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300">
                   <Icon name="material-symbols:close" class="w-6 h-6" />
                 </button>
               </div>
               <div v-for="job in jobs" :key="job.id">
-                <div v-if="job.userId == user.id" class="mx-6 mt-4 border-t border-background-300 pt-4">
-                  <div class="flex flex-col justify-between">
-                    <h2 class="text-lg">{{ job.title }}</h2>
-                    <div class="flex flex-row justify-between">
-                      <h2 class="text-lg">{{ job.company }}</h2>
-                      <h2 class="text-lg">
-                        {{ formatDate(job.from) }} - {{ formatDate(job.to) }}
-                      </h2>
-                      <h2 class="text-lg">{{ job.type }}</h2>
-                      <h2 class="text-lg">{{ job.location }}</h2>
-                    </div>
-                  </div>
-                  <p class="font-light">{{ job.description }}</p>
-                </div>
+                <ProfileJobs :user="user" :job="job" />
               </div>
             </div>
           </div>
@@ -115,49 +82,49 @@
       </div>
     </div>
     <div v-else class="w-full sm:w-3/4 md:w-3/4 lg:w-3/4 xl:w-3/4">
-      <div class="my-8 bg-background-200 shadow-md rounded pb-8">
+      <div class="my-8 bg-secondary-200 shadow-md rounded pb-8">
         <div class="flex flex-col mb-8">
           <div class="flex flex-row-reverse">
-            <div class="w-full h-40 bg-background-300 animate-pulse rounded"></div>
+            <div class="w-full h-40 bg-secondary-300 animate-pulse rounded"></div>
           </div>
           <div class="mx-6">
             <div class="flex flex-row justify-between">
-              <div class="w-32 h-32 bg-background-300 animate-pulse rounded-full -mt-20"></div>
+              <div class="w-32 h-32 bg-secondary-300 animate-pulse rounded-full -mt-20"></div>
               <div
                 class="w-10 h-10 mt-4 p-2 text-primary-default hover:bg-primary-400 hover:text-white rounded-full cursor-pointer transition-colors duration-300 animate-pulse">
               </div>
             </div>
-            <div class="h-6 bg-background-300 animate-pulse w-3/4 mt-4"></div>
-            <div class="h-6 bg-background-300 animate-pulse w-1/2 mt-1"></div>
-            <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
+            <div class="h-6 bg-secondary-300 animate-pulse w-3/4 mt-4"></div>
+            <div class="h-6 bg-secondary-300 animate-pulse w-1/2 mt-1"></div>
+            <div class="h-6 bg-secondary-300 animate-pulse w-1/4 mt-1"></div>
           </div>
         </div>
       </div>
-      <div class="mb-8 bg-background-200 shadow-md rounded py-8">
+      <div class="mb-8 bg-secondary-200 shadow-md rounded py-8">
         <div class="flex flex-col mb-8">
           <div class="mx-6">
             <div class="mb-8">
-              <div class="h-6 bg-background-300 animate-pulse w-1/4"></div>
-              <div class="mx-6 mt-4 border-t border-background-300 pt-4">
+              <div class="h-6 bg-secondary-300 animate-pulse w-1/4"></div>
+              <div class="mx-6 mt-4 border-t border-secondary-300 pt-4">
                 <div class="flex flex-col justify-between">
-                  <div class="h-6 bg-background-300 animate-pulse w-1/2"></div>
-                  <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
-                  <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
-                  <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
+                  <div class="h-6 bg-secondary-300 animate-pulse w-1/2"></div>
+                  <div class="h-6 bg-secondary-300 animate-pulse w-1/4 mt-1"></div>
+                  <div class="h-6 bg-secondary-300 animate-pulse w-1/4 mt-1"></div>
+                  <div class="h-6 bg-secondary-300 animate-pulse w-1/4 mt-1"></div>
                 </div>
-                <div class="h-6 bg-background-300 animate-pulse w-3/4 mt-1"></div>
+                <div class="h-6 bg-secondary-300 animate-pulse w-3/4 mt-1"></div>
               </div>
             </div>
             <div class="mb-8">
-              <div class="h-6 bg-background-300 animate-pulse w-1/4"></div>
-              <div class="mx-6 mt-4 border-t border-background-300 pt-4">
+              <div class="h-6 bg-secondary-300 animate-pulse w-1/4"></div>
+              <div class="mx-6 mt-4 border-t border-secondary-300 pt-4">
                 <div class="flex flex-col justify-between">
-                  <div class="h-6 bg-background-300 animate-pulse w-1/2"></div>
-                  <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
-                  <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
-                  <div class="h-6 bg-background-300 animate-pulse w-1/4 mt-1"></div>
+                  <div class="h-6 bg-secondary-300 animate-pulse w-1/2"></div>
+                  <div class="h-6 bg-secondary-300 animate-pulse w-1/4 mt-1"></div>
+                  <div class="h-6 bg-secondary-300 animate-pulse w-1/4 mt-1"></div>
+                  <div class="h-6 bg-secondary-300 animate-pulse w-1/4 mt-1"></div>
                 </div>
-                <div class="h-6 bg-background-300 animate-pulse w-3/4 mt-1"></div>
+                <div class="h-6 bg-secondary-300 animate-pulse w-3/4 mt-1"></div>
               </div>
             </div>
           </div>

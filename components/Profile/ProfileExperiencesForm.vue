@@ -130,7 +130,8 @@
             type="submit"
             class="bg-primary-default hover:bg-primary-400 click:bg-primary-400 text-text-default font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            Add experience
+            <span v-if="isEdit">Edit</span>
+            <span v-else>Add</span> experience
           </button>
         </div>
       </form>
@@ -147,6 +148,14 @@ const description = ref('')
 const location = ref('')
 const type = ref('')
 const userId = localStorage.getItem('userId')
+const props = defineProps({
+  isEdit: {
+    type: Boolean,
+    required: true
+  }
+})
+const isEdit = toRefs(props);
+
 const submitForm = async () => {
   const experienceData = {
     title: title.value,

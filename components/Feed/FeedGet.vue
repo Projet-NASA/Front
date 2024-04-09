@@ -1,16 +1,8 @@
 <template>
   <div>
-    <div
-      v-for="post in reversedPosts"
-      :key="post.id"
-      class="p-4 bg-secondary-200 rounded shadow mb-4"
-    >
+    <div v-for="post in reversedPosts" :key="post.id" class="p-4 bg-secondary-200 rounded shadow mb-4">
       <div class="flex items-center mb-2">
-        <img
-          class="w-10 h-10 rounded-full"
-          src="../../public/logo-rounded.png"
-          alt="User avatar"
-        />
+        <img class="w-10 h-10 rounded-full" src="../../public/logo-rounded.png" alt="User avatar" />
         <div class="ml-2">
           <div class="text-text-default font-bold">
             {{ post.user.firstName }} {{ post.user.lastName }}
@@ -25,7 +17,7 @@
         <button @click="likePost(post)" class="text-lg">
           {{ post.like }}
           <span v-if="post.userliked.some(user => user.userId === userId)">
-            <Icon name="material-symbols:favorite" class="text-primary-default text-2xl" />
+            <Icon name="material-symbols:favorite" class="text-primary-default text-2xl hover:animate-ping click:animate-ping"/>
           </span>
           <span v-else>
             <Icon name="material-symbols:favorite-outline"
@@ -40,11 +32,8 @@
       </div>
       <FeedComment :postId="`${post.id}`" />
       <div v-if="postComments(post.id).length > 0" class="comments-section">
-        <div
-          v-for="comment in postComments(post.id)"
-          :key="comment.id"
-          class="p-4 bg-secondary-200 rounded shadow mb-4"
-        >
+        <div v-for="comment in postComments(post.id)" :key="comment.id"
+          class="p-4 bg-secondary-200 rounded shadow mb-4">
           <div class="text-text-default mb-2">{{ comment.message }}</div>
         </div>
       </div>
