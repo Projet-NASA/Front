@@ -5,7 +5,9 @@
       :key="post.id"
       class="p-4 bg-secondary-200 rounded shadow mb-4"
     >
-      <div class="flex items-center mb-2">
+      <NuxtLink
+        :to="`/profile/${post.user.id}`"
+        class="flex items-center mb-2">
         <img
           class="w-10 h-10 rounded-full"
           src="../../public/logo-rounded.png"

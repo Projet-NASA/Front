@@ -71,7 +71,7 @@ import { onMounted, ref } from 'vue'
 
 const isDarkTheme = useCookie('isDarkTheme', false)
 const menuDeveloped = ref(false)
-const userId = typeof window !== 'undefined' ? window.localStorage.getItem('userId') : null;
+const userId = ref(typeof window !== 'undefined' ? window.localStorage.getItem('userId') : null);
 
 const applyTheme = () => {
   if (isDarkTheme.value) {
