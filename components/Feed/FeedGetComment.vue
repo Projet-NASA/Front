@@ -199,22 +199,19 @@ const timeSince = (date: string) => {
 }
 </script> -->
 
-
 <template>
-  <div 
-  
-  >
+  <div>
     {{ formData.postId }}
-    {{ posts.value.message }}
+    <!-- {{ posts.value.message }} -->
     <!-- Afficher le détail du post -->
     <button @click="goBack">Back to Feed</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
-import apiURL from '../../utils/apiURLs';
-import { useRouter } from 'vue-router';
+import { ref, computed, onMounted } from 'vue'
+import apiURL from '../../utils/apiURLs'
+import { useRouter } from 'vue-router'
 import type { Post } from '../interfaces/post.interface.ts'
 import type { User } from '../interfaces/user.interface.ts'
 import { useFormStore } from '../../stores/comment'
@@ -223,45 +220,46 @@ const formStore = useFormStore()
 const formData = formStore.formData
 
 let selectedPost = ref(false)
- 
-const userId = ref('')
 
+const userId = ref('')
 
 const comments = ref<Comment[]>([])
 
 const posts = ref<Post[]>([])
 
-const router = useRouter();
+const router = useRouter()
 
-if (formData.postId){
+if (formData.postId) {
   selectedPost = true
-  console.log(selectedPost);
-  
+  console.log(selectedPost)
 }
 
+console.log(formData.postId);
+
+const RetrievedId = formData.postId
 const fetchPost = async () => {
   try {
-    if (selectedPost.value) {
-      const response = await fetch(apiURL.getPostById(formData.postId));
-      if (!response.ok) {
-        throw new Error('Failed to fetch post details');
-      }
-      selectedPost.value = await response.json();
+    console.log(RetrievedId);
+    
+    const response = await fetch(
+      `http://localhost:3003/post/PostbyId/${ RetrievedId }`
+    )
+    if (!response.ok) {
+      throw new Error('Failed to fetch post details')
     }
+    posts.value = await response.json()
+    console.log(posts.value.message)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
-};
-
-
+}
 
 onMounted(() => {
   userId.value = localStorage.getItem('userId') || ''
-  fetchPost();
-});
+  fetchPost()
+})
 
 const goBack = () => {
-  router.push('/index');
-};
-
+  router.push('/index')
+}
 </script>
