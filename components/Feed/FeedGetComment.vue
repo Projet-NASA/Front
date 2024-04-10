@@ -202,10 +202,10 @@ const timeSince = (date: string) => {
 
 <template>
   <div 
-  v-if="selectedPost"
+  
   >
     {{ formData.postId }}
-    {{ selectedPost.message }}
+    {{ posts.value.message }}
     <!-- Afficher le détail du post -->
     <button @click="goBack">Back to Feed</button>
   </div>
@@ -222,8 +222,8 @@ import { useFormStore } from '../../stores/comment'
 const formStore = useFormStore()
 const formData = formStore.formData
 
-const selectedPost = formData.postId
-
+let selectedPost = ref(false)
+ 
 const userId = ref('')
 
 
@@ -233,10 +233,16 @@ const posts = ref<Post[]>([])
 
 const router = useRouter();
 
+if (formData.postId){
+  selectedPost = true
+  console.log(selectedPost);
+  
+}
+
 const fetchPost = async () => {
   try {
     if (selectedPost.value) {
-      const response = await fetch(apiURL.getPostById(selectedPost));
+      const response = await fetch(apiURL.getPostById(formData.postId));
       if (!response.ok) {
         throw new Error('Failed to fetch post details');
       }
@@ -247,10 +253,11 @@ const fetchPost = async () => {
   }
 };
 
+
+
 onMounted(() => {
   userId.value = localStorage.getItem('userId') || ''
   fetchPost();
-  intervalId = window.setInterval(fetchPost, 2000)
 });
 
 const goBack = () => {
