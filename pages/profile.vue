@@ -242,7 +242,6 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   data() {
@@ -258,68 +257,62 @@ export default {
   async mounted() {
     this.checkTokenAndRedirect()
     try {
-      const userId = localStorage.getItem('userId')
-      const token = localStorage.getItem('token')
-      if (!userId || !token) {
-        throw new Error('Aucun ID utilisateur ou token trouvé')
-      }
-      await this.getUserData(userId, token)
-      //await this.getJobs(userId, token);
-      await this.getExperiences(userId, token)
+      const sessionId = localStorage.getItem('sessionId')
+      console.log('Session ID:', sessionId)
+      await this.getUserData(sessionId)
+      await this.getExperiences(sessionId)
     } catch (error) {
       this.error = error.message
       console.error(error.message)
     }
   },
   methods: {
-    async getUserData(userId, token) {
-      const response = await fetch(
-        `http://localhost:3003/user/OneUser/${userId}`,
+    async getUserData(sessionId) {
+      console.log('Session ID:', sessionId)
+
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: sessionId
+      }
+
+      const userIdResponse = await fetch(
+        `http://localhost:3003/user/getUserIdFromSession/${sessionId}`,
         {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
+          headers: headers
         }
       )
-      if (!response.ok) {
-        const data = await response.json()
+      if (!userIdResponse.ok) {
+        const data = await userIdResponse.json()
+        throw new Error(
+          data.error || "impossible de récupérer l'ID de l'utilisateur"
+        )
+      }
+      const { userId } = await userIdResponse.json()
+
+      const userResponse = await fetch(
+        `http://localhost:3003/user/OneUser/${userId}`,
+        {
+          headers: headers
+        }
+      )
+
+      if (!userResponse.ok) {
+        const data = await userResponse.json()
         throw new Error(
           data.error || "Impossible de récupérer les données de l'utilisateur"
         )
       }
-      const data = await response.json()
+      const data = await userResponse.json()
       this.user = data
     },
-    // async getJobs(userId, token) {
-    //   const response = await fetch(
-    //     `http://localhost:3003/job/AllJobsByUser/${userId}`,
-    //     {
-    //       method: 'GET',
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //         'Content-Type': 'application/json'
-    //       }
-    //     }
-    //   );
-    //   if (!response.ok) {
-    //     const data = await response.json();
-    //     throw new Error(
-    //       data.error || "Impossible de récupérer les emplois de l'utilisateur"
-    //     );
-    //   }
-    //   const data = await response.json();
-    //   this.jobs = data;
-    // },
-    async getExperiences(userId, token) {
+    async getExperiences(sessionId) {
       const response = await fetch(
-        `http://localhost:3003/experience/ExperienceByUser/${userId}`,
+        `http://localhost:3003/experience/ExperienceByUser`,
         {
           method: 'GET',
           headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            sessionId: sessionId
           }
         }
       )
@@ -335,8 +328,7 @@ export default {
       console.log('Expériences:', this.experiences)
     },
     logout() {
-      localStorage.removeItem('token')
-      localStorage.removeItem('userId')
+      localStorage.removeItem('sessionId')
       this.$router.push('/login')
     },
     checkTokenAndRedirect() {},
