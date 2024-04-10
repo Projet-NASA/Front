@@ -200,16 +200,19 @@ const timeSince = (date: string) => {
 </script> -->
 
 <template>
-  <div>
-    {{ formData.postId }}
-    <!-- {{ posts.value.message }} -->
-    <!-- Afficher le détail du post -->
-    <button @click="goBack">Back to Feed</button>
+  <div :key="formData.postId">
+    <h2>
+      {{ posts.id }}
+      {{ posts.user.firstName }}
+    </h2>
+    <p>
+      {{ posts.message }}
+    </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import apiURL from '../../utils/apiURLs'
 import { useRouter } from 'vue-router'
 import type { Post } from '../interfaces/post.interface.ts'
@@ -225,7 +228,8 @@ const userId = ref('')
 
 const comments = ref<Comment[]>([])
 
-const posts = ref<Post[]>([])
+const posts = ref<Post>([])
+ 
 
 const router = useRouter()
 
@@ -235,6 +239,7 @@ if (formData.postId) {
 }
 
 console.log(formData.postId);
+
 
 const RetrievedId = formData.postId
 const fetchPost = async () => {
@@ -249,17 +254,19 @@ const fetchPost = async () => {
     }
     posts.value = await response.json()
     console.log(posts.value.message)
+    console.log(posts.value.user.firstName);
+    
   } catch (error) {
     console.error(error)
   }
 }
+
+
 
 onMounted(() => {
   userId.value = localStorage.getItem('userId') || ''
   fetchPost()
 })
 
-const goBack = () => {
-  router.push('/index')
-}
+
 </script>
