@@ -201,28 +201,60 @@ const timeSince = (date: string) => {
 
 
 <template>
-  <div v-if="selectedPost">
-    <div class="p-4 bg-secondary-200 rounded shadow mb-4">
-      <div class="flex items-center mb-2">
-      </div>
-      <div class="text-text-default mb-2">{{ selectedPost.message }}</div>
-    </div>
+  <div 
+  v-if="selectedPost"
+  >
+    {{ formData.postId }}
+    {{ selectedPost.message }}
+    <!-- Afficher le détail du post -->
+    <button @click="goBack">Back to Feed</button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import apiURL from '../../utils/apiURLs';
-import type { Post } from '../../.nuxt/types/post.interface';
-import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
+import type { Post } from '../interfaces/post.interface.ts'
+import type { User } from '../interfaces/user.interface.ts'
+import { useFormStore } from '../../stores/comment'
 
-const posts = ref<Post[]>([]);
-const selectedPostId = computed(() => $route.params.postId); 
+const formStore = useFormStore()
+const formData = formStore.formData
 
-const selectedPost = computed(() => posts.value.find(post => post.id === selectedPostId.value));
+const selectedPost = formData.postId
+
+const userId = ref('')
 
 
-export default {
-  selectedPost,
+const comments = ref<Comment[]>([])
+
+const posts = ref<Post[]>([])
+
+const router = useRouter();
+
+const fetchPost = async () => {
+  try {
+    if (selectedPost.value) {
+      const response = await fetch(apiURL.getPostById(selectedPost));
+      if (!response.ok) {
+        throw new Error('Failed to fetch post details');
+      }
+      selectedPost.value = await response.json();
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
+
+onMounted(() => {
+  userId.value = localStorage.getItem('userId') || ''
+  fetchPost();
+  intervalId = window.setInterval(fetchPost, 2000)
+});
+
+const goBack = () => {
+  router.push('/index');
+};
+
 </script>

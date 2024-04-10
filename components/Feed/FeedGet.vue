@@ -33,7 +33,7 @@
           </span>
         </button>
         <div>
-              {{ selectedPostId }}
+              {{ formData.postId }}
         </div>
         <button @click="selectPost(post.id)">
           {{ post.comments.length }}
@@ -51,8 +51,13 @@ import type { Post } from '../../.nuxt/types/post.interface'
 import type { User } from '../../.nuxt/types/user.interface'
 import type { Comment } from '../../.nuxt/types/comment.interface'
 import { useRouter } from 'vue-router'
+import { useFormStore } from '../../stores/comment'
+
 
 const userId = ref('')
+
+const formStore = useFormStore()
+const formData = formStore.formData
 
 const selectedPostId = ref<string[]>([]);
 
@@ -159,9 +164,10 @@ const removeLikeFromPost = async (post: Post) => {
 }
 
 const selectPost = (postId: string) => {
-  selectedPostId.value = postId;
-  router.push(`/post/${postId}`); 
+  formData.postId = postId
+  router.push('/postComment')
 };
+
 const timeSince = (date: string) => {
   const seconds = Math.floor(
     (new Date().getTime() - new Date(date).getTime()) / 1000
