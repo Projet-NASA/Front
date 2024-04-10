@@ -67,11 +67,38 @@
 
 <script setup>
 import { useCookie } from '#app'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 const isDarkTheme = useCookie('isDarkTheme', false)
 const menuDeveloped = ref(false)
-const userId = ref(typeof window !== 'undefined' ? window.localStorage.getItem('userId') : null);
+const sessionId = ref(typeof window !== 'undefined' ? window.localStorage.getItem('sessionId') : null);
+const userId = ref(null);
+
+async function getUserIdFromSession(sessionId) {
+  console.log('[getUserIdFromSession] Récupération de l\'ID de session:', sessionId)
+
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: sessionId
+  }
+
+  const userIdResponse = await fetch(
+    `http://localhost:3003/user/getUserIdFromSession/${sessionId}`,
+    {
+      headers: headers
+    }
+  )
+  if (!userIdResponse.ok) {
+    const data = await userIdResponse.json()
+    throw new Error(
+      data.error || "Impossible de récupérer l'ID de l'utilisateur"
+    )
+  }
+  const responseData = await userIdResponse.json()
+  const userId = responseData.userId
+  console.log('[getUserIdFromSession] ID de l\'utilisateur récupéré:', userId)
+  return userId
+}
 
 const applyTheme = () => {
   if (isDarkTheme.value) {
@@ -90,7 +117,6 @@ const isFloating = ref('w-full top-0')
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
-  console.log('userId', userId)
 })
 
 const handleScroll = () => {
@@ -114,4 +140,24 @@ const developMenu = () => {
     menuDeveloped.value = false
   }
 }
+
+// Gestionnaire de changement de sessionId
+watch(sessionId, async (newSessionId) => {
+  console.log('[watch] sessionId changé:', newSessionId)
+  if (newSessionId) {
+    userId.value = await getUserIdFromSession(newSessionId)
+  }
+})
+
+// Récupération initiale de l'ID de l'utilisateur
+onMounted(async () => {
+  console.log('[onMounted] Initialisation, sessionId:', sessionId.value)
+  if (sessionId.value) {
+    userId.value = await getUserIdFromSession(sessionId.value)
+  }
+})
 </script>
+
+
+
+

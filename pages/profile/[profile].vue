@@ -154,6 +154,8 @@
 </template>
 
 <script>
+import { redirect } from 'react-router-dom'
+
 export default {
   data() {
     return {
@@ -172,6 +174,10 @@ export default {
       const sessionId = localStorage.getItem('sessionId')
       const router = useRouter()
       const userId = router.currentRoute.value.params.profile;
+      if (!sessionId) {
+        router.push('/login')
+        throw new Error('Vous devez être connecté pour accéder à cette page')
+      }
       console.log('User ID:', userId)
       console.log('Session ID:', sessionId)
       await this.getUserData(userId)
