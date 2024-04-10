@@ -1,16 +1,8 @@
 <template>
   <div>
-    <div
-      v-for="post in reversedPosts"
-      :key="post.id"
-      class="p-4 bg-secondary-200 rounded shadow mb-4"
-    >
-      <div class="flex items-center mb-2">
-        <img
-          class="w-10 h-10 rounded-full"
-          src="../../public/logo-rounded.png"
-          alt="User avatar"
-        />
+    <div v-for="post in reversedPosts" :key="post.id" class="p-4 bg-secondary-200 rounded shadow mb-4">
+      <NuxtLink :to="`/profile/${post.user.id}`" class="flex items-center mb-2">
+        <img class="w-10 h-10 rounded-full" src="../../public/logo-rounded.png" alt="User avatar" />
         <div class="ml-2">
           <div class="text-text-default font-bold">
             {{ post.user.firstName }} {{ post.user.lastName }}
@@ -19,39 +11,29 @@
             {{ timeSince(post.createdAt) }}
           </div>
         </div>
-      </div>
+      </NuxtLink>
       <div class="text-text-default mb-2">{{ post.message }}</div>
       <div class="flex justify-between items-center text-gray-500">
         <button @click="likePost(post)" class="text-lg">
           {{ post.like }}
           <span v-if="post.userliked.some(user => user.userId === userId)">
-            <Icon
-              name="material-symbols:favorite"
-              class="text-primary-default text-2xl"
-            />
+            <Icon name="material-symbols:favorite" class="text-primary-default text-2xl hover:animate-ping click:animate-ping"/>
           </span>
           <span v-else>
-            <Icon
-              name="material-symbols:favorite-outline"
-              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-2xl"
-            />
+            <Icon name="material-symbols:favorite-outline"
+              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-2xl" />
           </span>
         </button>
         <button class="text-lg">
           {{ post.comments.length }}
-          <Icon
-            name="material-symbols:chat"
-            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-2xl"
-          />
+          <Icon name="material-symbols:chat"
+            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-2xl" />
         </button>
       </div>
       <FeedComment :postId="`${post.id}`" />
       <div v-if="postComments(post.id).length > 0" class="comments-section">
-        <div
-          v-for="comment in postComments(post.id)"
-          :key="comment.id"
-          class="p-4 bg-secondary-200 rounded shadow mb-4"
-        >
+        <div v-for="comment in postComments(post.id)" :key="comment.id"
+          class="p-4 bg-secondary-200 rounded shadow mb-4">
           <div class="text-text-default mb-2">{{ comment.message }}</div>
         </div>
       </div>

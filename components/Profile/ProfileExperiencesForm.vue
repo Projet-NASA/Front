@@ -20,7 +20,7 @@
         class="bg-background-200 shadow-md rounded px-8 pt-6 pb-8 mb-2"
       >
         <h1 class="text-2xl font-bold mb-5 text-center text-text-default">
-          Add an experience
+          Experience
         </h1>
         <div class="flex flex-col justify-center w-3/4 mx-auto space-y-3">
           <div>
@@ -130,7 +130,7 @@
             type="submit"
             class="bg-primary-default hover:bg-primary-400 click:bg-primary-400 text-text-default font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            Add experience
+            Submit
           </button>
         </div>
       </form>
@@ -147,6 +147,7 @@ const description = ref('')
 const location = ref('')
 const type = ref('')
 const userId = localStorage.getItem('userId')
+
 const submitForm = async () => {
   const experienceData = {
     title: title.value,
@@ -170,8 +171,11 @@ const submitForm = async () => {
       body: JSON.stringify(experienceData)
     })
 
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`)
+    if (response.ok) {
+      console.log('Job added successfully')
+      reloadNuxtApp()
+    } else {
+      console.error('Failed to add job')
     }
 
     const responseData = await response.json()
