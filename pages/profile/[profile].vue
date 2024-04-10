@@ -174,6 +174,7 @@ export default {
       console.log("userId:", userId);
       const token = localStorage.getItem('token');
       if (!userId || !token) {
+        this.$router.push('/login');
         throw new Error('Aucun ID utilisateur ou token trouvé');
       }
       await this.getUserData(userId, token);
