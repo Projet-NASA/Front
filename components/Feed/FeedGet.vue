@@ -5,10 +5,7 @@
       :key="post.id"
       class="p-4 bg-secondary-200 rounded shadow mb-4"
     >
-      <NuxtLink
-        :to="`/profile/${post.user.id}`"
-        class="flex items-center mb-2">
-
+      <NuxtLink :to="`/profile/${post.user.id}`" class="flex items-center mb-2">
         <img
           class="w-10 h-10 rounded-full"
           src="../../public/logo-rounded.png"
@@ -41,7 +38,7 @@
           </span>
         </button>
         <div>
-              {{ formData.postId }}
+          {{ formData.postId }}
         </div>
         <button @click="selectPost(post.id)">
           {{ post.comments.length }}
@@ -52,7 +49,6 @@
         </button>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -64,13 +60,12 @@ import type { Comment } from '../../.nuxt/types/comment.interface'
 import { useRouter } from 'vue-router'
 import { useFormStore } from '../../stores/comment'
 
-
 const userId = ref('')
 
 const formStore = useFormStore()
 const formData = formStore.formData
 
-const selectedPostId = ref<string[]>([]);
+const selectedPostId = ref<string[]>([])
 
 const comments = ref<Comment[]>([])
 
@@ -89,7 +84,6 @@ const fetchPosts = async () => {
     console.error(error)
   }
 }
-
 
 let intervalId: number | undefined
 
@@ -176,8 +170,8 @@ const removeLikeFromPost = async (post: Post) => {
 
 const selectPost = (postId: string) => {
   formData.postId = postId
-  router.push('/postComment')
-};
+  router.push(`/postComment/${postId}`)
+}
 
 const timeSince = (date: string) => {
   const seconds = Math.floor(

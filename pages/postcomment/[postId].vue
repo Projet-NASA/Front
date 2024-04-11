@@ -1,5 +1,5 @@
 <template>
-  <div :key="formData.postId" class="p-4 bg-secondary-200 rounded shadow mb-4">
+  <div :key="String(postId)" class="p-4 bg-secondary-200 rounded shadow mb-4">
     <div class="flex items-center mb-2">
       <img
         class="w-10 h-10 rounded-full"
@@ -26,7 +26,7 @@
         </span>
       </button>
       <div>
-        {{ formData.postId }}
+        {{ postId }}
       </div>
     </div>
     <FeedComment :postId="`${posts.id}`" />
@@ -45,12 +45,15 @@
 <script setup lang="ts">
 import apiURL from '../../utils/apiURLs'
 import { useRouter } from 'vue-router'
-import type { Post } from '../interfaces/post.interface.ts'
-import type { User } from '../interfaces/user.interface.ts'
-import type { Comment } from '../interfaces/comment.interface'
+import type { Post } from '../../components/interfaces/post.interface.ts'
+import type { User } from '../../components/interfaces/user.interface.ts'
+import type { Comment } from '../../components/interfaces/comment.interface'
 import { useFormStore } from '../../stores/comment'
 import { computed, onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
+const route = useRoute();
+const postId = route.params.postId;
 const formStore = useFormStore()
 const formData = formStore.formData
 
@@ -63,22 +66,19 @@ const comments = ref<Comment[]>([])
 
 const posts = ref<Post>({} as Post)
 
-const router = useRouter()
 
-if (formData.postId) {
+if (postId) {
   selectedPost.value = true;
   console.log(selectedPost)
 }
 
-console.log(formData.postId)
+console.log(postId)
 
-const RetrievedId = formData.postId
 const fetchPost = async () => {
   try {
-    console.log(RetrievedId)
 
     const response = await fetch(
-      `http://localhost:3003/post/PostbyId/${RetrievedId}`
+      `http://localhost:3003/post/PostbyId/${postId}`
     )
     if (!response.ok) {
       throw new Error('Failed to fetch post details')
