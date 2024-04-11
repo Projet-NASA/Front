@@ -37,7 +37,10 @@
             />
           </span>
         </button>
-        <button class="text-lg">
+        <div>
+          {{ formData.postId }}
+        </div>
+        <button @click="selectPost(post.id)">
           {{ post.comments.length }}
           <Icon
             name="material-symbols:chat"
@@ -45,51 +48,30 @@
           />
         </button>
       </div>
-      <FeedComment :postId="`${post.id}`" />
-      <div v-if="postComments(post.id).length > 0" class="comments-section">
-        <div
-          v-for="comment in postComments(post.id)"
-          :key="comment.id"
-          class="p-4 bg-secondary-200 rounded shadow mb-4"
-        >
-          <div class="text-text-default mb-2">{{ comment.message }}</div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import apiURL from '../../utils/apiURLs'
+import type { Post } from '../../.nuxt/types/post.interface'
+import type { User } from '../../.nuxt/types/user.interface'
+import type { Comment } from '../../.nuxt/types/comment.interface'
+import { useRouter } from 'vue-router'
+import { useFormStore } from '../../stores/comment'
 
-interface User {
-  id: string
-  firstName: string
-  lastName: string
-  avatar?: string
-}
-
-interface Post {
-  id: string
-  createdAt: string
-  message: string
-  like: number
-  userliked: { userId: string }[]
-  user: User
-  comments: Comment[]
-}
 const userId = ref('')
 
-interface Comment {
-  id: string
-  createdAt: string
-  message: string
-  postId: string
-}
+const formStore = useFormStore()
+const formData = formStore.formData
+
+const selectedPostId = ref<string[]>([])
 
 const comments = ref<Comment[]>([])
 
 const posts = ref<Post[]>([])
+
+const router = useRouter()
 
 const fetchPosts = async () => {
   try {
@@ -103,29 +85,15 @@ const fetchPosts = async () => {
   }
 }
 
-// const invisible = async (id) =>{
-//   if (document.getElementById(id).style.display == 'none')
-//   {
-//        document.getElementById(id).style.display = 'block';
-//   }
-//   else
-//   {
-//        document.getElementById(id).style.display = 'none';
-//   }
-// }
-
 let intervalId: number | undefined
 
 onMounted(() => {
   userId.value = localStorage.getItem('userId') || ''
   fetchPosts()
-  fetchComments()
   intervalId = window.setInterval(fetchPosts, 2000)
-  intervalId = window.setInterval(fetchComments, 2000)
 })
 
 const reversedPosts = computed(() => [...posts.value].reverse())
-const reversedcomments = computed(() => [...comments.value].reverse())
 
 // update posts for likes
 
@@ -200,24 +168,9 @@ const removeLikeFromPost = async (post: Post) => {
   }
 }
 
-const fetchComments = async () => {
-  try {
-    const response = await fetch(apiURL.getComment)
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch comments')
-    }
-
-    comments.value = await response.json()
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-const postComments = (postId: string) => {
-  return comments.value.filter(
-    (comment: { postId: string }) => comment.postId === postId
-  )
+const selectPost = (postId: string) => {
+  formData.postId = postId
+  router.push(`/postComment/${postId}`)
 }
 
 const timeSince = (date: string) => {
