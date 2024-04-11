@@ -3,15 +3,15 @@
     <div class="w-full max-w-xs">
       <form
         @submit.prevent="submitRequest"
-        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        class="bg-background-200 shadow-md rounded px-8 pt-6 pb-8 mb-2"
       >
         <div class="mb-4">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+          <label class="block text-text-default text-sm font-bold mb-2"  for="email">
             Email
           </label>
           <input
             v-model="email"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="bg-background-default shadow appearance-none border-primary-800 border rounded w-full py-2 px-3 text-text-default mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="email"
             type="email"
             placeholder="Email"
@@ -19,7 +19,7 @@
         </div>
         <div class="flex items-center justify-between">
           <button
-            class="bg-primary-800 hover:bg-primary-default text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          class="bg-primary-800 hover:bg-primary-default transition-colors duration-300 text-text-50 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full"
             type="submit"
           >
             Réinitialiser le mot de passe

@@ -222,6 +222,8 @@
 </template>
 
 <script>
+import { redirect } from 'react-router-dom'
+
 export default {
   data() {
     return {
@@ -237,31 +239,32 @@ export default {
   async mounted() {
     this.checkTokenAndRedirect()
     try {
+      const sessionId = localStorage.getItem('sessionId')
       const router = useRouter()
-      const userId = router.currentRoute.value.params.profile
-      console.log('userId:', userId)
-      const token = localStorage.getItem('token')
-      if (!userId || !token) {
-        throw new Error('Aucun ID utilisateur ou token trouvé')
+      const userId = router.currentRoute.value.params.profile;
+      if (!sessionId) {
+        router.push('/login')
+        throw new Error('Vous devez être connecté pour accéder à cette page')
       }
-      await this.getUserData(userId, token)
-      //await this.getJobs(userId, token);
-      await this.getExperiences(userId, token)
-      this.visitorId = localStorage.getItem('userId')
+      console.log('User ID:', userId)
+      console.log('Session ID:', sessionId)
+      await this.getUserData(userId)
+      await this.getVisitorData(sessionId)
+      await this.getExperiences(userId)
     } catch (error) {
       this.error = error.message
       console.error(error.message)
     }
   },
   methods: {
-    async getUserData(userId, token) {
+    async getUserData(userId) {
       const response = await fetch(
         `http://localhost:3003/user/OneUser/${userId}`,
         {
           method: 'GET',
           headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            userId: userId
           }
         }
       )
@@ -273,83 +276,99 @@ export default {
       }
       const data = await response.json()
       this.user = data
+      console.log('User:', this.user)
     },
-    // async getJobs(userId, token) {
-    //   const response = await fetch(
-    //     `http://localhost:3003/job/AllJobsByUser/${userId}`,
-    //     {
-    //       method: 'GET',
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //         'Content-Type': 'application/json'
-    //       }
-    //     }
-    //   );
-    //   if (!response.ok) {
-    //     const data = await response.json();
-    //     throw new Error(
-    //       data.error || "Impossible de récupérer les emplois de l'utilisateur"
-    //     );
-    //   }
-    //   const data = await response.json();
-    //   this.jobs = data;
-    // },
-    async getExperiences(userId, token) {
-      const response = await fetch(
-        `http://localhost:3003/experience/ExperienceByUser/${userId}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      )
-      if (!response.ok) {
-        const data = await response.json()
-        throw new Error(
-          data.error ||
-            "Impossible de récupérer les expériences de l'utilisateur"
-        )
-      }
-      const data = await response.json()
-      this.experiences = data
-      console.log('Expériences:', this.experiences)
-    },
-    async followUser() {
-      const router = useRouter()
-      const followerId = localStorage.getItem('userId')
-      const followingId = router.currentRoute.value.params.profile
-      console.log('Follower ID:', followerId)
-      console.log('Following ID:', followingId)
-      const response = await fetch(
-        `http://localhost:3003/follower/createFollower`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            followerID: followerId,
-            followingID: followingId
-          })
-        }
-      )
-      if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.error || 'Failed to follow user')
-      }
-      console.log('User followed successfully')
-    },
-    logout() {
-      localStorage.removeItem('token')
-      localStorage.removeItem('userId')
-      this.$router.push('/login')
-    },
-    checkTokenAndRedirect() {},
-    formatDate(date) {
-      return new Date(date).toLocaleDateString()
+  async getVisitorData(sessionId) {
+    console.log('Session ID:', sessionId)
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: sessionId
     }
+
+    const userIdResponse = await fetch(
+      `http://localhost:3003/user/getUserIdFromSession/${sessionId}`,
+      {
+        headers: headers
+      }
+    )
+    if (!userIdResponse.ok) {
+      const data = await userIdResponse.json()
+      throw new Error(
+        data.error || "impossible de récupérer l'ID de l'utilisateur"
+      )
+    }
+    const responseData = await userIdResponse.json()
+    const visitorId = responseData.userId
+
+    const userResponse = await fetch(
+      `http://localhost:3003/user/OneUser/${visitorId}`,
+      {
+        headers: headers,
+      }
+    )
+
+    if (!userResponse.ok) {
+      const data = await userResponse.json()
+      throw new Error(
+        data.error || "Impossible de récupérer les données de l'utilisateur"
+      )
+    }
+    const data = await userResponse.json()
+    this.visitorId = data.id
+    console.log('Visitor ID:', this.visitorId)
+  },
+  async getExperiences(userId) {
+    const response = await fetch(
+      `http://localhost:3003/experience/ExperienceByUser/${userId}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          userId: userId
+        }
+      }
+    )
+    if (!response.ok) {
+      const data = await response.json()
+      throw new Error(
+        data.error ||
+        "Impossible de récupérer les expériences de l'utilisateur"
+      )
+    }
+    const data = await response.json()
+    this.experiences = data
+    console.log('Expériences:', this.experiences)
+  },
+  async getJobs(sessionId) {
+    const response = await fetch(
+      `http://localhost:3003/job/AllJobsByUser/${this.user.id}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          sessionId: sessionId
+        }
+      }
+    )
+    if (!response.ok) {
+      const data = await response.json()
+      throw new Error(
+        data.error || "Impossible de récupérer les emplois de l'utilisateur"
+      )
+    }
+    const data = await response.json()
+    this.jobs = data
+    console.log('Emplois:', this.jobs)
+  },
+  logout() {
+    localStorage.removeItem('sessionId')
+    this.$router.push('/login')
+  },
+  checkTokenAndRedirect() { },
+  formatDate(date) {
+    return new Date(date).toLocaleDateString()
   }
+}
 }
 </script>
