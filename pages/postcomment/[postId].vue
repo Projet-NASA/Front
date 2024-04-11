@@ -35,13 +35,13 @@
     <div v-if="postComments(posts.id).length > 0" class="max-h-[550px] overflow-y-auto mx-auto mt-4">
       <div v-for="comment in postComments(posts.id)" :key="comment.id" class="p-4 bg-secondary-300 rounded shadow mb-4">
         <div class="flex">
-            <NuxtLink :to="`/profile/${comment}`" class="flex items-center mb-2">
+            <NuxtLink :to="`/profile/${comment.user.id}`" class="flex items-center mb-2">
             <img
               class="w-10 h-10 rounded-full hover:outline hover:outline-primary-default hover:outline-offset-2 click:outline click:outline-primary-default click:outline-offset-2"
               src="../../public/logo-rounded.png" alt="User avatar" />
           </NuxtLink>
           <div class="ml-2">
-            <NuxtLink :to="`/profile/${comment}`"
+            <NuxtLink :to="`/profile/${comment.user.id}`"
               class="flex items-center text-text-default hover:text-primary-default hover:underline click:text-primary-default click:underline">
               <div class=" font-bold">
                   {{ comment.user.firstName }} {{ comment.user.lastName }}
