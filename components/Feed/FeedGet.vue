@@ -3,14 +3,13 @@
     <div v-for="post in reversedPosts" :key="post.id" class="p-4 bg-secondary-200 rounded shadow mb-4">
       <div class="flex">
         <NuxtLink :to="`/profile/${post.user.id}`" class="flex items-center mb-2">
-
           <img
             class="w-10 h-10 rounded-full hover:outline hover:outline-primary-default hover:outline-offset-2 click:outline click:outline-primary-default click:outline-offset-2"
             src="../../public/logo-rounded.png" alt="User avatar" />
         </NuxtLink>
         <div class="ml-2">
           <NuxtLink :to="`/profile/${post.user.id}`"
-            class="flex items-center hover:text-primary-default hover:underline click:text-primary-default click:underline">
+            class="flex items-center text-text-default hover:text-primary-default hover:underline click:text-primary-default click:underline">
             <div class=" font-bold">
               {{ post.user.firstName }} {{ post.user.lastName }}
             </div>
@@ -22,9 +21,9 @@
       </div>
       <div class="text-text-default mb-2">{{ post.message }}</div>
       <div class="flex justify-between items-center text-gray-500">
-        <button @click="likePost(post)" class="text-lg">
+        <button @click="likePost(post)" class="text-sm">
           {{ post.like }}
-          <span v-if="post.userliked.some(user => user.userId === userId)">
+            <span v-if="post.userliked.some((user: User) => user.userId === userId)">
             <Icon name="material-symbols:favorite"
               class="text-primary-default text-2xl hover:animate-ping click:animate-ping" />
           </span>
@@ -56,9 +55,6 @@ const userId = ref('')
 const formStore = useFormStore()
 const formData = formStore.formData
 
-const selectedPostId = ref<string[]>([])
-
-const comments = ref<Comment[]>([])
 
 const posts = ref<Post[]>([])
 
@@ -90,7 +86,7 @@ const reversedPosts = computed(() => [...posts.value].reverse())
 
 const likePost = async (post: Post) => {
   const hasLiked = post.userliked.some(
-    userLike => userLike.userId === userId.value
+    (userLike: User) => userLike.userId === userId.value
   )
 
   if (hasLiked) {

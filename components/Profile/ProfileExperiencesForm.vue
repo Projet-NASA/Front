@@ -139,6 +139,7 @@
 </template>
 
 <script setup lang="ts">
+const router = useRoute()
 const title = ref('')
 const company = ref('')
 const from = ref('')
@@ -146,8 +147,9 @@ const to = ref('')
 const description = ref('')
 const location = ref('')
 const type = ref('')
-const userId = localStorage.getItem('userId')
+const userId = router.params.profile
 
+console.log(userId)
 const submitForm = async () => {
   const experienceData = {
     title: title.value,
@@ -175,7 +177,7 @@ const submitForm = async () => {
       console.log('Job added successfully')
       reloadNuxtApp()
     } else {
-      console.error('Failed to add job')
+      console.error('Failed to add experience')
     }
 
     const responseData = await response.json()

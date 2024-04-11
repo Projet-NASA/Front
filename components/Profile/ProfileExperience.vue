@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="experience.userId == user.id"
-    class="mx-6 mt-4 border-t border-secondary-300 pt-4"
+    class="mx-6 mt-4 border-2 border-secondary-300 p-4 rounded-xl"
   >
     <div class="flex flex-col justify-between">
       <div class="flex flex-row justify-between items-center">
@@ -34,7 +34,7 @@
       </button>
       <button
         class="bg-red-500 hover:bg-red-800 text-white rounded-full h-10 w-10 mt-4 mr-4 flex items-center justify-center transition-colors duration-300"
-        @click=""
+        @click="deleteExperience(experience.id)"
         title="Delete experience"
       >
         <Icon name="material-symbols:delete" class="text-white w-6 h-6" />
@@ -79,6 +79,24 @@ const props = defineProps({
     required: true
   }
 })
+const deleteExperience = async (id: string) => {
+  try {
+    const response = await fetch(`http://localhost:3003/experience/Experience/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(await response.text())
+    }
+
+    location.reload()
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 const { user, experience } = toRefs(props)
 </script>
