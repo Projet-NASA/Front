@@ -1,5 +1,13 @@
 <template>
   <div>
+    <div v-for="post in reversedPosts" :key="post.id" class="p-4 bg-secondary-200 rounded shadow mb-4">
+      <div class="flex">
+        <NuxtLink :to="`/profile/${post.user.id}`" class="flex items-center mb-2">
+
+          <img
+            class="w-10 h-10 rounded-full hover:outline hover:outline-primary-default hover:outline-offset-2 click:outline click:outline-primary-default click:outline-offset-2"
+            src="../../public/logo-rounded.png" alt="User avatar" />
+        </NuxtLink>
     <div
       v-for="post in reversedPosts"
       :key="post.id"
@@ -12,48 +20,35 @@
           alt="User avatar"
         />
         <div class="ml-2">
-          <div class="text-text-default font-bold">
-            {{ post.user.firstName }} {{ post.user.lastName }}
-          </div>
+          <NuxtLink :to="`/profile/${post.user.id}`"
+            class="flex items-center hover:text-primary-default hover:underline click:text-primary-default click:underline">
+            <div class=" font-bold">
+              {{ post.user.firstName }} {{ post.user.lastName }}
+            </div>
+          </NuxtLink>
           <div class="text-text-default text-sm text-gray-500">
             {{ timeSince(post.createdAt) }}
           </div>
         </div>
-      </NuxtLink>
+      </div>
       <div class="text-text-default mb-2">{{ post.message }}</div>
       <div class="flex justify-between items-center text-gray-500">
         <button @click="likePost(post)" class="text-lg">
           {{ post.like }}
           <span v-if="post.userliked.some(user => user.userId === userId)">
-            <Icon
-              name="material-symbols:favorite"
-              class="text-primary-default text-2xl hover:animate-ping click:animate-ping"
-            />
+            <Icon name="material-symbols:favorite"
+              class="text-primary-default text-2xl hover:animate-ping click:animate-ping" />
           </span>
           <span v-else>
-            <Icon
-              name="material-symbols:favorite-outline"
-              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-2xl"
-            />
+            <Icon name="material-symbols:favorite-outline"
+              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-2xl" />
           </span>
         </button>
-        <button class="text-lg">
+        <button @click="selectPost(post.id)">
           {{ post.comments.length }}
-          <Icon
-            name="material-symbols:chat"
-            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-2xl"
-          />
+          <Icon name="material-symbols:chat"
+            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-2xl" />
         </button>
-      </div>
-      <FeedComment :postId="`${post.id}`" />
-      <div v-if="postComments(post.id).length > 0" class="comments-section">
-        <div
-          v-for="comment in postComments(post.id)"
-          :key="comment.id"
-          class="p-4 bg-secondary-200 rounded shadow mb-4"
-        >
-          <div class="text-text-default mb-2">{{ comment.message }}</div>
-        </div>
       </div>
     </div>
   </div>
@@ -61,23 +56,12 @@
 
 <script setup lang="ts">
 import apiURL from '../../utils/apiURLs'
+import type { Post } from '../../.nuxt/types/post.interface'
+import type { User } from '../../.nuxt/types/user.interface'
+import type { Comment } from '../../.nuxt/types/comment.interface'
+import { useRouter } from 'vue-router'
+import { useFormStore } from '../../stores/comment'
 
-interface User {
-  id: string
-  firstName: string
-  lastName: string
-  avatar?: string
-}
-
-interface Post {
-  id: string
-  createdAt: string
-  message: string
-  like: number
-  userliked: { userId: string }[]
-  user: User
-  comments: Comment[]
-}
 const userId = ref('')
 const sessionId = ref('')
 
@@ -91,6 +75,8 @@ interface Comment {
 const comments = ref<Comment[]>([])
 
 const posts = ref<Post[]>([])
+
+const router = useRouter()
 
 const fetchPosts = async () => {
   try {
@@ -128,7 +114,6 @@ onMounted(() => {
 })
 
 const reversedPosts = computed(() => [...posts.value].reverse())
-const reversedcomments = computed(() => [...comments.value].reverse())
 
 // update posts for likes
 
@@ -203,24 +188,9 @@ const removeLikeFromPost = async (post: Post) => {
   }
 }
 
-const fetchComments = async () => {
-  try {
-    const response = await fetch(apiURL.getComment)
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch comments')
-    }
-
-    comments.value = await response.json()
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-const postComments = (postId: string) => {
-  return comments.value.filter(
-    (comment: { postId: string }) => comment.postId === postId
-  )
+const selectPost = (postId: string) => {
+  formData.postId = postId
+  router.push(`/postComment/${postId}`)
 }
 
 const timeSince = (date: string) => {
