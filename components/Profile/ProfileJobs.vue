@@ -1,20 +1,20 @@
 <template>
   <div
     v-if="job.userId == user.id"
-    class="mx-6 mt-4 border-2 border-secondary-300 p-4 rounded-xl"
+    class="mx-6 mt-4 border-2 border-primary-200 p-4 rounded-xl"
   >
-    <div class="flex flex-col justify-between">
-      <h2 class="text-lg">{{ job.title }}</h2>
-      <div class="flex flex-row justify-between">
-        <h2 class="text-lg">{{ job.company }}</h2>
-        <h2 class="text-lg">
-          {{ formatDate(job.from) }} - {{ formatDate(job.to) }}
+  <div class="flex flex-col justify-between">
+    <h2 class="text-lg font-bold">{{ job.title }}</h2>
+      <div class="flex flex- justify-start space-x-3">
+        <h2>{{ job.company }}</h2>
+        <h2>{{ job.location }}</h2>
+      </div>  
+        <h2 class="font-thin">
+          {{ formatDate(job.from) }}
         </h2>
-        <h2 class="text-lg">{{ job.type }}</h2>
-        <h2 class="text-lg">{{ job.location }}</h2>
-      </div>
+        <h2>{{ job.type }}</h2>
     </div>
-    <p class="font-light">{{ job.description }}</p>
+    <p class="font-light mt-2">{{ job.description }}</p>
     <div
       v-if="visitorId === user.id"
       class="flex flex-row justify-start space-x-4"
