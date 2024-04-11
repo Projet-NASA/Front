@@ -58,14 +58,19 @@ const formatDate = (date: Date) => {
 }
 
 const props = defineProps({
-  user: {
-    type: Object,
-    required: true
-  },
-  job: {
-    type: Object,
-    required: true
-  }
+
+    user: {
+        type: Object,
+        required: true
+    },
+    visitorId: {
+        type: String,
+        required: true
+    },
+    job: {
+        type: Object,
+        required: true
+    }
 })
 
 const { user, job } = toRefs(props)
