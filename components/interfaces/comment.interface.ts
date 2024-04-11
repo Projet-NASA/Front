@@ -5,6 +5,6 @@ export interface Comment {
     createdAt: string
     message: string
     postId: string
-    userComment: User
+    user: User
   }
   
