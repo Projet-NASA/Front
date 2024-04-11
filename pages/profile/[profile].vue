@@ -222,7 +222,6 @@
 </template>
 
 <script>
-import { redirect } from 'react-router-dom'
 
 export default {
   data() {
@@ -363,6 +362,7 @@ export default {
   },
   logout() {
     localStorage.removeItem('sessionId')
+    localStorage.removeItem('userId')
     this.$router.push('/login')
   },
   checkTokenAndRedirect() { },
