@@ -1,54 +1,75 @@
 <template>
   <div>
-    <div v-for="post in reversedPosts" :key="post.id" class="p-4 bg-secondary-200 rounded shadow mb-4">
-      <div class="flex">
-        <NuxtLink :to="`/profile/${post.user.id}`" class="flex items-center mb-2">
-
-          <img
-            class="w-10 h-10 rounded-full hover:outline hover:outline-primary-default hover:outline-offset-2 click:outline click:outline-primary-default click:outline-offset-2"
-            src="../../public/logo-rounded.png" alt="User avatar" />
-        </NuxtLink>
     <div
       v-for="post in reversedPosts"
       :key="post.id"
       class="p-4 bg-secondary-200 rounded shadow mb-4"
     >
-      <NuxtLink :to="`/profile/${post.user.id}`" class="flex items-center mb-2">
-        <img
-          class="w-10 h-10 rounded-full"
-          src="../../public/logo-rounded.png"
-          alt="User avatar"
-        />
-        <div class="ml-2">
-          <NuxtLink :to="`/profile/${post.user.id}`"
-            class="flex items-center hover:text-primary-default hover:underline click:text-primary-default click:underline">
-            <div class=" font-bold">
-              {{ post.user.firstName }} {{ post.user.lastName }}
-            </div>
+      <div class="flex">
+        <NuxtLink
+          :to="`/profile/${post.user.id}`"
+          class="flex items-center mb-2"
+        >
+          <img
+            class="w-10 h-10 rounded-full hover:outline hover:outline-primary-default hover:outline-offset-2 click:outline click:outline-primary-default click:outline-offset-2"
+            src="../../public/logo-rounded.png"
+            alt="User avatar"
+          />
+        </NuxtLink>
+        <div
+          v-for="post in reversedPosts"
+          :key="post.id"
+          class="p-4 bg-secondary-200 rounded shadow mb-4"
+        >
+          <NuxtLink
+            :to="`/profile/${post.user.id}`"
+            class="flex items-center mb-2"
+          >
+            <img
+              class="w-10 h-10 rounded-full"
+              src="../../public/logo-rounded.png"
+              alt="User avatar"
+            />
           </NuxtLink>
-          <div class="text-text-default text-sm text-gray-500">
-            {{ timeSince(post.createdAt) }}
+          <div class="ml-2">
+            <NuxtLink
+              :to="`/profile/${post.user.id}`"
+              class="flex items-center hover:text-primary-default hover:underline click:text-primary-default click:underline"
+            >
+              <div class="font-bold">
+                {{ post.user.firstName }} {{ post.user.lastName }}
+              </div>
+            </NuxtLink>
+            <div class="text-text-default text-sm text-gray-500">
+              {{ timeSince(post.createdAt) }}
+            </div>
           </div>
         </div>
-      </div>
-      <div class="text-text-default mb-2">{{ post.message }}</div>
-      <div class="flex justify-between items-center text-gray-500">
-        <button @click="likePost(post)" class="text-lg">
-          {{ post.like }}
-          <span v-if="post.userliked.some(user => user.userId === userId)">
-            <Icon name="material-symbols:favorite"
-              class="text-primary-default text-2xl hover:animate-ping click:animate-ping" />
-          </span>
-          <span v-else>
-            <Icon name="material-symbols:favorite-outline"
-              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-2xl" />
-          </span>
-        </button>
-        <button @click="selectPost(post.id)">
-          {{ post.comments.length }}
-          <Icon name="material-symbols:chat"
-            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-2xl" />
-        </button>
+        <div class="text-text-default mb-2">{{ post.message }}</div>
+        <div class="flex justify-between items-center text-gray-500">
+          <button @click="likePost(post)" class="text-lg">
+            {{ post.like }}
+            <span v-if="post.userliked.some(user => user.userId === userId)">
+              <Icon
+                name="material-symbols:favorite"
+                class="text-primary-default text-2xl hover:animate-ping click:animate-ping"
+              />
+            </span>
+            <span v-else>
+              <Icon
+                name="material-symbols:favorite-outline"
+                class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-2xl"
+              />
+            </span>
+          </button>
+          <button @click="selectPost(post.id)">
+            {{ post.comments.length }}
+            <Icon
+              name="material-symbols:chat"
+              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-2xl"
+            />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -59,7 +80,6 @@ import apiURL from '../../utils/apiURLs'
 import type { Post } from '../../.nuxt/types/post.interface'
 import type { User } from '../../.nuxt/types/user.interface'
 import type { Comment } from '../../.nuxt/types/comment.interface'
-import { useRouter } from 'vue-router'
 import { useFormStore } from '../../stores/comment'
 
 const userId = ref('')
@@ -71,8 +91,6 @@ interface Comment {
   message: string
   postId: string
 }
-
-const comments = ref<Comment[]>([])
 
 const posts = ref<Post[]>([])
 
@@ -110,7 +128,6 @@ onMounted(() => {
   sessionId.value = localStorage.getItem('sessionId') || ''
   fetchSessionId()
   fetchPosts()
-  fetchComments()
 })
 
 const reversedPosts = computed(() => [...posts.value].reverse())
