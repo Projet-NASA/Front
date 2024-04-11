@@ -85,7 +85,6 @@ export default {
         }
 
         const data = await response.json()
-        console.log(data)
         router.push('/')
 
         localStorage.setItem('sessionId', data.sessionId)
