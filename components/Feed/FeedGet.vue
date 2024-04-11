@@ -42,9 +42,7 @@
         </button>
       </div>
     </div>
-    <div v-if="selectedComment">
-      <FeedGetComment/>
-    </div>
+
   </div>
 </template>
 
