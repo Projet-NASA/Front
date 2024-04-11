@@ -29,6 +29,9 @@
 
 <script setup lang="ts">
 const postField = ref(false)
+onMounted(() => {
+  checkTokenAndRedirect()
+})
 </script>
 
 <style scoped></style>
