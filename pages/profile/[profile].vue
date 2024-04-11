@@ -366,7 +366,9 @@ export default {
     },
     logout() {
       localStorage.removeItem('sessionId')
-      localStorage.removeItem('userId')
+      localStorage.setItem('sessionId', '')
+      console.log('Session ID:', localStorage.getItem('sessionId'))
+      reloadNuxtApp()
       this.$router.push('/login')
     },
     checkTokenAndRedirect() {},

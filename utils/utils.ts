@@ -4,7 +4,7 @@ export function checkTokenAndRedirect() {
   const router = useRouter()
   const sessionId = localStorage.getItem('sessionId')
 
-  if( sessionId === null) {
+  if( sessionId === '' ) {
     console.log(sessionId)
     router.push('/login')
   }

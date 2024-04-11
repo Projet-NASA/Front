@@ -118,9 +118,9 @@ export default {
 
         const data = await response.json()
         console.log(data)
-        router.push('/')
-
         localStorage.setItem('sessionId', data.sessionId)
+        reloadNuxtApp()
+        router.push('/')
       } catch (error) {
         console.error(error)
       }
