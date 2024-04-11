@@ -199,7 +199,6 @@ const developMenu = () => {
   }
 }
 
-// Gestionnaire de changement de sessionId
 watch(sessionId, async newSessionId => {
   console.log('[watch] sessionId changé:', newSessionId)
   if (newSessionId) {
@@ -207,7 +206,6 @@ watch(sessionId, async newSessionId => {
   }
 })
 
-// Récupération initiale de l'ID de l'utilisateur
 onMounted(async () => {
   console.log('[onMounted] Initialisation, sessionId:', sessionId.value)
   if (sessionId.value) {

@@ -3,16 +3,16 @@
     v-if="experience.userId == user.id"
     class="mx-6 mt-4 border-2 border-primary-200 p-4 rounded-xl"
   >
-  <div class="flex flex-col justify-between">
-    <h2 class="text-lg font-bold">{{ experience.title }}</h2>
+    <div class="flex flex-col justify-between">
+      <h2 class="text-lg font-bold">{{ experience.title }}</h2>
       <div class="flex flex- justify-start space-x-3">
         <h2>{{ experience.company }}</h2>
         <h2>{{ experience.location }}</h2>
-      </div>  
-        <h2 class="font-thin">
-          {{ formatDate(experience.from) }} - {{ formatDate(experience.to) }}
-        </h2>
-        <h2>{{ experience.type }}</h2>
+      </div>
+      <h2 class="font-thin">
+        {{ formatDate(experience.from) }} - {{ formatDate(experience.to) }}
+      </h2>
+      <h2>{{ experience.type }}</h2>
     </div>
     <p class="font-light mt-2">{{ experience.description }}</p>
     <div
@@ -75,12 +75,15 @@ const props = defineProps({
 })
 const deleteExperience = async (id: string) => {
   try {
-    const response = await fetch(`http://localhost:3003/experience/Experience/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
+    const response = await fetch(
+      `http://localhost:3003/experience/Experience/${id}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-    })
+    )
 
     if (!response.ok) {
       throw new Error(await response.text())
