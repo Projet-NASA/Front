@@ -16,7 +16,7 @@
         <nuxt-link to="/" class="text-text-default flex items-center space-x-3">
           <img class="w-5 h-5 lg:w-8 lg:h-8 xl:w-10 xl:h-10 rounded-full" src="../public/logo-rounded.png" alt="Logo" />
           <div class="text-text-default lg:ml-2 font-bold text-sm md:text-base lg:text-xl xl:text-2xl">
-            AutoLinkedIn
+            {{ title }}
           </div>
         </nuxt-link>
         <div
@@ -70,13 +70,14 @@ const isDarkTheme = useCookie('isDarkTheme', false)
 const menuDeveloped = ref(false)
 const sessionId = ref(typeof window !== 'undefined' ? window.localStorage.getItem('sessionId') : null);
 const userId = ref(null);
+const router = useRouter()
+const title = ref('')
 
-if (userId === null) {
+if (sessionId.value === null) {
   router.push('/login')
 }
 
 async function getUserIdFromSession(sessionId) {
-  console.log('[getUserIdFromSession] Récupération de l\'ID de session:', sessionId)
 
   const headers = {
     'Content-Type': 'application/json',
@@ -97,7 +98,6 @@ async function getUserIdFromSession(sessionId) {
   }
   const responseData = await userIdResponse.json()
   const userId = responseData.userId
-  console.log('[getUserIdFromSession] ID de l\'utilisateur récupéré:', userId)
   return userId
 }
 
@@ -144,7 +144,6 @@ const developMenu = () => {
 
 // Gestionnaire de changement de sessionId
 watch(sessionId, async (newSessionId) => {
-  console.log('[watch] sessionId changé:', newSessionId)
   if (newSessionId) {
     userId.value = await getUserIdFromSession(newSessionId)
   }
@@ -152,10 +151,10 @@ watch(sessionId, async (newSessionId) => {
 
 // Récupération initiale de l'ID de l'utilisateur
 onMounted(async () => {
-  console.log('[onMounted] Initialisation, sessionId:', sessionId.value)
   if (sessionId.value) {
     userId.value = await getUserIdFromSession(sessionId.value)
   }
+  title.value = document.title
 })
 
 </script>
