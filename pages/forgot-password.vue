@@ -6,7 +6,10 @@
         class="bg-background-200 shadow-md rounded px-8 pt-6 pb-8 mb-2"
       >
         <div class="mb-4">
-          <label class="block text-text-default text-sm font-bold mb-2"  for="email">
+          <label
+            class="block text-text-default text-sm font-bold mb-2"
+            for="email"
+          >
             Email
           </label>
           <input
@@ -19,7 +22,7 @@
         </div>
         <div class="flex items-center justify-between">
           <button
-          class="bg-primary-800 hover:bg-primary-default transition-colors duration-300 text-text-50 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full"
+            class="bg-primary-800 hover:bg-primary-default transition-colors duration-300 text-text-50 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full"
             type="submit"
           >
             Réinitialiser le mot de passe
