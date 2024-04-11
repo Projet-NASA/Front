@@ -104,10 +104,7 @@ const fetchPosts = async () => {
   }
 }
 const fetchSessionId = async () => {
-  if (sessionId.value === '') {
-    const router = useRouter()
-    // router.push('/login')
-  } else {
+  if (sessionId.value) {
     try {
       const response = await fetch(
         `http://localhost:3003/user/getUserIdFromSession/${sessionId.value}`
