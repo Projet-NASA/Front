@@ -1,24 +1,18 @@
 <template>
   <div
     v-if="experience.userId == user.id"
-    class="mx-6 mt-4 border-2 border-secondary-300 p-4 rounded-xl"
+    class="mx-6 mt-4 border-2 border-primary-200 p-4 rounded-xl"
   >
-    <div class="flex flex-col justify-between">
-      <div class="flex flex-row justify-between items-center">
-        <div class="flex flex-row items-start space-x-5">
-          <h2 class="text-lg">{{ experience.title }}</h2>
-          <h2 class="text-lg">{{ experience.company }}</h2>
-        </div>
-        <div class="flex flex-row items-center">
-          <h2 class="text-lg">
-            {{ formatDate(experience.from) }} - {{ formatDate(experience.to) }}
-          </h2>
-        </div>
-      </div>
-      <div class="flex flex-row justify-start mt-2 space-x-4">
-        <h2 class="text-lg">{{ experience.type }}</h2>
-        <h2 class="text-lg">{{ experience.location }}</h2>
-      </div>
+  <div class="flex flex-col justify-between">
+    <h2 class="text-lg font-bold">{{ experience.title }}</h2>
+      <div class="flex flex- justify-start space-x-3">
+        <h2>{{ experience.company }}</h2>
+        <h2>{{ experience.location }}</h2>
+      </div>  
+        <h2 class="font-thin">
+          {{ formatDate(experience.from) }} - {{ formatDate(experience.to) }}
+        </h2>
+        <h2>{{ experience.type }}</h2>
     </div>
     <p class="font-light mt-2">{{ experience.description }}</p>
     <div
