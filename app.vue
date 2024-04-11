@@ -1,7 +1,4 @@
 <template>
-  <head>
-    <title>AutoLinkedIn</title>
-  </head>
   <div class="pt-16 bg-background-default h-screen">
     <NuxtLayout>
       <NuxtPage />
@@ -10,5 +7,4 @@
 </template>
 
 <script setup lang="ts">
-
 </script>
