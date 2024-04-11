@@ -60,21 +60,24 @@
 
 <script setup lang="ts">
 const showExperienceForm = ref(false)
-const visitorId = ref(localStorage.getItem('userId'))
 
 const formatDate = (date: Date) => {
   return new Date(date).toLocaleDateString()
 }
 
 const props = defineProps({
-  user: {
-    type: Object,
-    required: true
-  },
-  experience: {
-    type: Object,
-    required: true
-  }
+    user: {
+        type: Object,
+        required: true
+    },
+    visitorId: {
+        type: String,
+        required: true
+    },
+    experience: {
+        type: Object,
+        required: true
+    }
 })
 
 const { user, experience } = toRefs(props)

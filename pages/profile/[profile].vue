@@ -82,7 +82,7 @@
                 </button>
               </div>
               <div v-for="experience in experiences" :key="experience.id">
-                <ProfileExperience :user="user" :experience="experience" />
+                <ProfileExperience :user="user" :visitorId="visitorId" :experience="experience" />
               </div>
             </div>
             <div class="mb-8">
@@ -109,7 +109,7 @@
                 </button>
               </div>
               <div v-for="job in jobs" :key="job.id">
-                <ProfileJobs :user="user" :job="job" />
+                <ProfileJobs :user="user" :visitorId="visitorId" :job="job" />
               </div>
             </div>
           </div>
@@ -251,6 +251,7 @@ export default {
       await this.getUserData(userId)
       await this.getVisitorData(sessionId)
       await this.getExperiences(userId)
+      await this.getJobs(userId)
     } catch (error) {
       this.error = error.message
       console.error(error.message)
@@ -340,14 +341,14 @@ export default {
     this.experiences = data
     console.log('Expériences:', this.experiences)
   },
-  async getJobs(sessionId) {
+  async getJobs(userId) {
     const response = await fetch(
-      `http://localhost:3003/job/AllJobsByUser/${this.user.id}`,
+      `http://localhost:3003/job/AllJobsByUser/${userId}`,
       {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          sessionId: sessionId
+          userId: userId
         }
       }
     )
@@ -359,7 +360,7 @@ export default {
     }
     const data = await response.json()
     this.jobs = data
-    console.log('Emplois:', this.jobs)
+    console.log('Jobs :', this.jobs)
   },
   logout() {
     localStorage.removeItem('sessionId')
