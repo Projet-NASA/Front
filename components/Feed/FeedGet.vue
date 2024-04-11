@@ -99,7 +99,6 @@ onMounted(() => {
   sessionId.value = localStorage.getItem('sessionId') || ''
   fetchSessionId()
   fetchPosts()
-  fetchComments()
 })
 
 const reversedPosts = computed(() => [...posts.value].reverse())
