@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center pt-7 bg-background-default">
-    <div class="w-full max-w-2xl">
+    <div class="w-full max-w-5xl">
       <div class="p-4 bg-secondary-200 rounded shadow mb-4">
         <div v-if="postField == false">
           <button
