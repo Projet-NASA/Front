@@ -60,11 +60,10 @@ interface Comment {
   message: string
   postId: string
 }
-
+const formStore = useFormStore()
+const formData = formStore.formData
 const comments = ref<Comment[]>([])
-
 const posts = ref<Post[]>([])
-
 const router = useRouter()
 
 const fetchPosts = async () => {
