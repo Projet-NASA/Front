@@ -50,8 +50,6 @@ import type { Comment } from '../../.nuxt/types/comment.interface'
 import { useRouter } from 'vue-router'
 import { useFormStore } from '../../stores/comment'
 
-const userId = ref('')
-
 const formStore = useFormStore()
 const formData = formStore.formData
 
@@ -59,7 +57,7 @@ const formData = formStore.formData
 const posts = ref<Post[]>([])
 
 const router = useRouter()
-
+let userId = ref('')
 const fetchPosts = async () => {
   try {
     const response = await fetch(apiURL.getPost)
@@ -75,10 +73,28 @@ const fetchPosts = async () => {
 let intervalId: number | undefined
 
 onMounted(() => {
-  userId.value = localStorage.getItem('userId') || ''
-  fetchPosts()
-  intervalId = window.setInterval(fetchPosts, 2000)
-})
+  if (typeof window !== 'undefined') {
+    fetchPosts();
+    intervalId = window.setInterval(fetchPosts, 2000);
+
+    const sessionId = localStorage.getItem('sessionId');
+    if (!sessionId) {
+      router.push('/login');
+    }
+  }
+});
+const sessionId = localStorage.getItem('sessionId')
+
+const userIdResponse = await fetch(
+  `http://localhost:3003/user/getUserIdFromSession/${sessionId}`,
+  {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+)
+const responseData = await userIdResponse.json()
+userId = responseData.userId
 
 const reversedPosts = computed(() => [...posts.value].reverse())
 

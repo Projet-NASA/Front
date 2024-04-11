@@ -27,11 +27,23 @@ import apiURL from '../../utils/apiURLs'
 
 const postContent = ref('')
 const emits = defineEmits(['update'])
+const sessionId = localStorage.getItem('sessionId')
+
+const userIdResponse = await fetch(
+  `http://localhost:3003/user/getUserIdFromSession/${sessionId}`,
+  {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+)
+const responseData = await userIdResponse.json()
+const userId = responseData.userId
 
 const createPost = async () => {
   console.log('Creating post:', postContent.value)
   if (postContent.value != '') {
-    console.log(apiURL.addPost)
+    console.log("userID", userId)
     try {
       const response = await fetch(apiURL.addPost, {
         method: 'POST',
@@ -40,7 +52,7 @@ const createPost = async () => {
         },
         body: JSON.stringify({
           message: postContent.value,
-          userId: localStorage.getItem('userId')
+          userId: userId
         })
       })
 
