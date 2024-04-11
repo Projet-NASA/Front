@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="experience.userId == user.id"
-    class="mx-6 mt-4 border-t border-secondary-300 pt-4"
+    class="mx-6 mt-4 border-2 border-secondary-300 p-4 rounded-xl"
   >
     <div class="flex flex-col justify-between">
       <div class="flex flex-row justify-between items-center">
