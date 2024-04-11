@@ -66,13 +66,14 @@
 </template>
 
 <script setup>
-import { useCookie } from '#app'
-import { onMounted, ref, watch } from 'vue'
-
 const isDarkTheme = useCookie('isDarkTheme', false)
 const menuDeveloped = ref(false)
 const sessionId = ref(typeof window !== 'undefined' ? window.localStorage.getItem('sessionId') : null);
 const userId = ref(null);
+
+if (userId === null) {
+  router.push('/login')
+}
 
 async function getUserIdFromSession(sessionId) {
   console.log('[getUserIdFromSession] Récupération de l\'ID de session:', sessionId)
@@ -156,6 +157,7 @@ onMounted(async () => {
     userId.value = await getUserIdFromSession(sessionId.value)
   }
 })
+
 </script>
 
 
