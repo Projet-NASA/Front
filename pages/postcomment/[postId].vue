@@ -68,6 +68,7 @@ import { useFormStore } from '../../stores/comment'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { comment } from 'postcss'
+import { checkTokenAndRedirect } from '../../utils/utils'
 
 const route = useRoute();
 const postId = route.params.postId;
@@ -110,6 +111,7 @@ const fetchPost = async () => {
 }
 
 onMounted(() => {
+  checkTokenAndRedirect()
   fetchComments()
   fetchPost()
   fetchUserInfo()
