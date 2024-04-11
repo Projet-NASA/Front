@@ -5,10 +5,7 @@
       :key="post.id"
       class="p-4 bg-secondary-200 rounded shadow mb-4"
     >
-      <NuxtLink
-        :to="`/profile/${post.user.id}`"
-        class="flex items-center mb-2">
-
+      <NuxtLink :to="`/profile/${post.user.id}`" class="flex items-center mb-2">
         <img
           class="w-10 h-10 rounded-full"
           src="../../public/logo-rounded.png"
@@ -82,6 +79,7 @@ interface Post {
   comments: Comment[]
 }
 const userId = ref('')
+const sessionId = ref('')
 
 interface Comment {
   id: string
@@ -105,26 +103,31 @@ const fetchPosts = async () => {
     console.error(error)
   }
 }
-
-// const invisible = async (id) =>{
-//   if (document.getElementById(id).style.display == 'none')
-//   {
-//        document.getElementById(id).style.display = 'block';
-//   }
-//   else
-//   {
-//        document.getElementById(id).style.display = 'none';
-//   }
-// }
-
-let intervalId: number | undefined
+const fetchSessionId = async () => {
+  if (sessionId.value === '') {
+    const router = useRouter()
+    // router.push('/login')
+  } else {
+    try {
+      const response = await fetch(
+        `http://localhost:3003/user/getUserIdFromSession/${sessionId.value}`
+      )
+      if (!response.ok) {
+        throw new Error('Failed to fetch user id')
+      }
+      const data = await response.json()
+      userId.value = data.userId
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
 
 onMounted(() => {
-  userId.value = localStorage.getItem('userId') || ''
+  sessionId.value = localStorage.getItem('sessionId') || ''
+  fetchSessionId()
   fetchPosts()
   fetchComments()
-  intervalId = window.setInterval(fetchPosts, 2000)
-  intervalId = window.setInterval(fetchComments, 2000)
 })
 
 const reversedPosts = computed(() => [...posts.value].reverse())
