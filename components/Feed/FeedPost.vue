@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="addPopup"
-    class="flex justify-center"
-  >
+  <div id="addPopup" class="flex justify-center">
     <form id="createPost" class="w-full">
       <textarea
         type="text"
@@ -51,7 +48,7 @@ const createPost = async () => {
       if (!response.ok) {
         throw new Error(`Failed to create post`)
       }
-      location.reload();
+      location.reload()
       const data = await response.json()
       console.log('Created post:', data)
 

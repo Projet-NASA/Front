@@ -4,7 +4,7 @@
       <textarea
         type="text"
         id="commentContent"
-        class="w-full bg-background-200 outline-none text-text-default"
+        class="w-full bg-background-default outline-none text-text-default rounded-lg p-2 my-2"
         placeholder="Ajouter un commentaire"
         v-model="commentContent"
       ></textarea>

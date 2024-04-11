@@ -5,7 +5,10 @@
       :key="post.id"
       class="p-4 bg-secondary-200 rounded shadow mb-4"
     >
-      <div class="flex items-center mb-2">
+      <NuxtLink
+        :to="`/profile/${post.user.id}`"
+        class="flex items-center mb-2">
+
         <img
           class="w-10 h-10 rounded-full"
           src="../../public/logo-rounded.png"
@@ -19,17 +22,22 @@
             {{ timeSince(post.createdAt) }}
           </div>
         </div>
-      </div>
+      </NuxtLink>
       <div class="text-text-default mb-2">{{ post.message }}</div>
-      <div class="flex justify-between items-center text-gray-500 text-sm">
-        <button @click="likePost(post)">
+      <div class="flex justify-between items-center text-gray-500">
+        <button @click="likePost(post)" class="text-lg">
           {{ post.like }}
           <span v-if="post.userliked.some(user => user.userId === userId)">
-            <Icon name="material-symbols:favorite" class="text-primary-default text-lg" />
+            <Icon
+              name="material-symbols:favorite"
+              class="text-primary-default text-2xl hover:animate-ping click:animate-ping"
+            />
           </span>
           <span v-else>
-            <Icon name="material-symbols:favorite-outline"
-              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-lg" />
+            <Icon
+              name="material-symbols:favorite-outline"
+              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-2xl"
+            />
           </span>
         </button>
         <div>
@@ -37,8 +45,10 @@
         </div>
         <button @click="selectPost(post.id)">
           {{ post.comments.length }}
-          <Icon name="material-symbols:chat"
-            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-lg" />
+          <Icon
+            name="material-symbols:chat"
+            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-2xl"
+          />
         </button>
       </div>
     </div>
