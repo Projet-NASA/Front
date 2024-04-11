@@ -1,4 +1,7 @@
 <template>
+  <head>
+    <title>AutoLinkedIn</title>
+  </head>
   <div class="pt-16 bg-background-default h-screen">
     <NuxtLayout>
       <NuxtPage />
@@ -6,14 +9,6 @@
   </div>
 </template>
 
-<script setup>
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 
-defineComponent({
-  head() {
-    return {
-      title: 'AutoLinkedIn'
-    }
-  }
-})
 </script>
