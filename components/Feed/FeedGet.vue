@@ -37,9 +37,6 @@
             />
           </span>
         </button>
-        <div>
-          {{ formData.postId }}
-        </div>
         <button @click="selectPost(post.id)">
           {{ post.comments.length }}
           <Icon
