@@ -62,6 +62,10 @@ const props = defineProps({
     type: Object,
     required: true
   },
+  visitorId: {
+    type: String,
+    required: true
+  },
   job: {
     type: Object,
     required: true

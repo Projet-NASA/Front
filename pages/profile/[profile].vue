@@ -82,7 +82,11 @@
                 </button>
               </div>
               <div v-for="experience in experiences" :key="experience.id">
-                <ProfileExperience :user="user" :experience="experience" />
+                <ProfileExperience
+                  :user="user"
+                  :visitorId="visitorId"
+                  :experience="experience"
+                />
               </div>
             </div>
             <div class="mb-8">
@@ -109,7 +113,7 @@
                 </button>
               </div>
               <div v-for="job in jobs" :key="job.id">
-                <ProfileJobs :user="user" :job="job" />
+                <ProfileJobs :user="user" :visitorId="visitorId" :job="job" />
               </div>
             </div>
           </div>
@@ -222,7 +226,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
@@ -240,7 +243,7 @@ export default {
     try {
       const sessionId = localStorage.getItem('sessionId')
       const router = useRouter()
-      const userId = router.currentRoute.value.params.profile;
+      const userId = router.currentRoute.value.params.profile
       if (!sessionId) {
         router.push('/login')
         throw new Error('Vous devez être connecté pour accéder à cette page')
@@ -250,6 +253,7 @@ export default {
       await this.getUserData(userId)
       await this.getVisitorData(sessionId)
       await this.getExperiences(userId)
+      await this.getJobs(userId)
     } catch (error) {
       this.error = error.message
       console.error(error.message)
@@ -277,98 +281,100 @@ export default {
       this.user = data
       console.log('User:', this.user)
     },
-  async getVisitorData(sessionId) {
-    console.log('Session ID:', sessionId)
+    async getVisitorData(sessionId) {
+      console.log('Session ID:', sessionId)
 
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: sessionId
-    }
-
-    const userIdResponse = await fetch(
-      `http://localhost:3003/user/getUserIdFromSession/${sessionId}`,
-      {
-        headers: headers
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: sessionId
       }
-    )
-    if (!userIdResponse.ok) {
-      const data = await userIdResponse.json()
-      throw new Error(
-        data.error || "impossible de récupérer l'ID de l'utilisateur"
+
+      const userIdResponse = await fetch(
+        `http://localhost:3003/user/getUserIdFromSession/${sessionId}`,
+        {
+          headers: headers
+        }
       )
-    }
-    const responseData = await userIdResponse.json()
-    const visitorId = responseData.userId
-
-    const userResponse = await fetch(
-      `http://localhost:3003/user/OneUser/${visitorId}`,
-      {
-        headers: headers,
+      if (!userIdResponse.ok) {
+        const data = await userIdResponse.json()
+        throw new Error(
+          data.error || "impossible de récupérer l'ID de l'utilisateur"
+        )
       }
-    )
+      const responseData = await userIdResponse.json()
+      const visitorId = responseData.userId
 
-    if (!userResponse.ok) {
+      const userResponse = await fetch(
+        `http://localhost:3003/user/OneUser/${visitorId}`,
+        {
+          headers: headers
+        }
+      )
+
+      if (!userResponse.ok) {
+        const data = await userResponse.json()
+        throw new Error(
+          data.error || "Impossible de récupérer les données de l'utilisateur"
+        )
+      }
       const data = await userResponse.json()
-      throw new Error(
-        data.error || "Impossible de récupérer les données de l'utilisateur"
-      )
-    }
-    const data = await userResponse.json()
-    this.visitorId = data.id
-    console.log('Visitor ID:', this.visitorId)
-  },
-  async getExperiences(userId) {
-    const response = await fetch(
-      `http://localhost:3003/experience/ExperienceByUser/${userId}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          userId: userId
+      this.visitorId = data.id
+      console.log('Visitor ID:', this.visitorId)
+    },
+    async getExperiences(userId) {
+      const response = await fetch(
+        `http://localhost:3003/experience/ExperienceByUser/${userId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            userId: userId
+          }
         }
-      }
-    )
-    if (!response.ok) {
-      const data = await response.json()
-      throw new Error(
-        data.error ||
-        "Impossible de récupérer les expériences de l'utilisateur"
       )
-    }
-    const data = await response.json()
-    this.experiences = data
-    console.log('Expériences:', this.experiences)
-  },
-  async getJobs(sessionId) {
-    const response = await fetch(
-      `http://localhost:3003/job/AllJobsByUser/${this.user.id}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          sessionId: sessionId
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(
+          data.error ||
+            "Impossible de récupérer les expériences de l'utilisateur"
+        )
+      }
+      const data = await response.json()
+      this.experiences = data
+      console.log('Expériences:', this.experiences)
+    },
+    async getJobs(userId) {
+      const response = await fetch(
+        `http://localhost:3003/job/AllJobsByUser/${userId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            userId: userId
+          }
         }
-      }
-    )
-    if (!response.ok) {
-      const data = await response.json()
-      throw new Error(
-        data.error || "Impossible de récupérer les emplois de l'utilisateur"
       )
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(
+          data.error || "Impossible de récupérer les emplois de l'utilisateur"
+        )
+      }
+      const data = await response.json()
+      this.jobs = data
+      console.log('Jobs :', this.jobs)
+    },
+    logout() {
+      localStorage.removeItem('sessionId')
+      localStorage.setItem('sessionId', '')
+      console.log('Session ID:', localStorage.getItem('sessionId'))
+      reloadNuxtApp()
+      this.$router.push('/login')
+    },
+    checkTokenAndRedirect() {},
+    formatDate(date) {
+      return new Date(date).toLocaleDateString()
     }
-    const data = await response.json()
-    this.jobs = data
-    console.log('Emplois:', this.jobs)
-  },
-  logout() {
-    localStorage.removeItem('sessionId')
-    localStorage.removeItem('userId')
-    this.$router.push('/login')
-  },
-  checkTokenAndRedirect() { },
-  formatDate(date) {
-    return new Date(date).toLocaleDateString()
   }
-}
 }
 </script>
