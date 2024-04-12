@@ -43,7 +43,7 @@ const userId = responseData.userId
 const createPost = async () => {
   console.log('Creating post:', postContent.value)
   if (postContent.value != '') {
-    console.log("userID", userId)
+    console.log('userID', userId)
     try {
       const response = await fetch(apiURL.addPost, {
         method: 'POST',

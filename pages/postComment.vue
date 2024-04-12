@@ -1,9 +1,7 @@
 <template>
-<FeedGetComment/>
-  </template>
-  
-  <script setup lang="ts">
-  </script>
-  
-  <style scoped></style>
-  
+  <FeedGetComment />
+</template>
+
+<script setup lang="ts"></script>
+
+<style scoped></style>

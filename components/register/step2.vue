@@ -230,7 +230,6 @@ const submitForm = async () => {
 
   v$.value.$validate()
 
-  // if (!v$.value.$error) {
   try {
     console.log('Submitting form', formData)
     console.log('JSON.stringify(formData)', JSON.stringify(formData))
@@ -288,6 +287,5 @@ const submitForm = async () => {
   } finally {
     isSubmitting.value = false
   }
-  // }
 }
 </script>
