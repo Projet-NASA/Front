@@ -10,7 +10,7 @@
         <h2>{{ experience.location }}</h2>
       </div>
       <h2 class="font-thin">
-        {{ formatDate(experience.from) }} - {{ experience.current ? 'Today' : formatDate(experience.to)}}
+        {{ formatDate(experience.from) }} - {{ experience.current ? 'Current' : formatDate(experience.to)}}
       </h2>
       <h2>{{ experience.type }}</h2>
     </div>
