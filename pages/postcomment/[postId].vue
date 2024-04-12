@@ -3,7 +3,7 @@
     :key="String(postId)"
     class="p-4 bg-secondary-200 rounded shadow mb-4 w-full max-w-5xl mx-auto"
   >
-    <div class="flex">
+    <div v-if="posts && posts.user" class="flex">
       <NuxtLink :to="`/profile/${posts.user.id}`" class="flex items-center mb-2">
         <img
           class="w-10 h-10 rounded-full hover:outline hover:outline-primary-default hover:outline-offset-2 click:outline click:outline-primary-default click:outline-offset-2"
@@ -25,15 +25,12 @@
         </div>
       </div>
     </div>
-    <div class="text-text-default mb-2">{{ posts.message }}</div>
-    <div
-      v-if="posts"
-      class="flex justify-between items-center text-gray-500 text-sm"
-    >
+    <div v-if="posts" class="text-text-default mb-2">{{ posts.message }}</div>
+    <div v-if="posts" class="flex justify-between items-center text-gray-500 text-sm">
     </div>
     <FeedComment :postId="`${posts.id}`" />
     <div
-      v-if="postComments(posts.id).length > 0"
+      v-if="posts && postComments(posts.id).length > 0"
       class="max-h-[550px] overflow-y-auto mx-auto mt-4"
     >
       <div
@@ -41,7 +38,7 @@
         :key="comment.id"
         class="p-4 bg-secondary-300 rounded shadow mb-4"
       >
-        <div class="flex">
+        <div v-if="comment.user" class="flex">
           <NuxtLink
             :to="`/profile/${comment.user.id}`"
             class="flex items-center mb-2"
@@ -72,16 +69,15 @@
   </div>
 </template>
 
+
 <script setup lang="ts">
 import apiURL from '../../utils/apiURLs'
-import { useRouter } from 'vue-router'
 import type { Post } from '../../components/interfaces/post.interface.ts'
 import type { User } from '../../components/interfaces/user.interface.ts'
 import type { Comment } from '../../components/interfaces/comment.interface'
 import { useFormStore } from '../../stores/comment'
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { comment } from 'postcss'
 import { checkTokenAndRedirect } from '../../utils/utils'
 
 const route = useRoute()
@@ -122,11 +118,12 @@ const fetchPost = async () => {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   checkTokenAndRedirect()
-  fetchComments()
-  fetchPost()
-  fetchUserInfo()
+  if (postId) {
+    await fetchPost()
+    await fetchComments()
+  }
 })
 
 
