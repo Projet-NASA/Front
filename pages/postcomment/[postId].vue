@@ -97,10 +97,8 @@ const posts = ref<Post>({} as Post)
 
 if (postId) {
   selectedPost.value = true
-  console.log(selectedPost)
 }
 
-console.log(postId)
 
 const fetchPost = async () => {
   try {
@@ -111,8 +109,6 @@ const fetchPost = async () => {
       throw new Error('Failed to fetch post details')
     }
     posts.value = await response.json()
-    console.log(posts.value.message)
-    console.log(posts.value.user.firstName)
   } catch (error) {
     console.error(error)
   }
@@ -143,7 +139,6 @@ const fetchComments = async () => {
     }
 
     comments.value = await response.json()
-    console.log(comments.value)
   } catch (error) {
     console.error(error)
   }
@@ -156,7 +151,6 @@ const fetchUserInfo = async () => {
       throw new Error('Failed to fetch user details')
     }
     user.value = await response.json()
-    console.log('user', user.value)
   } catch (error) {
     console.error(error)
     return null
@@ -169,10 +163,8 @@ const likePost = async (post: Post) => {
   )
 
   if (hasLiked) {
-    console.log('Removing like from this post')
     await removeLikeFromPost(post)
   } else {
-    console.log('Adding like to this post')
     await addLikeToPost(post)
   }
 
@@ -196,7 +188,6 @@ const addLikeToPost = async (post: Post) => {
       throw new Error(`Failed to like post`)
     }
 
-    console.log('Post liked successfully')
     await fetchPost()
   } catch (error) {
     console.error(error)
@@ -227,7 +218,6 @@ const removeLikeFromPost = async (post: Post) => {
       throw new Error('Failed to remove like')
     }
 
-    console.log('Like removed successfully')
     await fetchPost()
   } catch (error) {
     console.error(error)
