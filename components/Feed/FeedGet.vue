@@ -102,7 +102,7 @@ const reversedPosts = computed(() => [...posts.value].reverse())
 
 const likePost = async (post: Post) => {
   const hasLiked = post.userliked.some(
-    (userLike: User) => userLike.userId === userId.value
+    (userLike: User) => userLike.userId === userId
   )
 
   if (hasLiked) {
@@ -125,7 +125,7 @@ const addLikeToPost = async (post: Post) => {
       },
       body: JSON.stringify({
         postId: post.id,
-        userId: userId.value
+        userId: userId
       })
     })
 
