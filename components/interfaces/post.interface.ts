@@ -1,6 +1,5 @@
 import type { User } from './user.interface'
 
-
 export interface Post {
   id: string
   createdAt: string

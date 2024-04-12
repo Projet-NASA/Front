@@ -1,28 +1,54 @@
 <template>
   <div :key="formData.postId" class="p-4 bg-secondary-200 rounded shadow mb-4">
-    <div class="flex items-center mb-2">
-      <img
-        class="w-10 h-10 rounded-full"
-        src="../../public/logo-rounded.png"
-        alt="User avatar"
-      />
+    <div class="flex">
+      <NuxtLink
+        :to="`/profile/${posts.user.id}`"
+        class="flex items-center mb-2"
+      >
+        <img
+          class="w-10 h-10 rounded-full hover:outline hover:outline-primary-default hover:outline-offset-2 click:outline click:outline-primary-default click:outline-offset-2"
+          src="../../public/logo-rounded.png"
+          alt="User avatar"
+        />
+      </NuxtLink>
       <div class="ml-2">
-        <div v-if="posts.user" class="text-text-default font-bold">
-          {{ posts.user.firstName }} {{ posts.user.lastName }}
+        <NuxtLink
+          :to="`/profile/${posts.user.id}`"
+          class="flex items-center hover:text-primary-default hover:underline click:text-primary-default click:underline"
+        >
+          <div class="font-bold">
+            {{ posts.user.firstName }} {{ posts.user.lastName }}
+          </div>
+        </NuxtLink>
+        <div class="text-text-default text-sm text-gray-500">
+          {{ timeSince(posts.createdAt) }}
         </div>
       </div>
     </div>
     <div class="text-text-default mb-2">{{ posts.message }}</div>
-    <div v-if="posts" class="flex justify-between items-center text-gray-500 text-sm">
+    <div
+      v-if="posts"
+      class="flex justify-between items-center text-gray-500 text-sm"
+    >
       <button @click="likePost(posts)">
         {{ posts.like }}
         <!-- Vérifier si posts.userliked est défini et non vide -->
-        <span v-if="posts.userliked && posts.userliked.some(user => user.userId === userId)">
-          <Icon name="material-symbols:favorite" class="text-primary-default text-lg" />
+        <span
+          v-if="
+            posts.userliked &&
+            posts.userliked.some(user => user.userId === userId)
+          "
+        >
+          <Icon
+            name="material-symbols:favorite"
+            class="text-primary-default text-lg"
+          />
         </span>
         <span v-else>
-          <Icon name="material-symbols:favorite-outline"
-            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-lg" />
+          <Icon
+            name="material-symbols:favorite-outline"
+            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-lg"
+          />
         </span>
       </button>
       <div>
@@ -30,15 +56,15 @@
       </div>
     </div>
     <FeedComment :postId="`${posts.id}`" />
-      <div v-if="postComments(posts.id).length > 0" class="comments-section">
-        <div
-          v-for="comment in postComments(posts.id)"
-          :key="comment.id"
-          class="p-4 bg-secondary-200 rounded shadow mb-4"
-        >
-          <div class="text-text-default mb-2">{{ comment.message }}</div>
-        </div>
+    <div v-if="postComments(posts.id).length > 0" class="comments-section">
+      <div
+        v-for="comment in postComments(posts.id)"
+        :key="comment.id"
+        class="p-4 bg-secondary-200 rounded shadow mb-4"
+      >
+        <div class="text-text-default mb-2">{{ comment.message }}</div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -58,7 +84,6 @@ let selectedPost = ref(false)
 
 const userId = ref('')
 
-
 const comments = ref<Comment[]>([])
 
 const posts = ref<Post>({} as Post)
@@ -66,7 +91,7 @@ const posts = ref<Post>({} as Post)
 const router = useRouter()
 
 if (formData.postId) {
-  selectedPost.value = true;
+  selectedPost.value = true
   console.log(selectedPost)
 }
 
@@ -120,7 +145,7 @@ const fetchComments = async () => {
 
 const likePost = async (post: Post) => {
   const hasLiked = post.userliked.some(
-    (    userLike: { userId: any }) => userLike.userId === userId.value
+    (userLike: { userId: any }) => userLike.userId === userId.value
   )
 
   if (hasLiked) {
@@ -187,5 +212,22 @@ const removeLikeFromPost = async (post: Post) => {
   } catch (error) {
     console.error(error)
   }
+}
+
+const timeSince = (date: string) => {
+  const seconds = Math.floor(
+    (new Date().getTime() - new Date(date).getTime()) / 1000
+  )
+  let interval = seconds / 31536000
+  if (interval > 1) return Math.floor(interval) + ' years'
+  interval = seconds / 2592000
+  if (interval > 1) return Math.floor(interval) + ' months'
+  interval = seconds / 86400
+  if (interval > 1) return Math.floor(interval) + ' days'
+  interval = seconds / 3600
+  if (interval > 1) return Math.floor(interval) + ' hours'
+  interval = seconds / 60
+  if (interval > 1) return Math.floor(interval) + ' minutes'
+  return Math.floor(seconds) + ' seconds'
 }
 </script>

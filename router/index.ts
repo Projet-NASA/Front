@@ -1,18 +1,17 @@
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
-import postComment from '../pages/postComment.vue'; // Importez votre composant pour afficher les commentaires du post
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import postComment from '../pages/postComment.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/post/:postId', // Définissez un paramètre dynamique postId
+    path: '/post/:postId',
     name: 'PostComment',
-    component: postComment,
-  },
-  // Autres routes
-];
+    component: postComment
+  }
+]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes,
-});
+  routes
+})
 
-export default router;
+export default router

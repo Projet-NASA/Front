@@ -81,12 +81,16 @@
                   <Icon name="material-symbols:close" class="w-6 h-6" />
                 </button>
               </div>
-              <div v-for="experience in experiences" :key="experience.id">
-                <ProfileExperience
-                  :user="user"
-                  :visitorId="visitorId"
-                  :experience="experience"
-                />
+              <div
+                class="flex flex-wrap max-h-80 overflow-y-auto bg-secondary-300 rounded-xl"
+              >
+                <div v-for="experience in experiences" :key="experience.id">
+                  <ProfileExperience
+                    :user="user"
+                    :visitorId="visitorId"
+                    :experience="experience"
+                  />
+                </div>
               </div>
             </div>
             <div class="mb-8">
@@ -112,8 +116,12 @@
                   <Icon name="material-symbols:close" class="w-6 h-6" />
                 </button>
               </div>
-              <div v-for="job in jobs" :key="job.id">
-                <ProfileJobs :user="user" :visitorId="visitorId" :job="job" />
+              <div
+                class="flex flex-wrap max-h-80 overflow-y-auto bg-secondary-300 rounded-xl"
+              >
+                <div v-for="job in jobs" :key="job.id">
+                  <ProfileJobs :user="user" :visitorId="visitorId" :job="job" />
+                </div>
               </div>
             </div>
           </div>

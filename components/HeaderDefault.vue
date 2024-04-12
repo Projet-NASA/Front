@@ -200,7 +200,6 @@ watch(sessionId, async (newSessionId) => {
   }
 })
 
-// Récupération initiale de l'ID de l'utilisateur
 onMounted(async () => {
   if (sessionId.value) {
     userId.value = await getUserIdFromSession(sessionId.value)

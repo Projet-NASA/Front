@@ -121,6 +121,7 @@ export default {
 
         localStorage.setItem('sessionId', data.sessionId)
         reloadNuxtApp()
+        setTimeout(() => {}, 2000)
         router.push('/')
       } catch (error) {
         console.error(error)
