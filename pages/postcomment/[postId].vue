@@ -37,7 +37,7 @@
       class="max-h-[550px] overflow-y-auto mx-auto mt-4"
     >
       <div
-        v-for="comment in postComments(posts.id)"
+        v-for="comment in postComments(posts.id).reverse()"
         :key="comment.id"
         class="p-4 bg-secondary-300 rounded shadow mb-4"
       >
@@ -129,7 +129,6 @@ onMounted(() => {
   fetchUserInfo()
 })
 
-const reversedcomments = computed(() => [...comments.value].reverse())
 
 const postComments = (postId: string) => {
   return comments.value.filter(
@@ -149,6 +148,7 @@ const fetchComments = async () => {
 
     comments.value = await response.json()
     console.log(comments.value)
+    reloadNuxtApp()
   } catch (error) {
     console.error(error)
   }
