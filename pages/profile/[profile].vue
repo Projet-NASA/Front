@@ -343,6 +343,54 @@ export default {
       this.jobs = data
       console.log('Jobs :', this.jobs)
     },
+    async followUser() {
+      console.log('Following user:', this.user.id)
+      const sessionId = localStorage.getItem('sessionId')
+      const userId = this.user.id
+      const response = await fetch(
+        `http://localhost:3003/follower/createFollower`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: sessionId
+          },
+          body: JSON.stringify({
+            followingId : this.visitorId,
+            followerId : userId
+          })
+        }
+      )
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(data.error || 'Failed to follow user')
+      }
+      console.log('User followed successfully')
+    },
+    async unfollowUser() {
+      console.log('Unfollowing user:', this.user.id)
+      const sessionId = localStorage.getItem('sessionId')
+      const userId = this.user.id
+      const response = await fetch(
+        `http://localhost:3003/follower/Follower/${userId}/${visitorId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: sessionId
+          },
+          body: JSON.stringify({
+            followingId : this.visitorId,
+            followerId : userId
+          })
+        }
+      )
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(data.error || 'Failed to unfollow user')
+      }
+      console.log('User unfollowed successfully')
+    },
     logout() {
       localStorage.removeItem('sessionId')
       localStorage.setItem('sessionId', '')
