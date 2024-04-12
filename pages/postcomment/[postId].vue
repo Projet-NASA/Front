@@ -30,26 +30,6 @@
       v-if="posts"
       class="flex justify-between items-center text-gray-500 text-sm"
     >
-      <button @click="likePost(posts)">
-        {{ posts.like }}
-        <span
-          v-if="
-            posts.userliked &&
-            posts.userliked.some(user => user.userId === userId)
-          "
-        >
-          <Icon
-            name="material-symbols:favorite"
-            class="text-primary-default text-2xl"
-          />
-        </span>
-        <span v-else>
-          <Icon
-            name="material-symbols:favorite-outline"
-            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-2xl"
-          />
-        </span>
-      </button>
     </div>
     <FeedComment :postId="`${posts.id}`" />
     <div

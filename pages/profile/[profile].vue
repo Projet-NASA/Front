@@ -3,8 +3,8 @@
     class="bg-background-default text-text-default flex flex-col items-center justify-between"
   >
     <div v-if="user" class="w-full sm:w-3/4 md:w-3/4 lg:w-3/4 xl:w-3/4">
-      <div class="my-8 bg-secondary-200 shadow-md rounded pb-8">
-        <div class="flex flex-col mb-8">
+      <div class="mb-4 bg-secondary-200 shadow-md rounded pb-8">
+        <div class="flex flex-col">
           <div class="flex flex-row-reverse">
             <img
               src="../../assets/images/sacha_wide.png"
@@ -50,14 +50,25 @@
                 />Follow
               </button>
             </div>
+            <div v-else>
+              <button
+                @click="logout"
+                class="bg-red-500 hover:bg-red-800 text-white text-lg rounded-lg h-10 p-5 mt-2 flex items-center justify-center transition-colors duration-300"
+              >
+                <Icon
+                  name="material-symbols:logout"
+                  class="w-6 h-6 mr-2"
+                />Logout
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="mb-8 bg-secondary-200 shadow-md rounded py-8">
-        <div class="flex flex-col mb-8">
+      <div class="bg-secondary-200 shadow-md rounded py-6">
+        <div class="flex flex-col">
           <div class="mx-6">
-            <div class="mb-8">
-              <h1 class="text-2xl font-bold flex">
+            <div>
+              <h1 class="text-2xl font-bold flex mb-1">
                 Experiences
                 <button
                   v-if="visitorId === user.id"
@@ -69,7 +80,7 @@
               </h1>
               <div
                 v-if="showExperienceForm"
-                class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center pb-full"
+                class="absolute top-0 left-0 w-full h-screen bg-black bg-opacity-50 flex justify-center items-center"
               >
                 <ProfileExperiencesForm
                   :class="showExperienceForm ? 'block' : 'hidden'"
@@ -82,9 +93,9 @@
                 </button>
               </div>
               <div
-                class="flex flex-wrap max-h-80 overflow-y-auto bg-secondary-300 rounded-xl py-4"
+                class="flex flex-row max-h-96 overflow-x-auto bg-secondary-300 rounded-xl py-4 snap-x"
               >
-                <div v-for="experience in experiences" :key="experience.id">
+                <div v-for="experience in experiences" :key="experience.id" class="snap-center">
                   <ProfileExperience
                     :user="user"
                     :visitorId="visitorId"
@@ -93,47 +104,8 @@
                 </div>
               </div>
             </div>
-            <div class="mb-8">
-              <h1 class="text-2xl font-bold flex">
-                Jobs
-                <button
-                  v-if="visitorId === user.id"
-                  @click="showJobForm = true"
-                  class="ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300"
-                >
-                  <Icon name="material-symbols:add" class="w-6 h-6" />
-                </button>
-              </h1>
-              <div
-                v-if="showJobForm"
-                class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center"
-              >
-                <ProfileJobsForm :class="showJobForm ? 'block' : 'hidden'" />
-                <button
-                  @click="showJobForm = false"
-                  class="absolute top-2 left-2 sm:top-10 sm:left-24 md:left-40 md:top-10 lg:left-1/4 z-50 ml-2 hover:bg-primary-400 rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300"
-                >
-                  <Icon name="material-symbols:close" class="w-6 h-6" />
-                </button>
-              </div>
-              <div
-                class="flex flex-wrap max-h-80 overflow-y-auto bg-secondary-300 rounded-xl"
-              >
-                <div v-for="job in jobs" :key="job.id">
-                  <ProfileJobs :user="user" :visitorId="visitorId" :job="job" />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
-        <button
-          v-if="visitorId === user.id"
-          @click="logout()"
-          class="bg-red-500 hover:bg-red-800 text-white rounded p-2 mx-auto flex items-center justify-center transition-colors duration-300"
-        >
-          Log out
-          <Icon name="material-symbols:logout" class="w-6 h-6 ml-2" />
-        </button>
       </div>
     </div>
     <div v-else class="w-full sm:w-3/4 md:w-3/4 lg:w-3/4 xl:w-3/4">
@@ -205,7 +177,6 @@
           </div>
         </div>
       </div>
-
       <div
         class="absolute top-0 left-0 w-full h-full flex justify-center items-center"
       >
