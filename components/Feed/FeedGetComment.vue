@@ -92,15 +92,12 @@ const router = useRouter()
 
 if (formData.postId) {
   selectedPost.value = true
-  console.log(selectedPost)
 }
 
-console.log(formData.postId)
 
 const RetrievedId = formData.postId
 const fetchPost = async () => {
   try {
-    console.log(RetrievedId)
 
     const response = await fetch(
       `http://localhost:3003/post/PostbyId/${RetrievedId}`
@@ -109,8 +106,6 @@ const fetchPost = async () => {
       throw new Error('Failed to fetch post details')
     }
     posts.value = await response.json()
-    console.log(posts.value.message)
-    console.log(posts.value.user.firstName)
   } catch (error) {
     console.error(error)
   }

@@ -231,12 +231,9 @@ export default {
         router.push('/login')
         throw new Error('Vous devez être connecté pour accéder à cette page')
       }
-      console.log('User ID:', userId)
-      console.log('Session ID:', sessionId)
       await this.getUserData(userId)
       await this.getVisitorData(sessionId)
       await this.getExperiences(userId)
-      await this.getJobs(userId)
     } catch (error) {
       this.error = error.message
       console.error(error.message)
@@ -262,10 +259,8 @@ export default {
       }
       const data = await response.json()
       this.user = data
-      console.log('User:', this.user)
     },
     async getVisitorData(sessionId) {
-      console.log('Session ID:', sessionId)
 
       const headers = {
         'Content-Type': 'application/json',
@@ -302,7 +297,6 @@ export default {
       }
       const data = await userResponse.json()
       this.visitorId = data.id
-      console.log('Visitor ID:', this.visitorId)
     },
     async getExperiences(userId) {
       const response = await fetch(
@@ -324,31 +318,9 @@ export default {
       }
       const data = await response.json()
       this.experiences = data
-      console.log('Expériences:', this.experiences)
     },
-    async getJobs(userId) {
-      const response = await fetch(
-        `http://localhost:3003/job/AllJobsByUser/${userId}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            userId: userId
-          }
-        }
-      )
-      if (!response.ok) {
-        const data = await response.json()
-        throw new Error(
-          data.error || "Impossible de récupérer les emplois de l'utilisateur"
-        )
-      }
-      const data = await response.json()
-      this.jobs = data
-      console.log('Jobs :', this.jobs)
-    },
+
     async followUser() {
-      console.log('Following user:', this.user.id)
       const sessionId = localStorage.getItem('sessionId')
       const userId = this.user.id
       const response = await fetch(
@@ -372,7 +344,6 @@ export default {
       console.log('User followed successfully')
     },
     async unfollowUser() {
-      console.log('Unfollowing user:', this.user.id)
       const sessionId = localStorage.getItem('sessionId')
       const userId = this.user.id
       const response = await fetch(
@@ -393,12 +364,10 @@ export default {
         const data = await response.json()
         throw new Error(data.error || 'Failed to unfollow user')
       }
-      console.log('User unfollowed successfully')
     },
     logout() {
       localStorage.removeItem('sessionId')
       localStorage.setItem('sessionId', '')
-      console.log('Session ID:', localStorage.getItem('sessionId'))
       reloadNuxtApp()
       this.$router.push('/login')
     },

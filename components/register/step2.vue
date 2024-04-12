@@ -218,7 +218,6 @@ const previousStep = () => {
   if (formData) {
     formStore.setFormData(formData)
     emit('previous-step')
-    console.log(formData)
   } else {
     console.error('formData is undefined')
   }
@@ -231,9 +230,6 @@ const submitForm = async () => {
   v$.value.$validate()
 
   try {
-    console.log('Submitting form', formData)
-    console.log('JSON.stringify(formData)', JSON.stringify(formData))
-    console.log(formData.dateofbirth)
 
     const isoDateString = formData.dateofbirth.toISOString()
 
@@ -243,7 +239,6 @@ const submitForm = async () => {
 
     const formattedDateOfBirth = dateInCEST.toISOString()
 
-    console.log(formattedDateOfBirth)
 
     const response = await fetch('http://localhost:3003/User/User', {
       method: 'POST',
@@ -270,7 +265,6 @@ const submitForm = async () => {
     const data = await response.json()
     message.value = 'User added successfully'
     messageClass.value = 'text-green-500'
-    console.log('Registration successful', data)
     formData.firstName = ''
     formData.lastName = ''
     formData.email = ''

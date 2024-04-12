@@ -41,9 +41,7 @@ const responseData = await userIdResponse.json()
 const userId = responseData.userId
 
 const createPost = async () => {
-  console.log('Creating post:', postContent.value)
   if (postContent.value != '') {
-    console.log('userID', userId)
     try {
       const response = await fetch(apiURL.addPost, {
         method: 'POST',
@@ -56,13 +54,11 @@ const createPost = async () => {
         })
       })
 
-      console.log()
       if (!response.ok) {
         throw new Error(`Failed to create post`)
       }
       location.reload()
       const data = await response.json()
-      console.log('Created post:', data)
 
       postContent.value = ''
 

@@ -187,7 +187,6 @@ const type = ref('')
 const current = ref(false)
 const userId = router.params.profile
 
-console.log(userId)
 const submitForm = async () => {
   let toDate = to.value
   if (current.value) {
@@ -218,14 +217,13 @@ const submitForm = async () => {
     })
 
     if (response.ok) {
-      console.log('Job added successfully')
+      console.log('Experience added')
       reloadNuxtApp()
     } else {
       console.error('Failed to add experience')
     }
 
     const responseData = await response.json()
-    console.log('Success:', responseData)
   } catch (error) {
     console.error('Error:', error)
   }

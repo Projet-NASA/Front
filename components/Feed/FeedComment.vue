@@ -52,7 +52,6 @@ if (sessionId) {
 }
 
 const createComment = async () => {
-  console.log('Creating comment:', commentContent.value)
   if (commentContent.value != '') {
     try {
       const response = await fetch(apiURL.addComment, {
@@ -67,14 +66,12 @@ const createComment = async () => {
         })
       })
 
-      console.log(props.postId)
 
       if (!response.ok) {
         throw new Error(`Failed to create comment`)
       }
 
       const data = await response.json()
-      console.log('Created comment:', data)
 
       commentContent.value = ''
 
