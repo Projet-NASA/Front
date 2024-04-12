@@ -4,7 +4,7 @@
     class="p-4 bg-secondary-200 rounded shadow mb-4 w-full max-w-5xl mx-auto"
   >
     <div class="flex">
-      <NuxtLink :to="`/profile/${posts.user}`" class="flex items-center mb-2">
+      <NuxtLink :to="`/profile/${posts.user.id}`" class="flex items-center mb-2">
         <img
           class="w-10 h-10 rounded-full hover:outline hover:outline-primary-default hover:outline-offset-2 click:outline click:outline-primary-default click:outline-offset-2"
           src="../../public/logo-rounded.png"
@@ -13,7 +13,7 @@
       </NuxtLink>
       <div class="ml-2">
         <NuxtLink
-          :to="`/profile/${posts.user}`"
+          :to="`/profile/${posts.user.id}`"
           class="flex items-center text-text-default hover:text-primary-default hover:underline click:text-primary-default click:underline"
         >
           <div v-if="posts.user" class="font-bold">
