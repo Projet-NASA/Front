@@ -32,6 +32,24 @@ const emits = defineEmits(['update'])
 const props = defineProps({
   postId: String
 })
+let userId = ref('')
+let sessionId
+if (typeof window !== 'undefined' && window.localStorage) {
+  sessionId = window.localStorage.getItem('sessionId')
+}
+
+if (sessionId) {
+  const userIdResponse = await fetch(
+    `http://localhost:3003/user/getUserIdFromSession/${sessionId}`,
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+  const responseData = await userIdResponse.json()
+  userId = responseData.userId
+}
 
 const createComment = async () => {
   console.log('Creating comment:', commentContent.value)
@@ -44,7 +62,7 @@ const createComment = async () => {
         },
         body: JSON.stringify({
           message: commentContent.value,
-          userId: localStorage.getItem('userId'),
+          userId: userId,
           postId: props.postId
         })
       })
