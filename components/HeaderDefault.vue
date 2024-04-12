@@ -128,7 +128,7 @@ const userId = ref(null)
 const router = useRouter()
 const title = ref('')
 
-if (sessionId.value === null) {
+if (sessionId === null) {
   router.push('/login')
 }
 

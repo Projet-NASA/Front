@@ -174,7 +174,7 @@ const addLikeToPost = async (post: Post) => {
 const removeLikeFromPost = async (post: Post) => {
   try {
     const findLikeResponse = await fetch(
-      `http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId.value}`
+      `http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId}`
     )
     if (!findLikeResponse.ok) {
       throw new Error('Failed to find like for removal')
