@@ -148,7 +148,6 @@ const fetchComments = async () => {
 
     comments.value = await response.json()
     console.log(comments.value)
-    reloadNuxtApp()
   } catch (error) {
     console.error(error)
   }

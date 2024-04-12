@@ -79,6 +79,7 @@ const createComment = async () => {
       commentContent.value = ''
 
       emits('update', false)
+      reloadNuxtApp()
     } catch (error) {
       console.error(error)
       // Gérer les erreurs ici
