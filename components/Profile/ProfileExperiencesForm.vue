@@ -100,16 +100,23 @@ const to = ref('')
 const description = ref('')
 const location = ref('')
 const type = ref('')
+const current = ref(false)
 const userId = router.params.profile
 
 console.log(userId)
 const submitForm = async () => {
+  let toDate = to.value;
+  if (current.value) {
+    toDate = new Date().toISOString().split('T')[0]
+  }
+
   const experienceData = {
     title: title.value,
     company: company.value,
     location: location.value,
     from: from.value,
-    to: to.value,
+    to: toDate,
+    current: current.value,
     type: type.value,
     description: description.value,
     userId: userId
