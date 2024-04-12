@@ -126,7 +126,6 @@ onMounted(async () => {
   }
 })
 
-
 const postComments = (postId: string) => {
   return comments.value.filter(
     (comment: { postId: string }) => comment.postId === postId
