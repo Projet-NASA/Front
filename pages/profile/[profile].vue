@@ -95,7 +95,11 @@
               <div
                 class="flex flex-row max-h-96 overflow-x-auto bg-secondary-300 rounded-xl py-4 snap-x"
               >
-                <div v-for="experience in experiences" :key="experience.id" class="snap-center">
+                <div
+                  v-for="experience in experiences"
+                  :key="experience.id"
+                  class="snap-center"
+                >
                   <ProfileExperience
                     :user="user"
                     :visitorId="visitorId"
@@ -356,8 +360,8 @@ export default {
             Authorization: sessionId
           },
           body: JSON.stringify({
-            followingId : this.visitorId,
-            followerId : userId
+            followingId: this.visitorId,
+            followerId: userId
           })
         }
       )
@@ -380,8 +384,8 @@ export default {
             Authorization: sessionId
           },
           body: JSON.stringify({
-            followingId : this.visitorId,
-            followerId : userId
+            followingId: this.visitorId,
+            followerId: userId
           })
         }
       )
