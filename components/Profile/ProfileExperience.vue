@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="experience.userId == user.id"
-    class="mx-6 mt-4 border-2 border-primary-200 p-4 rounded-xl"
+    class="mx-6 my-4 border-2 border-primary-200 p-4 rounded-xl"
   >
     <div class="flex flex-col justify-between">
       <h2 class="text-lg font-bold">{{ experience.title }}</h2>

@@ -82,7 +82,7 @@
                 </button>
               </div>
               <div
-                class="flex flex-wrap max-h-80 overflow-y-auto bg-secondary-300 rounded-xl"
+                class="flex flex-wrap max-h-80 overflow-y-auto bg-secondary-300 rounded-xl py-4"
               >
                 <div v-for="experience in experiences" :key="experience.id">
                   <ProfileExperience
