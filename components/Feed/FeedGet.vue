@@ -72,7 +72,6 @@ const formStore = useFormStore()
 const formData = formStore.formData
 
 const posts = ref<Post[]>([])
-
 const router = useRouter()
 let userId = ref('')
 const fetchPosts = async () => {
@@ -86,8 +85,22 @@ const fetchPosts = async () => {
     console.error(error)
   }
 }
-
-let intervalId: number | undefined
+const fetchSessionId = async () => {
+  if (sessionId.value) {
+    try {
+      const response = await fetch(
+        `http://localhost:3003/user/getUserIdFromSession/${sessionId.value}`
+      )
+      if (!response.ok) {
+        throw new Error('Failed to fetch user id')
+      }
+      const data = await response.json()
+      userId.value = data.userId
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
 
 onMounted(() => {
   if (typeof window !== 'undefined' && window.localStorage) {
@@ -97,6 +110,7 @@ onMounted(() => {
     }
     fetchPosts()
   }
+  fetchPosts()
 })
 let sessionId
 if (typeof window !== 'undefined' && window.localStorage) {

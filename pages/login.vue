@@ -117,7 +117,8 @@ export default {
         }
 
         const data = await response.json()
-        console.log(data)
+        router.push('/')
+
         localStorage.setItem('sessionId', data.sessionId)
         reloadNuxtApp()
         setTimeout(() => {}, 2000)

@@ -28,7 +28,7 @@
           <div
             class="text-text-default lg:ml-2 font-bold text-sm md:text-base lg:text-xl xl:text-2xl"
           >
-            AutoLinkedIn
+          {{ title }}
           </div>
         </nuxt-link>
         <div
@@ -117,23 +117,18 @@
 </template>
 
 <script setup>
-import { useCookie } from '#app'
-import { onMounted, ref, watch } from 'vue'
-
 const isDarkTheme = useCookie('isDarkTheme', false)
 const menuDeveloped = ref(false)
-const sessionId = ref(
-  typeof window !== 'undefined'
-    ? window.localStorage.getItem('sessionId')
-    : null
-)
-const userId = ref(null)
+const sessionId = ref(typeof window !== 'undefined' ? window.localStorage.getItem('sessionId') : null);
+const userId = ref(null);
+const router = useRouter()
+const title = ref('')
+
+if (sessionId.value === null) {
+  router.push('/login')
+}
 
 async function getUserIdFromSession(sessionId) {
-  console.log(
-    "[getUserIdFromSession] Récupération de l'ID de session:",
-    sessionId
-  )
 
   const headers = {
     'Content-Type': 'application/json',
@@ -154,7 +149,6 @@ async function getUserIdFromSession(sessionId) {
   }
   const responseData = await userIdResponse.json()
   const userId = responseData.userId
-  console.log("[getUserIdFromSession] ID de l'utilisateur récupéré:", userId)
   return userId
 }
 
@@ -199,17 +193,18 @@ const developMenu = () => {
   }
 }
 
-watch(sessionId, async newSessionId => {
-  console.log('[watch] sessionId changé:', newSessionId)
+// Gestionnaire de changement de sessionId
+watch(sessionId, async (newSessionId) => {
   if (newSessionId) {
     userId.value = await getUserIdFromSession(newSessionId)
   }
 })
 
 onMounted(async () => {
-  console.log('[onMounted] Initialisation, sessionId:', sessionId.value)
   if (sessionId.value) {
     userId.value = await getUserIdFromSession(sessionId.value)
   }
+  title.value = document.title
 })
+
 </script>
