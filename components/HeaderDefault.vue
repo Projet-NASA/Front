@@ -28,7 +28,7 @@
           <div
             class="text-text-default lg:ml-2 font-bold text-sm md:text-base lg:text-xl xl:text-2xl"
           >
-          {{ title }}
+            {{ title }}
           </div>
         </nuxt-link>
         <div
@@ -119,8 +119,12 @@
 <script setup>
 const isDarkTheme = useCookie('isDarkTheme', false)
 const menuDeveloped = ref(false)
-const sessionId = ref(typeof window !== 'undefined' ? window.localStorage.getItem('sessionId') : null);
-const userId = ref(null);
+const sessionId = ref(
+  typeof window !== 'undefined'
+    ? window.localStorage.getItem('sessionId')
+    : null
+)
+const userId = ref(null)
 const router = useRouter()
 const title = ref('')
 
@@ -129,7 +133,6 @@ if (sessionId.value === null) {
 }
 
 async function getUserIdFromSession(sessionId) {
-
   const headers = {
     'Content-Type': 'application/json',
     Authorization: sessionId
@@ -194,7 +197,7 @@ const developMenu = () => {
 }
 
 // Gestionnaire de changement de sessionId
-watch(sessionId, async (newSessionId) => {
+watch(sessionId, async newSessionId => {
   if (newSessionId) {
     userId.value = await getUserIdFromSession(newSessionId)
   }
@@ -206,5 +209,4 @@ onMounted(async () => {
   }
   title.value = document.title
 })
-
 </script>
