@@ -172,6 +172,7 @@ const isFloating = ref('w-full top-0')
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  applyTheme()
 })
 
 const handleScroll = () => {
