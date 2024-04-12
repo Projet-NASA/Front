@@ -68,7 +68,6 @@ import type { User } from '../../.nuxt/types/user.interface'
 import type { Comment } from '../../.nuxt/types/comment.interface'
 import { useRouter } from 'vue-router'
 import { useFormStore } from '../../stores/comment'
-const userId = ref('')
 
 const formStore = useFormStore()
 const formData = formStore.formData
