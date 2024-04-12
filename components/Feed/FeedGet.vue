@@ -91,29 +91,30 @@ const fetchPosts = async () => {
 let intervalId: number | undefined
 
 onMounted(() => {
-  if (typeof window !== 'undefined') {
-    fetchPosts()
-    intervalId = window.setInterval(fetchPosts, 2000)
-
-    const sessionId = localStorage.getItem('sessionId')
+  if (typeof window !== 'undefined' && window.localStorage) {
+    const sessionId = window.localStorage.getItem('sessionId')
     if (!sessionId) {
       router.push('/login')
     }
   }
 })
-const sessionId = localStorage.getItem('sessionId')
+let sessionId
+if (typeof window !== 'undefined' && window.localStorage) {
+  sessionId = window.localStorage.getItem('sessionId')
+}
 
-const userIdResponse = await fetch(
-  `http://localhost:3003/user/getUserIdFromSession/${sessionId}`,
-  {
-    headers: {
-      'Content-Type': 'application/json'
+if (sessionId) {
+  const userIdResponse = await fetch(
+    `http://localhost:3003/user/getUserIdFromSession/${sessionId}`,
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
     }
-  }
-)
-const responseData = await userIdResponse.json()
-userId = responseData.userId
-
+  )
+  const responseData = await userIdResponse.json()
+  userId = responseData.userId
+}
 const reversedPosts = computed(() => [...posts.value].reverse())
 
 const likePost = async (post: Post) => {
