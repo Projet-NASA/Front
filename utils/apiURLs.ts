@@ -29,6 +29,7 @@ const apiURL = {
   addPost: 'http://localhost:3003/post/createPost',
   getPost: 'http://localhost:3003/post/Post',
   getOnePost: 'http://localhost:3003/post/OnePost',
+  getPostByid: 'http://localhost:3003/post/PostbyId/{{postId}}',
   updatePost: 'http://localhost:3003/post/Post',
   deletePost: 'http://localhost:3003/post/Post',
 

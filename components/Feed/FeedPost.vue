@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="addPopup"
-    class="flex justify-center"
-  >
+  <div id="addPopup" class="flex justify-center">
     <form id="createPost" class="w-full">
       <textarea
         type="text"
@@ -30,11 +27,21 @@ import apiURL from '../../utils/apiURLs'
 
 const postContent = ref('')
 const emits = defineEmits(['update'])
+const sessionId = localStorage.getItem('sessionId')
+
+const userIdResponse = await fetch(
+  `http://localhost:3003/user/getUserIdFromSession/${sessionId}`,
+  {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+)
+const responseData = await userIdResponse.json()
+const userId = responseData.userId
 
 const createPost = async () => {
-  console.log('Creating post:', postContent.value)
   if (postContent.value != '') {
-    console.log(apiURL.addPost)
     try {
       const response = await fetch(apiURL.addPost, {
         method: 'POST',
@@ -43,17 +50,15 @@ const createPost = async () => {
         },
         body: JSON.stringify({
           message: postContent.value,
-          userId: localStorage.getItem('userId')
+          userId: userId
         })
       })
 
-      console.log()
       if (!response.ok) {
         throw new Error(`Failed to create post`)
       }
-      location.reload();
+      location.reload()
       const data = await response.json()
-      console.log('Created post:', data)
 
       postContent.value = ''
 

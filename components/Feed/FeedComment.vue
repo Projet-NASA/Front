@@ -26,18 +26,32 @@
 import { ref, defineEmits, defineProps } from 'vue'
 import apiURL from '../../utils/apiURLs'
 
-const userId = '660c0462b7a076125a0dfd08'
-
 const commentContent = ref('')
 const emits = defineEmits(['update'])
 
-// Définir une prop pour recevoir l'ID du post associé
 const props = defineProps({
   postId: String
 })
+let userId = ref('')
+let sessionId
+if (typeof window !== 'undefined' && window.localStorage) {
+  sessionId = window.localStorage.getItem('sessionId')
+}
+
+if (sessionId) {
+  const userIdResponse = await fetch(
+    `http://localhost:3003/user/getUserIdFromSession/${sessionId}`,
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+  const responseData = await userIdResponse.json()
+  userId = responseData.userId
+}
 
 const createComment = async () => {
-  console.log('Creating comment:', commentContent.value)
   if (commentContent.value != '') {
     try {
       const response = await fetch(apiURL.addComment, {
@@ -48,22 +62,21 @@ const createComment = async () => {
         body: JSON.stringify({
           message: commentContent.value,
           userId: userId,
-          postId: props.postId // Utiliser l'ID du post passé depuis les props
+          postId: props.postId
         })
       })
 
-      console.log(props.postId)
 
       if (!response.ok) {
         throw new Error(`Failed to create comment`)
       }
 
       const data = await response.json()
-      console.log('Created comment:', data)
 
       commentContent.value = ''
 
       emits('update', false)
+      reloadNuxtApp()
     } catch (error) {
       console.error(error)
       // Gérer les erreurs ici
