@@ -28,47 +28,86 @@
           <div
             class="text-text-default lg:ml-2 font-bold text-sm md:text-base lg:text-xl xl:text-2xl"
           >
-            AutoLinkedIn
+            {{ title }}
           </div>
         </nuxt-link>
-        <div class="flex items-center bg-white border-secondary-default rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary-300">
+        <div
+          class="flex items-center bg-white border-secondary-default rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary-300"
+        >
           <Icon name="material-symbols:search" class="text-black ml-2" />
-          <input type="text" placeholder="Search..."
-            class="w-32 md:w-48 lg:w-64 xl:w-96 text-black px-4 py-2 rounded-lg" />
-          
+          <input
+            type="text"
+            placeholder="Search..."
+            class="w-32 md:w-48 lg:w-64 xl:w-96 text-black px-4 py-2 rounded-lg"
+          />
         </div>
-        <button class="flex items-center sm:hidden text-3xl" @click="developMenu">
+        <button
+          class="flex items-center sm:hidden text-3xl"
+          @click="developMenu"
+        >
           <span v-if="menuDeveloped">
-            <Icon name="material-symbols:keyboard-arrow-up-rounded" class="hover:animate-ping click:animate-ping" />
+            <Icon
+              name="material-symbols:keyboard-arrow-up-rounded"
+              class="hover:animate-ping click:animate-ping"
+            />
           </span>
           <span v-else>
-            <Icon name="material-symbols:keyboard-arrow-down-rounded" class="hover:animate-ping click:animate-ping" />
+            <Icon
+              name="material-symbols:keyboard-arrow-down-rounded"
+              class="hover:animate-ping click:animate-ping"
+            />
           </span>
         </button>
       </div>
-      <ul class="hidden sm:flex flex-row mx-auto items-center space-x-5 lg:space-x-10 text-3xl font-bold" id="navbar">
+      <ul
+        class="hidden sm:flex flex-row mx-auto items-center space-x-5 lg:space-x-10 text-3xl font-bold"
+        id="navbar"
+      >
         <li>
           <nuxt-link to="/" class="text-text-default" title="Messages">
-            <Icon name="material-symbols:chat" class="hover:animate-ping click:animate-ping" />
+            <Icon
+              name="material-symbols:chat"
+              class="hover:animate-ping click:animate-ping"
+            />
           </nuxt-link>
         </li>
         <li>
           <nuxt-link to="/" class="text-text-default" title="Notifications">
-            <Icon name="material-symbols:circle-notifications" class="hover:animate-ping click:animate-ping" />
+            <Icon
+              name="material-symbols:circle-notifications"
+              class="hover:animate-ping click:animate-ping"
+            />
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/profile" class="text-text-default" title="Profile">
-            <Icon name="mdi:racing-helmet" class="hover:animate-ping click:animate-ping" />
+          <nuxt-link
+            :to="`/profile/${userId}`"
+            class="text-text-default"
+            title="Profile"
+          >
+            <Icon
+              name="mdi:racing-helmet"
+              class="hover:animate-ping click:animate-ping"
+            />
           </nuxt-link>
         </li>
         <li>
-          <button @click="toggleTheme" class="text-text-50" title="Toggle theme">
+          <button
+            @click="toggleTheme"
+            class="text-text-50"
+            title="Toggle theme"
+          >
             <span v-if="isDarkTheme">
-              <Icon name="material-symbols:dark-mode" class="hover:animate-ping click:animate-ping" />
+              <Icon
+                name="material-symbols:dark-mode"
+                class="hover:animate-ping click:animate-ping"
+              />
             </span>
             <span v-else>
-              <Icon name="material-symbols:clear-day-rounded" class="hover:animate-ping click:animate-ping" />
+              <Icon
+                name="material-symbols:clear-day-rounded"
+                class="hover:animate-ping click:animate-ping"
+              />
             </span>
           </button>
         </li>
@@ -78,11 +117,43 @@
 </template>
 
 <script setup>
-import { useCookie } from '#app'
-import { onMounted, ref } from 'vue'
-
 const isDarkTheme = useCookie('isDarkTheme', false)
 const menuDeveloped = ref(false)
+const sessionId = ref(
+  typeof window !== 'undefined'
+    ? window.localStorage.getItem('sessionId')
+    : null
+)
+const userId = ref(null)
+const router = useRouter()
+const title = ref('')
+
+if (sessionId === null) {
+  router.push('/login')
+}
+
+async function getUserIdFromSession(sessionId) {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: sessionId
+  }
+
+  const userIdResponse = await fetch(
+    `http://localhost:3003/user/getUserIdFromSession/${sessionId}`,
+    {
+      headers: headers
+    }
+  )
+  if (!userIdResponse.ok) {
+    const data = await userIdResponse.json()
+    throw new Error(
+      data.error || "Impossible de récupérer l'ID de l'utilisateur"
+    )
+  }
+  const responseData = await userIdResponse.json()
+  const userId = responseData.userId
+  return userId
+}
 
 const applyTheme = () => {
   if (isDarkTheme.value) {
@@ -101,6 +172,7 @@ const isFloating = ref('w-full top-0')
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  applyTheme()
 })
 
 const handleScroll = () => {
@@ -124,4 +196,18 @@ const developMenu = () => {
     menuDeveloped.value = false
   }
 }
+
+// Gestionnaire de changement de sessionId
+watch(sessionId, async newSessionId => {
+  if (newSessionId) {
+    userId.value = await getUserIdFromSession(newSessionId)
+  }
+})
+
+onMounted(async () => {
+  if (sessionId.value) {
+    userId.value = await getUserIdFromSession(sessionId.value)
+  }
+  title.value = document.title
+})
 </script>

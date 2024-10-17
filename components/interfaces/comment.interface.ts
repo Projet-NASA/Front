@@ -1,11 +1,9 @@
 import type { User } from './user.interface'
 
-export interface Post {
+export interface Comment {
   id: string
   createdAt: string
   message: string
-  like: number
-  userliked: { userId: string }[]
+  postId: string
   user: User
-  comments: Comment[]
 }

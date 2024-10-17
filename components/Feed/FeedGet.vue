@@ -5,48 +5,57 @@
       :key="post.id"
       class="p-4 bg-secondary-200 rounded shadow mb-4"
     >
-      <div class="flex items-center mb-2">
-        <img
-          class="w-10 h-10 rounded-full"
-          src="../../public/logo-rounded.png"
-          alt="User avatar"
-        />
+      <div class="flex">
+        <NuxtLink
+          :to="`/profile/${post.user.id}`"
+          class="flex items-center mb-2"
+        >
+          <img
+            class="w-10 h-10 rounded-full hover:outline hover:outline-primary-default hover:outline-offset-2 click:outline click:outline-primary-default click:outline-offset-2"
+            src="../../public/logo-rounded.png"
+            alt="User avatar"
+          />
+        </NuxtLink>
         <div class="ml-2">
-          <div class="text-text-default font-bold">
-            {{ post.user.firstName }} {{ post.user.lastName }}
-          </div>
+          <NuxtLink
+            :to="`/profile/${post.user.id}`"
+            class="flex items-center text-text-default hover:text-primary-default hover:underline click:text-primary-default click:underline"
+          >
+            <div class="font-bold">
+              {{ post.user.firstName }} {{ post.user.lastName }}
+            </div>
+          </NuxtLink>
           <div class="text-text-default text-sm text-gray-500">
             {{ timeSince(post.createdAt) }}
           </div>
         </div>
       </div>
       <div class="text-text-default mb-2">{{ post.message }}</div>
-      <div class="flex justify-between items-center text-gray-500 text-sm">
-        <button @click="likePost(post)">
+      <div class="flex justify-between items-center text-gray-500">
+        <button @click="likePost(post)" class="text-sm">
           {{ post.like }}
-          <span v-if="post.userliked.some(user => user.userId === userId)">
-            <Icon name="material-symbols:favorite" class="text-primary-default text-lg" />
+          <span
+            v-if="post.userliked.some((user: User) => user.userId === userId)"
+          >
+            <Icon
+              name="material-symbols:favorite"
+              class="text-primary-default text-2xl hover:animate-ping click:animate-ping"
+            />
           </span>
           <span v-else>
-            <Icon name="material-symbols:favorite-outline"
-              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-lg" />
+            <Icon
+              name="material-symbols:favorite-outline"
+              class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default text-2xl"
+            />
           </span>
         </button>
-        <button>
+        <button @click="selectPost(post.id)">
           {{ post.comments.length }}
-          <Icon name="material-symbols:chat"
-            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-lg" />
+          <Icon
+            name="material-symbols:chat"
+            class="hover:animate-ping hover:text-primary-default click:animate-ping click:text-primary-default cursor-pointer text-2xl"
+          />
         </button>
-      </div>
-      <FeedComment :postId="`${post.id}`" />
-      <div v-if="postComments(post.id).length > 0" class="comments-section">
-        <div
-          v-for="comment in postComments(post.id)"
-          :key="comment.id"
-          class="p-4 bg-secondary-200 rounded shadow mb-4"
-        >
-          <div class="text-text-default mb-2">{{ comment.message }}</div>
-        </div>
       </div>
     </div>
   </div>
@@ -54,36 +63,18 @@
 
 <script setup lang="ts">
 import apiURL from '../../utils/apiURLs'
+import type { Post } from '../../.nuxt/types/post.interface'
+import type { User } from '../../.nuxt/types/user.interface'
+import { useRouter } from 'vue-router'
+import { useFormStore } from '../../stores/comment'
 
-interface User {
-  id: string
-  firstName: string
-  lastName: string
-  avatar?: string
-}
-
-interface Post {
-  id: string
-  createdAt: string
-  message: string
-  like: number
-  userliked: { userId: string }[]
-  user: User
-  comments: Comment[]
-}
-const userId = ref('')
-
-interface Comment {
-  id: string
-  createdAt: string
-  message: string
-  postId: string
-}
-
-const comments = ref<Comment[]>([])
+const formStore = useFormStore()
+const formData = formStore.formData
 
 const posts = ref<Post[]>([])
-
+const router = useRouter()
+let userId = ref('')
+let sessionId = ref('')
 const fetchPosts = async () => {
   try {
     const response = await fetch(apiURL.getPost)
@@ -95,36 +86,52 @@ const fetchPosts = async () => {
     console.error(error)
   }
 }
-
-// const invisible = async (id) =>{
-//   if (document.getElementById(id).style.display == 'none')
-//   {
-//        document.getElementById(id).style.display = 'block';
-//   }
-//   else
-//   {
-//        document.getElementById(id).style.display = 'none';
-//   }
-// }
-
-let intervalId: number | undefined
+const fetchSessionId = async () => {
+  try {
+    const response = await fetch(
+      `http://localhost:3003/user/getUserIdFromSession/${sessionId.value}`
+    )
+    if (!response.ok) {
+      throw new Error('Failed to fetch user id')
+    }
+    const data = await response.json()
+    userId.value = data.userId
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 onMounted(() => {
-  userId.value = localStorage.getItem('userId') || ''
+  if (typeof window !== 'undefined' && window.localStorage) {
+    const sessionId = window.localStorage.getItem('sessionId')
+    if (!sessionId) {
+      router.push('/login')
+    }
+    fetchPosts()
+  }
   fetchPosts()
-  fetchComments()
-  intervalId = window.setInterval(fetchPosts, 2000)
-  intervalId = window.setInterval(fetchComments, 2000)
 })
+if (typeof window !== 'undefined' && window.localStorage) {
+  sessionId = window.localStorage.getItem('sessionId')
+}
 
+if (sessionId) {
+  const userIdResponse = await fetch(
+    `http://localhost:3003/user/getUserIdFromSession/${sessionId}`,
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+  const responseData = await userIdResponse.json()
+  userId = responseData.userId
+}
 const reversedPosts = computed(() => [...posts.value].reverse())
-const reversedcomments = computed(() => [...comments.value].reverse())
-
-// update posts for likes
 
 const likePost = async (post: Post) => {
   const hasLiked = post.userliked.some(
-    userLike => userLike.userId === userId.value
+    (userLike: User) => userLike.userId === userId
   )
 
   if (hasLiked) {
@@ -147,7 +154,7 @@ const addLikeToPost = async (post: Post) => {
       },
       body: JSON.stringify({
         postId: post.id,
-        userId: userId.value
+        userId: userId
       })
     })
 
@@ -165,7 +172,7 @@ const addLikeToPost = async (post: Post) => {
 const removeLikeFromPost = async (post: Post) => {
   try {
     const findLikeResponse = await fetch(
-      `http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId.value}`
+      `http://localhost:3003/like/findLikeByPostAndUserId/${post.id}/${userId}`
     )
     if (!findLikeResponse.ok) {
       throw new Error('Failed to find like for removal')
@@ -193,24 +200,9 @@ const removeLikeFromPost = async (post: Post) => {
   }
 }
 
-const fetchComments = async () => {
-  try {
-    const response = await fetch(apiURL.getComment)
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch comments')
-    }
-
-    comments.value = await response.json()
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-const postComments = (postId: string) => {
-  return comments.value.filter(
-    (comment: { postId: string }) => comment.postId === postId
-  )
+const selectPost = (postId: string) => {
+  formData.postId = postId
+  router.push(`/postComment/${postId}`)
 }
 
 const timeSince = (date: string) => {
